@@ -1,24 +1,44 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { UserLogin } from '../store/UserLogin';
+import { UserProfile } from '../store/UserProfile';
+import { UserNickname } from '../store/UserNickname';
+import { UserId } from '../store/UserId';
+import { instance } from './customAxios';
 
 const Redirect = () => {
   const code = new URL(document.location.toString()).searchParams.get('code');
-  console.log(code);
-  const navigate = useNavigate();
-  navigate('/');
+  const navigate = useNavigate('');
 
-  /*
+  const [isLogined, setIsLogined] = useRecoilState(UserLogin);
+  const [userId, setUserId] = useRecoilState(UserId);
+  const [userNickname, setUserNickname] = useRecoilState(UserNickname);
+  const [userProfile, setUserProfile] = useRecoilState(UserProfile);
+
   useEffect(() => {
-    console.log(process.env.REACT_APP_URL);
-    axios.post(`http://localhost/kakao/kakaoLogin${code}`).then(r => {
-      console.log(r.data);
+    const existingToken = localStorage.getItem('Authorization');
 
-      localStorage.setItem('name', r.data.user_name);
-
+    if (existingToken) {
+      setIsLogined(true);
       navigate('/');
-    });
-  }, []);*/
+    } else {
+      if (code) {
+        instance
+          .post(`/kakao/kakaoLogin/${code}`)
+          .then(response => {
+            localStorage.setItem('Authorization', response.headers.authorization);
+            setUserId(response.data.memberId);
+            setUserNickname(response.data.nickname);
+            setUserProfile(response.data.thumbnailImageUrl);
+            navigate('/');
+            setIsLogined(true);
+          })
+          .catch(error => console.error);
+      }
+    }
+  }, []);
 };
 
 export default Redirect;

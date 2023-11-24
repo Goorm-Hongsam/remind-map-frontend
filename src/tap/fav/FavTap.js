@@ -1,86 +1,102 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Styles from './FavTap.module.css';
 import RoundTap from '../../common/btn/RoundTap';
 import Posting from '../../common/userposting/Posting';
+import { instance } from '../../api/customAxios';
 
 const FavTap = () => {
-  const [activeMaker, setActiveMaker] = useState(true);
+  const [isMarkerActive, setIsActiveMaker] = useState(true);
 
   const handleActiveRoute = () => {
-    setActiveMaker(!activeMaker);
+    setIsActiveMaker(!isMarkerActive);
   };
 
   const userMarkerArr = [
     {
-      title: '홍대 개미',
-      writer: '작성자',
-      date: '2023-10-1',
-      fav: true,
-      latitude: 0,
-      longitued: 1,
-    },
-    { title: '피오니', writer: '작성자', date: '2023-10-2', fav: true, latitude: 0, longitued: 1 },
-    { title: '탕후루', writer: '작성자', date: '2023-10-3', fav: true, latitude: 0, longitued: 1 },
-    { title: '현우동', writer: '작성자', date: '2023-10-4', fav: true, latitude: 0, longitued: 1 },
-    {
-      title: '슈붕 파는 곳',
-      writer: '작성자',
-      date: '2023-10-5',
-      fav: true,
-      latitude: 0,
-      longitued: 1,
+      id: 1111,
+      nickName: '정윤수',
+      title: '만석공원',
+      memo: '만석공원에 왔다!',
+      location: {
+        latitude: 127.001443714087,
+        longitude: 37.300455081,
+      },
+      wentDate: '2023-11-02T15:30',
     },
     {
-      title: '파주 영어마을',
-      writer: '작성자',
-      date: '2023-10-5',
-      fav: true,
-      latitude: 0,
-      longitued: 1,
+      id: 3423,
+      nickName: '황윤',
+      title: '수원역',
+      memo: '수원역에 왔다!',
+      location: {
+        latitude: 127.001443714087,
+        longitude: 37.300455081,
+      },
+      wentDate: '2023-11-02T15:30',
     },
   ];
 
   const userRouteArr = [
     {
-      title: '파주 여행',
-      writer: '작성자',
-      date: '2023-10-1',
-      fav: true,
-      latitude: 0,
-      longitued: 1,
-    },
-    {
-      title: '수원 데이트',
-      writer: '작성자',
-      date: '2023-10-2',
-      fav: true,
-      latitude: 0,
-      longitued: 1,
+      id: 3423,
+      nickName: '황윤',
+      title: '수원역',
+      memo: '수원역에 왔다!',
+      location: {
+        latitude: 127.001443714087,
+        longitude: 37.300455081,
+      },
+      wentDate: '2023-11-02T15:30',
     },
   ];
 
+  /*
+  const [userRouteArr, setUserRouteArr] = useState([]);
+
+  useEffect(() => {
+    instance.get('/star/markers').then(response => {
+      if (response.status === 200) {
+        setUserMarkerArr(response.data);
+      } else {
+        console.log(console.error());
+      }
+    });
+
+    instance.get('/star/routes').then(response => {
+      if (response.status === 200) {
+        setUserRouteArr(response.data);
+      } else {
+        console.log(console.error());
+      }
+    });
+  }, [setUserMarkerArr, setUserRouteArr]);*/
+
   return (
     <div className={Styles.favTap}>
-      <RoundTap activeMaker={activeMaker} handleActiveRoute={handleActiveRoute} />
+      <RoundTap isMarkerActive={isMarkerActive} handleActiveRoute={handleActiveRoute} />
       <div className={Styles.searchMarker}>
-        {activeMaker &&
-          userMarkerArr.map((marker, index) => (
+        {isMarkerActive &&
+          userMarkerArr.map(marker => (
             <Posting
-              key={index}
+              key={marker.id}
               title={marker.title}
-              writer={marker.writer}
-              date={marker.date}
-              fav={marker.fav}
+              nickName={marker.nickName}
+              wentDate={marker.wentDate.slice(0, 10)}
+              id={marker.id}
+              type="marker"
+              fav="❌"
             />
           ))}
-        {!activeMaker &&
-          userRouteArr.map((route, index) => (
+        {!isMarkerActive &&
+          userRouteArr.map(route => (
             <Posting
-              key={index}
+              key={route.id}
               title={route.title}
-              writer={route.writer}
-              date={route.date}
-              fav={route.fav}
+              nickName={route.nickName}
+              wentDate={route.wentDate.slice(0, 10)}
+              id={route.id}
+              type="route"
+              fav="❌"
             />
           ))}
       </div>

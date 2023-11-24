@@ -1,13 +1,13 @@
 .SearchInputContainer {
-  width: 260px;
-  text-align: center;
+  display: flex;
 }
 
 .searchInput {
-  width: 90%;
+  width: 176px;
+  margin: 0 auto;
   height: 20px;
   padding: 15px;
   border: var(--main-color) 1px solid;
   border-radius: 3px;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }

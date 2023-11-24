@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Styles from './Posting.module.css';
-import { AiFillStar } from 'react-icons/ai';
+import { instance } from '../../api/customAxios';
 
-const Posting = ({ title, writer, date, fav }) => {
-  const [onFav, setOnFav] = useState(fav);
+const Posting = ({ id, title, nickName, wentDate, latitude, longitude, fav, type }) => {
+  const handleFavorite = () => {
+    const endpoint = type === 'marker' ? `/star/markers/${id}` : `/star/routes/${id}`;
+    const method = fav === '❌' ? 'delete' : 'post';
 
-  const handleFav = () => {
-    setOnFav(!onFav);
+    instance[method](endpoint)
+      .then(response => {
+        if (response.status === (fav === '❌' ? 204 : 201)) {
+          console.log(
+            `${type === 'marker' ? '마커' : '루트'} 찜 ${fav === '❌' ? '삭제' : '완료'}`,
+          );
+        } else {
+          console.log(
+            `${type === 'marker' ? '마커' : '루트'} 찜 ${fav === '❌' ? '삭제' : '실패'}`,
+          );
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
     <div className={Styles.posting}>
       <div className={Styles.postingInfo}>
         <div className={Styles.title}>{title}</div>
-        <div className={Styles.writer}>{writer}</div>
-        <div className={Styles.date}>{date}</div>
+        <div className={Styles.nickName}>{nickName}</div>
+        <div className={Styles.wentDate}>{wentDate}</div>
+        <div className={Styles.latitude}>{latitude}</div>
+        <div className={Styles.longitude}>{longitude}</div>
       </div>
-      <button className={Styles.fav} onClick={handleFav}>
-        <AiFillStar className={`${Styles.fav} ${onFav ? Styles.active : ''}`} />
+      <button className={Styles.fav} onClick={handleFavorite}>
+        {fav}
       </button>
     </div>
   );

@@ -16,7 +16,7 @@ const OpenBtn = ({ handleSidebarToggle, isSidebarOpen }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ onSearchResults }) => {
   const [selectedTab, setSelectedTab] = useState('검색');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
       <div className={Styles.sidebarContainer}>
         <div className={`${Styles.sidebar} ${isSidebarOpen ? '' : Styles.close} `}>
           <SidebarMenu handleTabChange={handleTabChange} selectedTab={selectedTab} />
-          <SidebarContent selectedTab={selectedTab} />
+          <SidebarContent selectedTab={selectedTab} onSearchResults={onSearchResults} />
         </div>
         <OpenBtn handleSidebarToggle={handleSidebarToggle} isSidebarOpen={isSidebarOpen} />
       </div>

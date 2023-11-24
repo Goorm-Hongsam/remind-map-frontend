@@ -1,13 +1,15 @@
 .rankSelectContainer {
+  display: flex;
   width: 260px;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .rankSelect {
   width: 90%;
-  height: 30px;
+  height: 32px;
   padding: 5px;
   border: var(--main-color) 1px solid;
   border-radius: 3px;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
 }

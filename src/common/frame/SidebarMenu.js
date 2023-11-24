@@ -16,9 +16,9 @@ const menuItems = [
 const SidebarMenu = ({ handleTabChange, selectedTab }) => {
   return (
     <div className={Styles.sidebarMenu}>
-      {menuItems.map((item, index) => (
+      {menuItems.map(item => (
         <button
-          key={index}
+          key={item.name}
           className={`${Styles.sidebarbtn} ${selectedTab === item.name ? Styles.active : ''}`}
           onClick={() => handleTabChange(item.name)}
         >

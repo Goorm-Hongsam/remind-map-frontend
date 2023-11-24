@@ -1,10 +1,10 @@
 import React from 'react';
 import MainMap from './MainMap';
 
-const Main = () => {
+const Main = ({ searchResults }) => {
   return (
     <div>
-      <MainMap />
+      <MainMap searchResults={searchResults} />
     </div>
   );
 };
