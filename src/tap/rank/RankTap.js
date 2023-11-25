@@ -17,46 +17,32 @@ const RankTap = () => {
     setSelectedValue(value);
   };
 
-  /* 배열 변수명 대소문자 주의 */
+  const [userMarkerArr, setUserMarkerArr] = useState([]);
+  const [userRouteArr, setUserRouteArr] = useState([]);
+
   useEffect(() => {
-    const boardType = isMarkerActive === true ? 'marker' : 'route';
     const value = selectedValue;
-
     if (value === '실시간 조회수 TOP 10') {
-      instance.get(`/rank?boardType=${boardType}&count=10`).then(response => {
-        if (response.status === 200) {
-          `setUser${boardType}`(response.data);
-        }
-      });
+      if (isMarkerActive) {
+        instance.get(`/rank?boardType=marker&count=10`).then(response => {
+          if (response.data.length !== 0) {
+            setUserMarkerArr(response.data);
+            console.log(response.data);
+          } else if (response.data.length === 0) {
+            alert('데이터가 없습니다.');
+          }
+        });
+      } else {
+        instance.get(`/rank?boardType=route&count=10`).then(response => {
+          if (response.data.length !== 0) {
+            setUserRouteArr(response.data);
+          } else if (response.data.length === 0) {
+            alert('데이터가 없습니다.');
+          }
+        });
+      }
     }
-  }, []);
-
-  const userMarkerArr = [
-    {
-      id: 1,
-      nickName: '정윤수',
-      title: '만석공원',
-      memo: '만석공원에 왔다!',
-      location: {
-        latitude: 127.001443714087,
-        longitude: 37.300455081,
-      },
-      wentDate: '2023-11-02T15:30',
-    },
-    {
-      id: 2,
-      nickName: '황윤',
-      title: '수원역',
-      memo: '수원역에 왔다!',
-      location: {
-        latitude: 127.001443714087,
-        longitude: 37.300455081,
-      },
-      wentDate: '2023-11-02T15:30',
-    },
-  ];
-
-  const userRouteArr = [];
+  }, [isMarkerActive, selectedValue]);
 
   return (
     <div className={Styles.rankTap}>

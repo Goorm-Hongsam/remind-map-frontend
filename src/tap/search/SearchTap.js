@@ -15,45 +15,8 @@ const SearchTap = ({ onSearchResults }) => {
     setIsActiveMaker(!isMarkerActive);
   };
 
-  /* 연결되면 이거 useState로 바꿔야 함 */
-  const userMarkerArr = [
-    {
-      id: 1111,
-      nickName: '정윤수',
-      title: '만석공원',
-      memo: '만석공원에 왔다!',
-      location: {
-        latitude: 127.001443714087,
-        longitude: 37.300455081,
-      },
-      wentDate: '2023-11-02T15:30',
-    },
-    {
-      id: 3423,
-      nickName: '황윤',
-      title: '수원역',
-      memo: '수원역에 왔다!',
-      location: {
-        latitude: 127.001443714087,
-        longitude: 37.300455081,
-      },
-      wentDate: '2023-11-02T15:30',
-    },
-  ];
-
-  const userRouteArr = [
-    {
-      id: 718,
-      nickName: '황윤',
-      title: '수원역',
-      memo: '수원역에 왔다!',
-      location: {
-        latitude: 127.001443714087,
-        longitude: 37.300455081,
-      },
-      wentDate: '2023-11-02T15:30',
-    },
-  ];
+  const [userMarkerArr, setUserMarkerArr] = useState([]);
+  const [userRouteArr, setUserRouteArr] = useState([]);
 
   const [isclick, setIsClick] = useState(false);
 
@@ -98,8 +61,9 @@ const SearchTap = ({ onSearchResults }) => {
         instance
           .get(`/markers?latitude=${x}&longitude=${y}`)
           .then(response => {
-            if (response.data !== null) {
-              userMarkerArr(response.data);
+            console.log(response);
+            if (response.data.length !== 0) {
+              setUserMarkerArr(response.data);
             } else {
               alert('데이터가 없습니다.');
             }
@@ -109,8 +73,9 @@ const SearchTap = ({ onSearchResults }) => {
         instance
           .get(`/marker-route?latitude=${x}&longitude=${y}`)
           .then(response => {
-            if (response.data !== null) {
-              userRouteArr(response.data);
+            console.log(response);
+            if (response.data.length !== 0) {
+              setUserRouteArr(response.data);
             } else {
               alert('데이터가 없습니다.');
             }
@@ -153,7 +118,7 @@ const SearchTap = ({ onSearchResults }) => {
         {isclick && isMarkerActive && !display && (
           <div className={Styles.posting}>
             <RoundTap isMarkerActive={isMarkerActive} handleActiveRoute={handleActiveRoute} />
-            {isMarkerActive &&
+            {isMarkerActive && userMarkerArr.length > 0 ? (
               userMarkerArr.map(marker => (
                 <Posting
                   key={marker.id}
@@ -164,16 +129,19 @@ const SearchTap = ({ onSearchResults }) => {
                   fav="찜"
                   type="marker"
                 />
-              ))}
+              ))
+            ) : (
+              <div>검색 결과가 없어요.</div>
+            )}
           </div>
         )}
         {isclick && !isMarkerActive && !display && (
           <div className={Styles.posting}>
             <RoundTap isMarkerActive={isMarkerActive} handleActiveRoute={handleActiveRoute} />
-            {!isMarkerActive &&
-              userRouteArr.map((route, index) => (
+            {!isMarkerActive && userRouteArr.length > 0 ? (
+              userRouteArr.map(route => (
                 <Posting
-                  key={index}
+                  key={route.id}
                   title={route.title}
                   nickName={route.nickName}
                   wentDate={route.wentDate.slice(0, 10)}
@@ -181,7 +149,10 @@ const SearchTap = ({ onSearchResults }) => {
                   fav="찜"
                   type="route"
                 />
-              ))}
+              ))
+            ) : (
+              <div>검색 결과가 없어요.</div>
+            )}
           </div>
         )}
       </div>
