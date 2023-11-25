@@ -9,8 +9,13 @@ import { RecoilRoot } from 'recoil';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
-  const [selectedMarker, setSelectedMarker] = useState('');
-
+  const [selectedMarker, setSelectedMarker] = useState(null);
+  const [enableMarkerCreation, setEnableMarkerCreation] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [sidebarData, setSidebarData] = useState(null);
+  const handleDataFromSidebar = data => {
+    setSidebarData(data);
+  };
   return (
     <BrowserRouter>
       <RecoilRoot>
@@ -21,8 +26,21 @@ function App() {
               path="/"
               element={
                 <>
-                  <Main searchResults={searchResults} onMarkerSelect={setSelectedMarker} />
-                  <Sidebar onSearchResults={setSearchResults} selectedMarker={selectedMarker} />
+                  <Main
+                    searchResults={searchResults}
+                    onMarkerSelect={setSelectedMarker}
+                    enableMarkerCreation={enableMarkerCreation}
+                    selectedLocation={selectedLocation}
+                    sidebarData={sidebarData}
+                    setEnableMarkerCreation={setEnableMarkerCreation}
+                  />
+                  <Sidebar
+                    onSearchResults={setSearchResults}
+                    selectedMarker={selectedMarker}
+                    onEnableMarkerCreation={setEnableMarkerCreation}
+                    onPostClick={setSelectedLocation}
+                    onDataFromSidebar={handleDataFromSidebar}
+                  />
                 </>
               }
             />

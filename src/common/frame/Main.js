@@ -1,10 +1,24 @@
 import React from 'react';
 import MainMap from './MainMap';
 
-const Main = ({ searchResults }) => {
+const Main = ({
+  sidebarData,
+  selectedLocation,
+  searchResults,
+  onMarkerSelect,
+  enableMarkerCreation,
+  setEnableMarkerCreation,
+}) => {
   return (
     <div>
-      <MainMap searchResults={searchResults} />
+      <MainMap
+        enableMarkerCreation={enableMarkerCreation}
+        searchResults={searchResults}
+        onMarkerSelect={onMarkerSelect}
+        selectedLocation={selectedLocation}
+        sidebarData={sidebarData}
+        setEnableMarkerCreation={setEnableMarkerCreation}
+      />
     </div>
   );
 };
