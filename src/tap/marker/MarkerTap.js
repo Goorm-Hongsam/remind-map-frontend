@@ -5,6 +5,7 @@ import styles from './MarkerTap.module.css';
 import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
+import { instance } from '../../api/customAxios';
 
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
@@ -12,6 +13,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [modalVisible, setModalVisible] = useState(false);
   const [enableMarkerCreation, setEnableMarkerCreation] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState([]);
+  const [receivedFormData, setReceivedFormData] = useState(null);
 
   const searchPlaces = () => {
     if (!place.trim()) {
@@ -69,6 +71,22 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     setSavedSearchResults([]);
     setSelectedGroup([]);
   };
+  const handleFormData = formData => {
+    console.log('Completed Form Data:', formData);
+    setReceivedFormData(formData);
+  };
+  useEffect(() => {
+    if (receivedFormData) {
+      instance
+        .post('/marker', receivedFormData)
+        .then(response => {
+          console.log('POST request response:', response);
+        })
+        .catch(error => {
+          console.error('POST request error:', error);
+        });
+    }
+  }, [receivedFormData]);
   return (
     <>
       <div className={styles.markerTap}>
@@ -105,7 +123,11 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           </div>
         </div>
       </div>
-      <div>{modalVisible && <MarkerModal data={selectedMarker} onClose={closeModal} />}</div>
+      <div>
+        {modalVisible && (
+          <MarkerModal data={selectedMarker} onClose={closeModal} onFormData={handleFormData} />
+        )}
+      </div>
     </>
   );
 };

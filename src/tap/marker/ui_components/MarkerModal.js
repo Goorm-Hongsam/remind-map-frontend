@@ -9,7 +9,7 @@ const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
 
-const MarkerModal = ({ data, onClose }) => {
+const MarkerModal = ({ data, onClose, onFormData }) => {
   const modalRef = useRef();
   const [selectedDate, setSelectedDate] = useState({
     startDate: null,
@@ -69,6 +69,7 @@ const MarkerModal = ({ data, onClose }) => {
       images,
     };
     onClose();
+    onFormData(completeFormData);
   };
   const handleImageUpload = event => {
     const files = event.target.files;
@@ -83,6 +84,7 @@ const MarkerModal = ({ data, onClose }) => {
       }
     }
   };
+
   return (
     <div className={Styles.MarkerpostingModal}>
       <button className={Styles.closeButton} onClick={onClose}>
