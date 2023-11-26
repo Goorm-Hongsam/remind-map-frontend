@@ -5,7 +5,7 @@ export default function GroupUserCard({ member, userName, buttonText, onClick, b
   return (
     <div
       onClick={onClick}
-      className="w-full border-b border-main-color items-center justify-center relative flex gap-3 p-1"
+      className="w-full border-b border-main-color flex items-center justify-center relative gap-3 p-1"
     >
       {member.profile_thumbnail_image ? (
         <img className="w-8 rounded-full" src={member.profile_thumbnail_image} alt="" />
@@ -17,7 +17,7 @@ export default function GroupUserCard({ member, userName, buttonText, onClick, b
         />
       )}
 
-      <p className="text-sm pb-1">{userName}</p>
+      <p class="text-sm pb-1 whitespace-nowrap overflow-x-auto w-24">{userName}</p>
       <div className="grow" />
       {buttonText && (
         <GroupButton
