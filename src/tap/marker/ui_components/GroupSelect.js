@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './GroupSelect.module.css';
-
+//useGroup.js:31 지금 가지고 있는 그룹ID 스테이트 :  3
 const GroupSelect = ({ groups, onGroupId, onSelect }) => {
   console.log(groups);
   console.log(onGroupId);
