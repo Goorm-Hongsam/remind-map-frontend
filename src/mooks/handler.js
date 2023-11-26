@@ -9,18 +9,30 @@ const groupIdCreate = groupId => {
 };
 
 export const handlers = [
-  // 할일 목록
-
   rest.post('/group/create', (req, res, ctx) => {
     const lastGroupIndex = groups.length - 1;
     const title = req.body.title;
-    const groupId = groupIdCreate(groups[lastGroupIndex].groupId);
+    let groupId = '0';
+    if (groups.length === 0) {
+      groupId = '0';
+    }
+    if (groups.length !== 0) {
+      groupId = groupIdCreate(groups[lastGroupIndex].groupId);
+    }
     const group = { groupId: groupId, title: title };
     groups.push(group);
     return res(ctx.status(200), ctx.json({ groupId }));
   }),
   rest.post(`/group/edit/:groupId`, (req, res, ctx) => {
-    return res(ctx.status(200));
+    const { groupId } = req.params;
+    const { title } = req.body;
+    const data = { title: title, groupId: groupId };
+    return res(ctx.status(200), ctx.json(data));
+  }),
+  rest.delete(`/group/remove/:groupId`, (req, res, ctx) => {
+    const { groupId } = req.params;
+
+    return res(ctx.status(200), ctx.json(groupId));
   }),
   rest.get('/group/get/:groupId', (req, res, ctx) => {
     const { groupId } = req.params;
@@ -39,8 +51,10 @@ export const handlers = [
   rest.post('/group/member/add', (req, res, ctx) => {
     return res(ctx.status(200));
   }),
-  rest.delete('/group/member/remove/:groupMemberId', (req, res, ctx) => {
-    return res(ctx.status(200));
+  rest.delete('/group/member/remove/:groupId', (req, res, ctx) => {
+    const { groupId } = req.params;
+    const data = req.body;
+    return res(ctx.status(200), ctx.json(groupId));
   }),
   rest.get('/group/member/get/:groupId', (req, res, ctx) => {
     const { groupId } = req.params;

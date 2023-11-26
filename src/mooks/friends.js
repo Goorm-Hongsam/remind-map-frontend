@@ -4,7 +4,7 @@ export const friends = {
       id: 123123,
       uuid: 'abcdefg0001',
       favorite: true,
-      profile_nickname: '이수민',
+      profile_nickname: '이수민이수민이수민이수민이수민',
       profile_thumbnail_image: 'https://xxx.kakao.co.kr/.../aaa.jpg',
     },
     {
@@ -20,6 +20,30 @@ export const friends = {
       favorite: true,
       profile_nickname: '메시',
       profile_thumbnail_image: 'https://xxx.kakao.co.kr/.../aaa.jpg',
+    },
+    {
+      id: 2,
+      uuid: 'abcdefg0004',
+      favorite: true,
+      nickname: '동우',
+    },
+    {
+      groupId: 'asd1',
+      uuid: 'abcdefg0005',
+      id: 1,
+      nickname: '윤',
+    },
+    {
+      groupId: 'asd1',
+      uuid: 'abcdefg0006',
+      id: 2,
+      nickname: '동우',
+    },
+    {
+      groupId: 'asd1',
+      uuid: 'abcdefg0007',
+      id: 3,
+      nickname: '윤수',
     },
   ],
 };
