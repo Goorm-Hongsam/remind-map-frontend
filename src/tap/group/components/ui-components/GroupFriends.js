@@ -14,7 +14,7 @@ export default function GroupFriends() {
   const [isInformationModal, setIsInformationModal] = useState(false);
 
   const { getFriends, friends, sendMessage, sendInGroup, getGroupInvite } = useFriends(groupId);
-  const { deletGroup, getGroupmembers, groupMembers } = useGroup(groupId);
+  const { deleteGroup, getGroupmembers, groupMembers } = useGroup(groupId);
 
   useEffect(() => {
     getFriends();
@@ -64,7 +64,7 @@ export default function GroupFriends() {
         buttonOnClick={submitInvite}
       />
       <div className="flex flex-col items-center justify-center gap-2 w-full mt-3 relative">
-        {isInformationModal && groupMembers.length === 0 && (
+        {isInformationModal && groupMembers.length === 1 && (
           <div className="flex flex-col gap-1 border w-full p-3 text-center rounded-md text-xs absolute z-10 bg-white bottom-20 opacity-80">
             <p>친구목록에 없는 친구는</p>
             <p>RemindMap에 가입해야</p>
@@ -85,7 +85,7 @@ export default function GroupFriends() {
           }}
           bg="kakao"
         />
-        <GroupButton type="Button" text="그룹 삭제" onClick={deletGroup} bg="red" />
+        <GroupButton type="Button" text="그룹 삭제" onClick={deleteGroup} bg="red" />
       </div>
     </div>
   );

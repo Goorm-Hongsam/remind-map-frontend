@@ -13,7 +13,7 @@ export default function GroupDetail() {
   const group = useRecoilValue(groupState);
   const [search, setSearch] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
-  const { getGroup, getGroupmembers, groupMembers, editGroup, deletMember } = useGroup(
+  const { getGroup, getGroupmembers, groupMembers, editGroup, deleteMember } = useGroup(
     groupId,
     groupTitle,
   );
@@ -34,12 +34,12 @@ export default function GroupDetail() {
           editGroup(navigate);
         }}
       />
-      {groupMembers.length !== 0 ? (
+      {groupMembers.length > 1 ? (
         <GroupUserCardWraper
           mambers={groupMembers}
           title="그룹원 목록"
           buttonText="삭제"
-          buttonOnClick={deletMember}
+          buttonOnClick={deleteMember}
         />
       ) : (
         <div className="text-sm flex flex-col items-center justify-center gap-2">
