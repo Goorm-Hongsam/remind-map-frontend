@@ -18,7 +18,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const { groupId } = useParams();
   const [groups, setGroups] = useState([]);
   const [group, setGroup] = useState(null);
-
+  console.log('gruop markerTap ', group);
   // 모든 그룹 정보를 가져오는 함수
   const getGroups = async () => {
     try {
@@ -104,6 +104,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   //이부분
   const handleGroupSelect = group => {
     setSelectedGroup(group);
+    console.log(group);
   };
   const handleSearchReset = () => {
     setSavedSearchResults([]);
@@ -111,9 +112,11 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   };
   const handleFormData = formData => {
     setReceivedFormData(formData);
+    console.log(formData);
   };
   const handleGroupIdSelect = groupId => {
     getGroup(groupId);
+    console.log(groupId);
   };
   return (
     <>
