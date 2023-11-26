@@ -3,7 +3,7 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
-RUN yarn build
+RUN NODE_OPTIONS=--max-old-space-size=4096 yarn build
 
 FROM nginx 
 EXPOSE 3000
