@@ -2,23 +2,24 @@ import React, { useState } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import styles from '../../GroupTap.module.css';
 export default function DatePicker() {
-  const [value, setValue] = useState({
+  const [date, setDate] = useState({
     startDate: new Date(),
     endDate: new Date().setMonth(11),
   });
-  const handleValueChange = newValue => {
-    setValue(newValue);
+  const handleDateInput = newValue => {
+    setDate(newValue);
+    console.log('선택한날짜 : ', date);
   };
 
   const datePickerOptions = {
-    inputClassName: 'w-full p-2',
-    containerClassName: `${styles.groupTapItem} border rounded-sm`,
+    containerClassName: `w-11/12`,
+    // inputClassName: 'text-sm',
     toggleClassName: 'hidden',
     primaryColor: 'purple',
     useRange: false,
-    value: value,
-    onChange: handleValueChange,
-    placeholder: 'YYYY-MM-DD',
+    value: date,
+    onChange: handleDateInput,
+    placeholder: 'YYYY-MM-DD~YYYY-MM-DD',
   };
   return <Datepicker {...datePickerOptions} />;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import GroupInput from '../atom-components/GroupInput';
@@ -9,6 +9,7 @@ import { groupState } from '../../../../recoil/groupAtoms';
 
 export default function GroupDetail() {
   const { groupId } = useParams();
+  const navigate = useNavigate();
   const group = useRecoilValue(groupState);
   const [search, setSearch] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
@@ -29,7 +30,9 @@ export default function GroupDetail() {
         setValue={setGroupTitle}
         buttonText="수정"
         placeholder="그룹 이름 수정"
-        buttonOnclick={editGroup}
+        buttonOnclick={() => {
+          editGroup(navigate);
+        }}
       />
       {groupMembers.length !== 0 ? (
         <GroupUserCardWraper
