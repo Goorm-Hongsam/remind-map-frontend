@@ -5,12 +5,15 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
+import axios from 'axios';
+import { instance } from '../../../api/customAxios';
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
 
-const MarkerModal = ({ data, onClose, onFormData }) => {
+const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   const modalRef = useRef();
+  console.log('id:', groupId);
   const [selectedDate, setSelectedDate] = useState({
     startDate: null,
     endDate: null,
@@ -18,9 +21,8 @@ const MarkerModal = ({ data, onClose, onFormData }) => {
   const [formData, setFormData] = useState({
     title: '',
     memo: '',
-    images: [],
     location: {},
-    visible: '',
+    visiable: '',
     wentDate: '',
   });
   const [images, setImages] = useState([]);
@@ -31,7 +33,7 @@ const MarkerModal = ({ data, onClose, onFormData }) => {
   useEffect(() => {
     setFormData(prevState => ({
       ...prevState,
-      visible: isChecked ? 1 : 0,
+      visiable: isChecked ? 1 : 0,
     }));
   }, [isChecked]);
   useEffect(() => {
@@ -62,15 +64,7 @@ const MarkerModal = ({ data, onClose, onFormData }) => {
       wentDate: selectedDate.startDate,
     }));
   };
-  const handleSubmit = e => {
-    e.preventDefault();
-    const completeFormData = {
-      ...formData,
-      images,
-    };
-    onClose();
-    onFormData(completeFormData);
-  };
+
   const handleImageUpload = event => {
     const files = event.target.files;
     for (let i = 0; i < files.length && images.length + i < 10; i++) {
@@ -83,6 +77,42 @@ const MarkerModal = ({ data, onClose, onFormData }) => {
         reader.readAsDataURL(file);
       }
     }
+  };
+  const handleSubmit = e => {
+    e.preventDefault();
+    const formDataObj = new FormData();
+    const completeFormData = {
+      ...formData,
+    };
+
+    formDataObj.append('title', completeFormData.title);
+    formDataObj.append('memo', completeFormData.title);
+    if (completeFormData.location) {
+      const locationString = JSON.stringify({
+        latitude: completeFormData.location.latitude || '',
+        longitude: completeFormData.location.longitude || '',
+      });
+      formDataObj.append('location', locationString);
+    }
+    formDataObj.append('visiable', completeFormData.visiable);
+    formDataObj.append('wentDate', completeFormData.wentDate);
+    images.forEach((file, index) => {
+      formDataObj.append(`file[${index}]`, file);
+    });
+    instance
+      .post(`/marker/group/${groupId}`, formDataObj, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+        onClose();
+        onFormData(response.data);
+      })
+      .catch(error => {
+        console.error('Error during the API call', error);
+      });
   };
 
   return (

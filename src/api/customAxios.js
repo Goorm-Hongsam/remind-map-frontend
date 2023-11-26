@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const instance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URI,
+  withCredentials: true,
 });
 
 let isRetrying = false;
@@ -18,7 +19,6 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   },
 );
-
 instance.interceptors.response.use(
   response => {
     return response;

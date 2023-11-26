@@ -15,7 +15,7 @@ const Header = () => {
   const [userId, setUserId] = useRecoilState(UserId);
   const [userNickname, setUserNickname] = useRecoilState(UserNickname);
   const [userProfile, setUserProfile] = useRecoilState(UserProfile);
-
+  console.log('header 유저 프로필', userProfile);
   const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
@@ -24,7 +24,6 @@ const Header = () => {
   const handleLogin = () => {
     window.location.href = link;
   };
-
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -33,10 +32,10 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('Authorization');
-    /*instance
+    instance
       .post('/logout')
       .then(response => console.log(response))
-      .catch(e => console.error());*/
+      .catch(e => console.error());
     setIsLogined(false);
   };
 

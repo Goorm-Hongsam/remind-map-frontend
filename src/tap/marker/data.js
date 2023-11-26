@@ -107,7 +107,7 @@ export const groupMarkers = [
 
 export const groups = [
   { groupId: 1, groupTitle: '그룹 1' },
-  { groupId: 2, groupTitle: '그룹 2' },
-  { groupId: 3, groupTitle: '그룹 3' },
+  { groupId: 1, groupTitle: '그룹 2' },
+  { groupId: 1, groupTitle: '그룹 3' },
   // 다른 그룹을 필요한 만큼 추가할 수 있습니다.
 ];

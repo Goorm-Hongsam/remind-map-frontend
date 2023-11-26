@@ -6,6 +6,7 @@ import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
 import { instance } from '../../api/customAxios';
+import axios from 'axios';
 
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
@@ -14,7 +15,10 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [enableMarkerCreation, setEnableMarkerCreation] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [receivedFormData, setReceivedFormData] = useState(null);
+  const [selectedGroupId, setSelectedGroupId] = useState(null);
 
+  //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
+  //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
   const searchPlaces = () => {
     if (!place.trim()) {
       alert('검색어를 입력해주세요');
@@ -59,8 +63,11 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       onEnableMarkerCreation(false);
     }
   };
-  const handleGroupSelect = e => {
-    setSelectedGroup(e);
+  const handleGroupSelect = group => {
+    setSelectedGroup(group);
+  };
+  const handleGroupIdSelect = group => {
+    setSelectedGroupId(group);
   };
   const handlePostClick = marker => {
     onPostClick(marker);
@@ -72,13 +79,13 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     setSelectedGroup([]);
   };
   const handleFormData = formData => {
-    console.log('Completed Form Data:', formData);
     setReceivedFormData(formData);
   };
+  /*
   useEffect(() => {
     if (receivedFormData) {
       instance
-        .post('/marker', receivedFormData)
+        .post(`/marker`, receivedFormData)
         .then(response => {
           console.log('POST request response:', response);
         })
@@ -87,10 +94,12 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
         });
     }
   }, [receivedFormData]);
+  console.log(receivedFormData);
+  */
   return (
     <>
       <div className={styles.markerTap}>
-        <GroupSelect onSelect={handleGroupSelect} />
+        <GroupSelect onSelect={handleGroupSelect} onGroupId={handleGroupIdSelect} />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput
@@ -125,7 +134,12 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       </div>
       <div>
         {modalVisible && (
-          <MarkerModal data={selectedMarker} onClose={closeModal} onFormData={handleFormData} />
+          <MarkerModal
+            data={selectedMarker}
+            groupId={selectedGroupId}
+            onClose={closeModal}
+            onFormData={handleFormData}
+          />
         )}
       </div>
     </>

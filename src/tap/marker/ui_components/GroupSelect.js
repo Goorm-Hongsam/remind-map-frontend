@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './GroupSelect.module.css';
 import { groupMarkers, groups } from '../data';
 
-const GroupSelect = ({ onSelect }) => {
+const GroupSelect = ({ onGroupId, onSelect }) => {
   const [curGroup, setCurGroup] = useState(0);
   const [curGroupId, setCurGroupId] = useState(0);
   const [isGroups, setIsGroups] = useState(false);
@@ -16,6 +16,9 @@ const GroupSelect = ({ onSelect }) => {
     const selectedGroup = groupMarkers.filter(marker => marker.groupId === groupId);
     if (typeof onSelect === 'function') {
       onSelect(selectedGroup);
+    }
+    if (typeof onGroupId === 'function') {
+      onGroupId(groupId); // 여기에서 groupId를 직접 전달
     }
   };
   const openGroup = () => {

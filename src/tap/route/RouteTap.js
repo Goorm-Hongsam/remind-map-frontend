@@ -16,7 +16,10 @@ const RouteTap = ({ onDataFromRouteTap }) => {
   const [selectedMarkersData, setSelectedMarkersData] = useState([]);
   const [routeModalVisible, setRouteModalVisible] = useState(false);
   const [selectedRouteData, setSelectedRouteData] = useState('');
-
+  // 그룹 내 루트 조회 GET 	/marker-route/group/{groupId} -> selectedRouteData이거 사용해서 GET한 이후 사용
+  // 루트 생성할때(날짜 셀렉 모달창) GET	/marker/group/{groupId} 로 그룹내 모든 마커 데이터 받기
+  // 그룹 내 루트 생성 POST	/marker-route/group/{groupId} -> Modal쪽 데이터 보기
+  // 하나의 루트내 모든 마커 조회 -> 루트의 마커들을 통해서 Polyline볼때
   const closeModal = () => {
     setModalVisible(false);
   };
