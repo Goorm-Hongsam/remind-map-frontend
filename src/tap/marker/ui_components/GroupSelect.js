@@ -11,7 +11,7 @@ const GroupSelect = ({ groups, onGroupId, onSelect }) => {
   const [isGroups, setIsGroups] = useState(false);
   const selectGroup = groupId => {
     const selectIndex = groups.findIndex(e => {
-      //여기서
+      console.log(groupId, e, selectIndex);
       return e.groupId === groupId;
     });
     setCurGroup(selectIndex);
@@ -20,9 +20,11 @@ const GroupSelect = ({ groups, onGroupId, onSelect }) => {
     const selectedGroup = groups.filter(marker => marker.groupId === groupId);
     if (typeof onSelect === 'function') {
       onSelect(selectedGroup);
+      console.log(selectedGroup);
     }
     if (typeof onGroupId === 'function') {
       onGroupId(groupId); // 여기에서 groupId를 직접 전달
+      console.log(groupId);
     }
   };
   const openGroup = () => {

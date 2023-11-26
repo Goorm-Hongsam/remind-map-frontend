@@ -49,9 +49,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   const handleDateChange = date => {
     setSelectedDate(date);
   };
-  const triggerFileInput = () => {
-    fileInputRef.current.click();
-  };
+
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -107,7 +105,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     if (fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
-    console.log(fileInputRef);
+    console.log(formData);
     instance
       .post(`/marker/group/${groupId}`, formDataObj, {
         headers: {
@@ -120,6 +118,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       .catch(error => {
         console.error('Error during the API call', error);
       });
+    console.log(formDataObj);
   };
 
   return (
