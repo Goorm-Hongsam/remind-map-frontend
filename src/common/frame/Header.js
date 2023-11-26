@@ -35,7 +35,7 @@ const Header = () => {
 
   const handleLogout = () => {
     instance
-      .post('/logout')
+      .post('/out')
       .then(response => {
         if (response.status === 200) {
           localStorage.removeItem('Authorization');
