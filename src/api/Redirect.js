@@ -27,7 +27,7 @@ const Redirect = () => {
     } else {
       if (code) {
         instance
-          .get(`/kakao/kakaoLogin/${code}`)
+          .post(`/kakao/kakaoLogin/${code}`)
           .then(response => {
             localStorage.setItem('Authorization', response.headers.authorization);
             setUserId(response.data.memberId);
