@@ -22,11 +22,9 @@ const useGroup = (groupId, groupTitle) => {
       const copyGroups = [...result.data];
       setGroups(copyGroups);
       console.log('그룹들 가져오기 : ', copyGroups);
-      if (seletGroupId === 0) {
+      if (seletGroupId === 0 || seletGroupId === undefined) {
         setSeletGroupId(copyGroups[0].groupId);
         console.log('최초 진입 시 그룹ID : ', seletGroupId);
-      } else {
-        setSeletGroupId(groupId);
       }
       console.log('지금 가지고 있는 그룹ID 스테이트 : ', seletGroupId);
     } catch (error) {
