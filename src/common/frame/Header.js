@@ -31,14 +31,15 @@ const Header = () => {
     setDropdownVisible(!isDropdownVisible);
   };
 
+  const location = window.location.origin;
+
   const handleLogout = () => {
     instance
       .post('/logout')
       .then(response => {
         if (response.status === 200) {
           localStorage.removeItem('Authorization');
-          // 로그아웃 후 필요한 페이지로 리디렉션
-          window.location.href = '/login'; // 예시
+          window.location.href = `${location}`;
         }
       })
       .catch(e => console.error());
