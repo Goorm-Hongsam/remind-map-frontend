@@ -21,11 +21,6 @@ export default function GroupDetail() {
     getGroupmembers();
     getGroup();
   }, [groupId]);
-
-  useEffect(() => {
-    getGroup();
-  }, [editGroup]);
-
   return (
     <div className="flex flex-col items-center gap-5 mt-3 transition-all">
       <h1 className="text-xl">{group.title}</h1>
