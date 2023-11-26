@@ -25,7 +25,7 @@ const Header = () => {
   const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
   useEffect(() => {
-    console.log('asdsad');
+    console.log('나에게 온 초대메시지 불러오기 !');
     getGroupInvite();
     console.log(groupInvites);
   }, [isInvites]);
@@ -83,6 +83,12 @@ const Header = () => {
         <div className={Styles.userInfo} onClick={toggleDropdown}>
           <img className={Styles.userPhoto} src={profileImg} alt="유저 프로필" />
           <div className={Styles.userName}>{nickname}</div>
+
+          {isDropdownVisible && (
+            <div className={Styles.dropdown}>
+              <button onClick={handleLogout}>로그아웃</button>
+            </div>
+          )}
           <button
             onClick={() => {
               setIsInvites(!isInvites);
@@ -91,11 +97,6 @@ const Header = () => {
           >
             종
           </button>
-          {isDropdownVisible && (
-            <div className={Styles.dropdown}>
-              <button onClick={handleLogout}>로그아웃</button>
-            </div>
-          )}
         </div>
       ) : (
         <div>
