@@ -6,8 +6,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 1, // groupId 추가
-    groupTitle: '그룹 1', // groupTitle 추가
+    groupId: 'asd1',
+    groupTitle: '홍삼',
   },
   {
     title: '피오니',
@@ -16,8 +16,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 1, // groupId 추가
-    groupTitle: '그룹 1', // groupTitle 추가
+    groupId: 'asd1',
+    groupTitle: '홍삼',
   },
   {
     title: '탕후루',
@@ -26,8 +26,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 2, // groupId 추가
-    groupTitle: '그룹 2', // groupTitle 추가
+    groupId: 'asd2',
+    groupTitle: '친구',
   },
   {
     title: '현우동',
@@ -36,8 +36,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 2, // groupId 추가
-    groupTitle: '그룹 2', // groupTitle 추가
+    groupId: 'asd2',
+    groupTitle: '친구',
   },
   {
     title: '슈붕 파는 곳',
@@ -46,8 +46,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 3, // groupId 추가
-    groupTitle: '그룹 3', // groupTitle 추가
+    groupId: 'asd3',
+    groupTitle: '가족',
   },
   {
     title: '파주 영어마을',
@@ -56,8 +56,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 3, // groupId 추가
-    groupTitle: '그룹 3', // groupTitle 추가
+    groupId: 'asd3',
+    groupTitle: '가족',
   },
   {
     title: '파주 영어마을',
@@ -66,8 +66,8 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 3, // groupId 추가
-    groupTitle: '그룹 3', // groupTitle 추가
+    groupId: 'asd3',
+    groupTitle: '가족',
   },
   {
     title: '파주 영어마을',
@@ -76,14 +76,13 @@ export const groupMarkers = [
     fav: true,
     latitude: 0,
     longitude: 1,
-    groupId: 3, // groupId 추가
-    groupTitle: '그룹 3', // groupTitle 추가
+    groupId: 'asd3',
+    groupTitle: '가족',
   },
 ];
 
 export const groups = [
-  { groupId: 1, groupTitle: '그룹 1' },
-  { groupId: 2, groupTitle: '그룹 2' },
-  { groupId: 3, groupTitle: '그룹 3' },
-  // 다른 그룹을 필요한 만큼 추가할 수 있습니다.
+  { groupId: 1, groupTitle: '홍삼' },
+  { groupId: 2, groupTitle: '친구' },
+  { groupId: 3, groupTitle: '가족' },
 ];

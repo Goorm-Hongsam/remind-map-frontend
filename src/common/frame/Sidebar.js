@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Styles from './Sidebar.module.css';
 import SidebarMenu from './SidebarMenu';
 import SidebarContent from './SidebarContent';
+import { useNavigate } from 'react-router-dom';
+import { seletGroupIdState } from '../../recoil/groupAtoms';
+import { useRecoilValue } from 'recoil';
 
 const OpenBtn = ({ handleSidebarToggle, isSidebarOpen }) => {
   return (
@@ -17,6 +20,8 @@ const OpenBtn = ({ handleSidebarToggle, isSidebarOpen }) => {
 };
 
 const Sidebar = ({ onSearchResults }) => {
+  const seletGroupId = useRecoilValue(seletGroupIdState);
+  const navigator = useNavigate();
   const [selectedTab, setSelectedTab] = useState('검색');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -26,6 +31,13 @@ const Sidebar = ({ onSearchResults }) => {
 
   const handleTabChange = tab => {
     setSelectedTab(tab);
+
+    if (tab === '그룹') {
+      console.log('그룹');
+      navigator(`/grouptab/all/${seletGroupId}`);
+    } else {
+      navigator('/');
+    }
   };
 
   return (
