@@ -93,7 +93,7 @@ const useGroup = (groupId, groupTitle) => {
     }
   };
 
-  const deletGroup = async () => {
+  const deleteGroup = async () => {
     console.log('삭제할 그룹 ID : ', groupId);
     try {
       const result = await instance.post(`/group/remove/${groupId}`);
@@ -114,7 +114,7 @@ const useGroup = (groupId, groupTitle) => {
       console.log('그룹수정 실패', error);
     }
   };
-  const deletMember = async member => {
+  const deleteMember = async member => {
     try {
       const result = await instance.delete(`/group/member/remove/${groupId}`);
       console.log(result);
@@ -130,10 +130,10 @@ const useGroup = (groupId, groupTitle) => {
     groupMembers,
     getGroupMarkers,
     getGroupRoutes,
-    deletGroup,
+    deleteGroup,
     editGroup,
     createGroup,
-    deletMember,
+    deleteMember,
   };
 };
 
