@@ -8,7 +8,11 @@ export default function GroupUserCard({ member, userName, buttonText, onClick, b
       className="w-full border-b border-main-color flex items-center justify-center relative gap-3 p-1"
     >
       {member.profile_thumbnail_image ? (
-        <img className="w-8 rounded-full" src={member.profile_thumbnail_image} alt="" />
+        <img
+          className="w-8 rounded-full"
+          src={member.profile_thumbnail_image || member.thumbnailImageUrl}
+          alt=""
+        />
       ) : (
         <img
           className="w-8 rounded-full"
