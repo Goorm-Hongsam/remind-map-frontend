@@ -8,6 +8,7 @@ import {
 } from '../recoil/groupAtoms';
 import { useState } from 'react';
 import { instance } from '../api/customAxios';
+import { groups } from '../tap/group/datas';
 const useGroup = (groupId, groupTitle) => {
   const setGroups = useSetRecoilState(groupsState);
   const setGroup = useSetRecoilState(groupState);
@@ -26,6 +27,7 @@ const useGroup = (groupId, groupTitle) => {
         setSeletGroupId(copyGroups[0].groupId);
         console.log('최초 진입 시 그룹ID : ', seletGroupId);
       }
+      // setSeletGroupId(groups[0].groupId);
       console.log('지금 가지고 있는 그룹ID 스테이트 : ', seletGroupId);
     } catch (error) {
       console.log(error);

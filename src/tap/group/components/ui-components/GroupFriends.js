@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import GroupButton from '../atom-components/GroupButton';
 import GroupInput from '../atom-components/GroupInput';
 import GroupUserCardWraper from '../wrap-components/GroupUserCardWraper';
@@ -12,9 +11,13 @@ export default function GroupFriends() {
   const { groupId } = useParams();
   const [filterFriends, setFilterFriends] = useState([]);
   const [isInformationModal, setIsInformationModal] = useState(false);
-
+  const [searchValue, setSearchValue] = useState('');
   const { getFriends, friends, sendMessage, sendInGroup, getGroupInvite } = useFriends(groupId);
   const { deleteGroup, getGroupmembers, groupMembers } = useGroup(groupId);
+
+  const searchFriend = () => {
+    console.log(searchValue);
+  };
 
   useEffect(() => {
     getFriends();
@@ -55,13 +58,16 @@ export default function GroupFriends() {
 
   return (
     <div className="flex flex-col items-center gap-5 mt-10 transition-all">
-      <h1 className="text-xl">초대할수 있는 친구목록</h1>
-      <GroupInput buttonText="검색" placeholder="친구 찾기" />
+      {/* <GroupInput buttonText="검색" placeholder="친구 찾기" /> */}
       <GroupUserCardWraper
         mambers={filterFriends}
         title="친구 목록"
         buttonText="초대"
         buttonOnClick={submitInvite}
+        inputButtonText="검색"
+        inputPlaceholder="친구 찾기"
+        inputSetValue={setSearchValue}
+        inputButtonOnclick={searchFriend}
       />
       <div className="flex flex-col items-center justify-center gap-2 w-full mt-3 relative">
         {isInformationModal && groupMembers.length === 1 && (
