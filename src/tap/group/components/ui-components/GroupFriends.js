@@ -17,9 +17,10 @@ export default function GroupFriends() {
 
   const { getFriends, friends, sendMessage, sendInGroup } = useFriends(groupId);
   const { deletGroup, getGroupmembers, groupMembers } = useGroup(groupId);
-  getFriends();
-  getGroupmembers();
+
   useEffect(() => {
+    getFriends();
+    getGroupmembers();
     console.log(groupMembers);
     console.log(friends);
   }, [groupId]);
@@ -31,7 +32,7 @@ export default function GroupFriends() {
     );
     setFilterFriends(copyFriends);
     console.log('중복제거 친구', filterFriends);
-  }, [filterFriends, groupId]);
+  }, [groupId, groupMembers, friends]);
 
   const submitInvite = member => {
     sendMessage(member);
