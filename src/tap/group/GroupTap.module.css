@@ -15,6 +15,7 @@
   width: 90%;
   transition: 0.5s all;
   cursor: pointer;
+  z-index: 100;
 }
 .groupDetailTap {
   height: calc(100vh - 40px);
@@ -22,7 +23,7 @@
   left: 320px;
   background: white;
   width: 260px;
-  z-index: 0;
+  z-index: 1;
   border-right: var(--border-color) 1px solid;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
   transition: all 1s ease;

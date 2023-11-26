@@ -7,6 +7,7 @@ import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
 import { instance } from '../../../api/customAxios';
 import axios from 'axios';
+import axios from 'axios';
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
@@ -95,6 +96,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 
     formDataObj.append(
       'request',
+      'request',
       JSON.stringify({
         title: formData.title,
         memo: formData.memo,
@@ -138,6 +140,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
         id="image-upload"
         multiple
         accept="image/*"
+        ref={fileInputRef}
         ref={fileInputRef}
         onChange={handleImageUpload} // 파일 선택 시 이미지 미리보기 처리
       />

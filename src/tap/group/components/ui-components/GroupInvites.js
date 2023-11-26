@@ -20,6 +20,14 @@ export default function GroupInvites(setIsInvites) {
       console.log('그룹에 멤버 추가 실패! : ', error);
     }
   };
+  const refuseGroupMember = async groupId => {
+    try {
+      const result = await instance.get(`/invite/refuse/${groupId}`);
+      console.log('초대거절 성공 : ', result.data);
+    } catch (error) {
+      console.log('초대거절 실패 : ', error);
+    }
+  };
   // const groupInvites = [
   //   { nickname: '이동우', title: 'Test', groupId: 1, memberId: 3179769655, leaderId: 3182683176 },
   //   {
@@ -56,7 +64,7 @@ export default function GroupInvites(setIsInvites) {
                 size="sm"
                 bg="red"
                 onClick={() => {
-                  addGroupMember(el.groupId);
+                  refuseGroupMember(el.groupId);
                 }}
               />
             </div>
