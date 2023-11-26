@@ -110,7 +110,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     for (let [key, value] of formDataObj.entries()) {
       console.log(key, value);
     }
-    console.log(formData);
+    console.log(formData, '드가자!!!!!!!!!');
     try {
       const response = await axios.post(`marker/group/${groupId}`, formDataObj, {
         headers: { 'Content-Type': 'multipart/form-data' },
