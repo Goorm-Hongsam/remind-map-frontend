@@ -102,7 +102,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     console.log(formData);
   };
   const handleGroupIdSelect = groupId => {
-    //getGroup(groupId);
+    setSelectedGroupId(groupId);
     console.log(groupId);
   };
   console.log('gruop markerTap ', group); //선택된 그룹이고, groupId, title받음
@@ -148,7 +148,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
         {modalVisible && (
           <MarkerModal
             data={selectedMarker}
-            groupId={group.groupId}
+            groupId={selectedGroupId}
             onClose={closeModal}
             onFormData={handleFormData}
           />
