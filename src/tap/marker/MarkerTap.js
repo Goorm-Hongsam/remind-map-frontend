@@ -49,12 +49,12 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   }, [groupId]);
   //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
   //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
+  // 서치에 필요한 부분
   const searchPlaces = () => {
     if (!place.trim()) {
       alert('검색어를 입력해주세요');
       return;
     }
-
     const ps = new window.kakao.maps.services.Places();
     ps.keywordSearch(place, (data, status) => {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -67,6 +67,14 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       }
     });
   };
+  const handleInputChange = e => {
+    setPlace(e.target.value);
+  };
+  const handleSubmit = e => {
+    e.preventDefault();
+    searchPlaces();
+  };
+  // 모달 보여주는 부분
   useEffect(() => {
     if (selectedMarker) {
       setModalVisible(true);
@@ -77,13 +85,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const closeModal = () => {
     setModalVisible(false);
   };
-  const handleInputChange = e => {
-    setPlace(e.target.value);
-  };
-  const handleSubmit = e => {
-    e.preventDefault();
-    searchPlaces();
-  };
+  // 마커 클릭부분
   const handleMarkerCreation = e => {
     if (!enableMarkerCreation) {
       setEnableMarkerCreation(true);
@@ -93,15 +95,16 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       onEnableMarkerCreation(false);
     }
   };
-  const handleGroupSelect = group => {
-    setSelectedGroup(group);
-  };
 
   const handlePostClick = marker => {
     onPostClick(marker);
   };
   const hasSearchResults = savedSearchResults.length > 0;
 
+  //이부분
+  const handleGroupSelect = group => {
+    setSelectedGroup(group);
+  };
   const handleSearchReset = () => {
     setSavedSearchResults([]);
     setSelectedGroup([]);
