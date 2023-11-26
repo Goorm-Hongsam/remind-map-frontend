@@ -6,14 +6,12 @@ import { instance } from '../../../../api/customAxios';
 import useGroup from '../../../../hooks/useGroup';
 
 export default function GroupInvites(setIsInvites) {
-  const arr = [1, 1, 1, 1, 1];
-
-  // const groupInvites = useRecoilValue(groupInvitesState);
+  const groupInvites = useRecoilValue(groupInvitesState);
   const { getGroupInvites } = useGroup();
   const addGroupMember = async groupId => {
     console.log(groupId);
     try {
-      const result = await instance.post(`/group/member/add/${groupId}`);
+      const result = await instance.get(`/group/member/add/${groupId}`);
       console.log('그룹에 멤버 추가 성공! : ', result.data);
       getGroupInvites();
       setIsInvites(false);
@@ -22,16 +20,16 @@ export default function GroupInvites(setIsInvites) {
       console.log('그룹에 멤버 추가 실패! : ', error);
     }
   };
-  const groupInvites = [
-    { nickname: '이동우', title: 'Test', groupId: 1, memberId: 3179769655, leaderId: 3182683176 },
-    {
-      nickname: '박서연',
-      title: 'ㅁㅁㅁ',
-      groupId: 2,
-      memberId: 31797696155,
-      leaderId: 31821683176,
-    },
-  ];
+  // const groupInvites = [
+  //   { nickname: '이동우', title: 'Test', groupId: 1, memberId: 3179769655, leaderId: 3182683176 },
+  //   {
+  //     nickname: '박서연',
+  //     title: 'ㅁㅁㅁ',
+  //     groupId: 2,
+  //     memberId: 31797696155,
+  //     leaderId: 31821683176,
+  //   },
+  // ];
   return (
     <div className="fixed right-0 top-10">
       {groupInvites.map((el, i) => {
