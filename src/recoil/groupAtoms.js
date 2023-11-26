@@ -24,5 +24,9 @@ export const groupRoutesState = atom({
   key: 'groupRoutesState',
   default: [],
 });
+export const groupInvitesState = atom({
+  key: 'groupInvitesState',
+  default: [],
+});
 
 export { groupState, groupsState, seletGroupIndexState };
