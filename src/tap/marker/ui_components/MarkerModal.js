@@ -12,7 +12,7 @@ const { defaultImg } = {
 
 const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   const modalRef = useRef();
-  console.log('id:', groupId);
+  console.log('id:', groupId); //여기서 Null 남
   const [selectedDate, setSelectedDate] = useState({
     startDate: null,
     endDate: null,
@@ -106,8 +106,6 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       })
       .then(response => {
         console.log(response.data);
-        onClose();
-        onFormData(response.data);
       })
       .catch(error => {
         console.error('Error during the API call', error);
@@ -198,3 +196,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 };
 
 export default MarkerModal;
+
+/*
+
+      */
