@@ -6,6 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
 import { instance } from '../../../api/customAxios';
+import axios from 'axios';
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
@@ -93,7 +94,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     //여기 형식이 이상
 
     formDataObj.append(
-      'data',
+      'request',
       JSON.stringify({
         title: formData.title,
         memo: formData.memo,
@@ -110,21 +111,17 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       console.log(key, value);
     }
     console.log(formData);
-    instance
-      .post(`/marker/group/${groupId}`, formDataObj, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error during the API call', error);
+    try {
+      const response = await axios.post(`marker/group/${groupId}`, formDataObj, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
-    console.log(formDataObj);
+      console.log(response.data);
+      // 성공 처리 로직
+    } catch (error) {
+      console.error('Error:', error);
+      // 실패 처리 로직
+    }
   };
-
   return (
     <div className={Styles.MarkerpostingModal}>
       <button className={Styles.closeButton} onClick={onClose}>
@@ -137,11 +134,11 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 
       <input
         type="file"
-        ref={fileInputRef}
         style={{ display: 'none' }}
         id="image-upload"
         multiple
         accept="image/*"
+        ref={fileInputRef}
         onChange={handleImageUpload} // 파일 선택 시 이미지 미리보기 처리
       />
       <div className={Styles.photo}>
@@ -237,4 +234,23 @@ export default MarkerModal;
           )}
         </div>
       </div>
+      */
+
+/* 
+          instance
+      .post(`/marker/group/${groupId}`, formDataObj, {
+        headers: {
+          'Contest-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Error during the API call', error);
+      });
+    console.log(formDataObj);
+  };
+      
+      
       */
