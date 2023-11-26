@@ -3,6 +3,7 @@ WORKDIR /usr/src/app
 COPY package.json yarn.lock ./
 RUN yarn install
 COPY . .
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN yarn build
 
 FROM nginx 
