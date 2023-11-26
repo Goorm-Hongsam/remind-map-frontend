@@ -16,6 +16,7 @@ const Redirect = () => {
   const [userId, setUserId] = useRecoilState(UserId);
   const [userNickname, setUserNickname] = useRecoilState(UserNickname);
   const [userProfile, setUserProfile] = useRecoilState(UserProfile);
+  console.log('redirect 유저 프로필', userProfile);
 
   useEffect(() => {
     const existingToken = localStorage.getItem('Authorization');
@@ -26,7 +27,7 @@ const Redirect = () => {
     } else {
       if (code) {
         instance
-          .post(`/kakao/kakaoLogin/${code}`)
+          .get(`/kakao/kakaoLogin/${code}`)
           .then(response => {
             localStorage.setItem('Authorization', response.headers.authorization);
             setUserId(response.data.memberId);
