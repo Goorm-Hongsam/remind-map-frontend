@@ -1,10 +1,8 @@
 export const groupMembers = [
   {
     groupId: 'asd1',
-    memberId: 2,
+    memberId: 1,
     nickname: '윤',
-    profile_thumbnail_image:
-      'https://p.kakaocdn.net/th/talkp/wokkmFuO8T/0tBiKlpQYygCTd5OLeCdok/sa0mxl_110x110_c.jpg',
   },
   {
     groupId: 'asd1',
