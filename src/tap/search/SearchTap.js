@@ -47,8 +47,8 @@ const SearchTap = ({ onSearchResults }) => {
     setDisplay(true);
   };
 
-  const click = (x, y) => {
-    setClickedLocation({ x, y });
+  const click = (y, x) => {
+    setClickedLocation({ y, x });
     setPlace('');
     setIsClick(true);
     setDisplay(false);
@@ -56,10 +56,10 @@ const SearchTap = ({ onSearchResults }) => {
 
   useEffect(() => {
     if (clickedLocation) {
-      const { x, y } = clickedLocation;
+      const { y, x } = clickedLocation;
       if (isMarkerActive) {
         instance
-          .get(`/markers?latitude=${x}&longitude=${y}`)
+          .get(`/markers?latitude=${y}&longitude=${x}`)
           .then(response => {
             console.log(response);
             if (response.data.length !== 0) {
@@ -71,7 +71,7 @@ const SearchTap = ({ onSearchResults }) => {
           .catch(console.error);
       } else {
         instance
-          .get(`/marker-route?latitude=${x}&longitude=${y}`)
+          .get(`/marker-route?latitude=${y}&longitude=${x}`)
           .then(response => {
             console.log(response);
             if (response.data.length !== 0) {
@@ -110,7 +110,7 @@ const SearchTap = ({ onSearchResults }) => {
         {!isclick &&
           display &&
           savedSearchResults.map((result, index) => (
-            <li onClick={() => click(result.x, result.y)} key={index}>
+            <li onClick={() => click(result.y, result.x)} key={index}>
               <div>{result.place_name}</div>
               <p>{result.road_address_name || result.address_name}</p>
             </li>
