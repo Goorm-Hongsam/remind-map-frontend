@@ -32,11 +32,14 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('Authorization');
-    /*instance
+    instance
       .post('/logout')
-      .then(response => console.log(response))
-      .catch(e => console.error());*/
+      .then(response => {
+        if (response.status === 200) {
+          localStorage.removeItem('Authorization');
+        }
+      })
+      .catch(e => console.error());
     setIsLogined(false);
   };
 
