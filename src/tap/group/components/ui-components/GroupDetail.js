@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import GroupInput from '../atom-components/GroupInput';
-import GroupButton from '../atom-components/GroupButton';
 import GroupUserCardWraper from '../wrap-components/GroupUserCardWraper';
 import useGroup from '../../../../hooks/useGroup';
 import { groupState } from '../../../../recoil/groupAtoms';
@@ -13,7 +12,7 @@ export default function GroupDetail() {
   const group = useRecoilValue(groupState);
   const [search, setSearch] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
-  const { getGroup, getGroupmembers, groupMembers, deletGroup, editGroup } = useGroup(
+  const { getGroup, getGroupmembers, groupMembers, editGroup, deletMember } = useGroup(
     groupId,
     groupTitle,
   );
@@ -32,15 +31,12 @@ export default function GroupDetail() {
         placeholder="그룹 이름 수정"
         buttonOnclick={editGroup}
       />
-      {/* <GroupInput setValue={setSearch} buttonText="검색" placeholder="그룹원 찾기" /> */}
       {groupMembers.length !== 0 ? (
         <GroupUserCardWraper
           mambers={groupMembers}
           title="그룹원 목록"
           buttonText="삭제"
-          buttonOnClick={() => {
-            console.log('삭제');
-          }}
+          buttonOnClick={deletMember}
         />
       ) : (
         <div className="text-sm flex flex-col items-center justify-center gap-2">
