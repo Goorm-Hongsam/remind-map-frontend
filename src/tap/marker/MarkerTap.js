@@ -5,7 +5,8 @@ import styles from './MarkerTap.module.css';
 import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
-
+import { useParams } from 'react-router';
+import { instance } from '../../api/customAxios';
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
   const [savedSearchResults, setSavedSearchResults] = useState([]);
@@ -14,15 +15,46 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [receivedFormData, setReceivedFormData] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
+  const { groupId } = useParams();
+  const [groups, setGroups] = useState([]);
+  const [group, setGroup] = useState(null);
+  console.log('gruop markerTap ', group);
+  // 모든 그룹 정보를 가져오는 함수
+  const getGroups = async () => {
+    try {
+      const result = await instance.get('/group/getall');
+      setGroups(result.data);
+      console.log('getGroups result', result);
+    } catch (error) {
+      console.error('그룹 정보 가져오기 실패:', error);
+    }
+  };
 
+  // 특정 그룹의 상세 정보를 가져오는 함수
+  const getGroup = async groupId => {
+    try {
+      const result = await instance.get(`/group/get/${groupId}`);
+      setGroup(result.data);
+      console.log('getGroup result', result);
+    } catch (error) {
+      console.error('그룹 상세 정보 가져오기 실패:', error);
+    }
+  };
+
+  useEffect(() => {
+    getGroups();
+    if (groupId) {
+      getGroup(groupId);
+    }
+  }, [groupId]);
   //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
   //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
+  // 서치에 필요한 부분
   const searchPlaces = () => {
     if (!place.trim()) {
       alert('검색어를 입력해주세요');
       return;
     }
-
     const ps = new window.kakao.maps.services.Places();
     ps.keywordSearch(place, (data, status) => {
       if (status === window.kakao.maps.services.Status.OK) {
@@ -35,6 +67,14 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       }
     });
   };
+  const handleInputChange = e => {
+    setPlace(e.target.value);
+  };
+  const handleSubmit = e => {
+    e.preventDefault();
+    searchPlaces();
+  };
+  // 모달 보여주는 부분
   useEffect(() => {
     if (selectedMarker) {
       setModalVisible(true);
@@ -45,13 +85,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const closeModal = () => {
     setModalVisible(false);
   };
-  const handleInputChange = e => {
-    setPlace(e.target.value);
-  };
-  const handleSubmit = e => {
-    e.preventDefault();
-    searchPlaces();
-  };
+  // 마커 클릭부분
   const handleMarkerCreation = e => {
     if (!enableMarkerCreation) {
       setEnableMarkerCreation(true);
@@ -61,28 +95,33 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       onEnableMarkerCreation(false);
     }
   };
-  const handleGroupSelect = group => {
-    setSelectedGroup(group);
-  };
-  const handleGroupIdSelect = group => {
-    setSelectedGroupId(group);
-  };
+
   const handlePostClick = marker => {
     onPostClick(marker);
   };
   const hasSearchResults = savedSearchResults.length > 0;
 
+  //이부분
+  const handleGroupSelect = group => {
+    setSelectedGroup(group);
+    console.log(group);
+  };
   const handleSearchReset = () => {
     setSavedSearchResults([]);
     setSelectedGroup([]);
   };
   const handleFormData = formData => {
     setReceivedFormData(formData);
+    console.log(formData);
+  };
+  const handleGroupIdSelect = groupId => {
+    getGroup(groupId);
+    console.log(groupId);
   };
   return (
     <>
       <div className={styles.markerTap}>
-        <GroupSelect onSelect={handleGroupSelect} onGroupId={handleGroupIdSelect} />
+        <GroupSelect onSelect={handleGroupSelect} groups={groups} onGroupId={handleGroupIdSelect} />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput

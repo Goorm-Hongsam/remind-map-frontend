@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import styles from './GroupSelect.module.css';
-import { groupMarkers, groups } from '../data';
 
-const GroupSelect = ({ onGroupId, onSelect }) => {
+const GroupSelect = ({ groups, onGroupId, onSelect }) => {
+  console.log(groups);
+  console.log(onGroupId);
+  console.log(onSelect);
+
   const [curGroup, setCurGroup] = useState(0);
   const [curGroupId, setCurGroupId] = useState(0);
   const [isGroups, setIsGroups] = useState(false);
@@ -13,7 +16,7 @@ const GroupSelect = ({ onGroupId, onSelect }) => {
     setCurGroup(selectIndex);
     setCurGroupId(groupId);
     setIsGroups(false);
-    const selectedGroup = groupMarkers.filter(marker => marker.groupId === groupId);
+    const selectedGroup = groups.filter(marker => marker.groupId === groupId);
     if (typeof onSelect === 'function') {
       onSelect(selectedGroup);
     }
@@ -28,7 +31,7 @@ const GroupSelect = ({ onGroupId, onSelect }) => {
     <div className={styles.routeTap}>
       <div className="w-full flex flex-col items-center justify-center ">
         <p onClick={openGroup} className={`${styles.routeTapItem} rounded border p-2`}>
-          {groups[curGroup].groupTitle}
+          {groups.title}
         </p>
         {isGroups ? (
           <ul className={`${styles.routeTapItem} rounded border`}>
@@ -41,7 +44,7 @@ const GroupSelect = ({ onGroupId, onSelect }) => {
                   key={i}
                   className="p-2 border border-b"
                 >
-                  {group.groupTitle}
+                  {group.title}
                 </li>
               );
             })}
