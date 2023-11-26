@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { instance } from '../api/customAxios';
 import { groupState } from '../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
-import { seletGroupIdState } from '../recoil/groupAtoms';
+import useGroup from './useGroup';
 
-const useFriends = () => {
+const useFriends = groupId => {
   const [friends, setFriends] = useState([]);
   const group = useRecoilValue(groupState);
-  const seletGroupId = useRecoilValue(seletGroupIdState);
+
   const getFriends = async () => {
     try {
       const result = await instance.get('/group/friends');
@@ -27,7 +27,7 @@ const useFriends = () => {
   const sendMessage = async member => {
     const uuids = [];
     uuids.push(member.uuid);
-    console.log('메시지 전송을 위한 데이터 :', uuids, group.groupTitle, group.groupId);
+    console.log('메시지 전송을 위한 데이터 :', uuids, group.title, group.groupId);
     try {
       const result = await instance.post('/group/messages', {
         uuid: uuids,
@@ -43,10 +43,9 @@ const useFriends = () => {
   const sendInGroup = async member => {
     const ids = [];
     ids.push({ memberId: member.id });
-    console.log('그룹 초대DB 요청 데이터 =>', '지금 그룹 아이디 : ', seletGroupId, '멤버ID', ids);
+    console.log('그룹 초대DB 요청 데이터 groupId , memberId', groupId, ids);
     try {
-      const result = await instance.post(`/invite/${seletGroupId}`, ids);
-      //[{memberID : 123}]
+      const result = await instance.post(`/invite/${groupId}`, ids);
       console.log('초대 완료 :', result);
     } catch (error) {
       console.log(error);
