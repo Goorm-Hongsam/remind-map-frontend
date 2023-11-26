@@ -12,11 +12,13 @@ import DatePicker from './components/atom-components/DatePicker';
 import { groupMarkersState, groupsState } from '../../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
 import { formatDateWithDay } from '../../util/formatDateWithDay';
+import { UserLogin } from '../../store/UserLogin';
 
 const GroupTap = () => {
   const [isDetailGroup, setIsDetailGroup] = useState(false);
   const groupMarkers = useRecoilValue(groupMarkersState);
   const groups = useRecoilValue(groupsState);
+  const isUserLogin = useRecoilValue(UserLogin);
   const create = useMatch('/grouptab/create/:id');
   const detail = useMatch('/grouptab/all/:id');
   const navigator = useNavigate();
@@ -87,10 +89,20 @@ const GroupTap = () => {
   return (
     <div>
       <div ref={ref} className={`${styles.trans} ${styles.groupTap} opacity-0`}>
-        <GroupButton onClick={onCreateTab} text="그룹관리" type="Button" size="w90" />
         <GroupButton onClick={onDetailTab} text="그룹 만들기" type="Button" size="w90" />
-        <DatePicker />
-        {groups.length === 0 ? '그룹없음' : <Seleter />}
+
+        {groups.length === 0 ? (
+          <div className="bg-white flex items-center flex-col gap-3 mt-5">
+            <p className="text-5xl bounce">👆</p>
+            <p>그룹을 만들어주세요 !</p>
+          </div>
+        ) : (
+          <>
+            <GroupButton onClick={onCreateTab} text="그룹관리" type="Button" size="w90" />
+            <DatePicker />
+            <Seleter />
+          </>
+        )}
 
         <div
           className={`${styles.trans} w-full flex flex-col items-center justify-center gap-3 transition-all`}

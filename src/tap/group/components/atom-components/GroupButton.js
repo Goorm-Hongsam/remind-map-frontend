@@ -9,7 +9,8 @@ export const ButtonVariants = cva(
       bg: {
         default: `bg-main-color`,
         hover: `bg-main-hover`,
-        red: `bg-red-500 hover:bg-red-700`,
+        red: `bg-red-400 hover:bg-red-500 text-black`,
+        kakao: `bg-kakao-color text-black hover:bg-kakao-hover`,
       },
       text: {
         white: `text-white`,
@@ -33,7 +34,17 @@ export const ButtonVariants = cva(
     },
   },
 );
-export default function GroupButton({ text, type, url, onClick, bg, size, position }) {
+export default function GroupButton({
+  text,
+  type,
+  url,
+  onClick,
+  bg,
+  size,
+  position,
+  onMouseOver,
+  onMouseleave,
+}) {
   return (
     <div className={cn(ButtonVariants({ bg, size, position }))}>
       {type === 'Link' && (
@@ -42,7 +53,13 @@ export default function GroupButton({ text, type, url, onClick, bg, size, positi
         </Link>
       )}
       {type === 'Button' && (
-        <button className="w-full" type="button" onClick={onClick}>
+        <button
+          className="w-full"
+          type="button"
+          onClick={onClick}
+          onMouseOver={onMouseOver}
+          onMouseLeave={onMouseleave}
+        >
           {text}
         </button>
       )}
