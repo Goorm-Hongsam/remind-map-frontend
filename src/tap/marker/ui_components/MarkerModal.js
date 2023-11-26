@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
-import axios from 'axios';
 import { instance } from '../../../api/customAxios';
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',

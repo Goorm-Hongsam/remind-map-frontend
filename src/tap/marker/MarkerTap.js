@@ -5,8 +5,6 @@ import styles from './MarkerTap.module.css';
 import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
-import { instance } from '../../api/customAxios';
-import axios from 'axios';
 
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
@@ -81,21 +79,6 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const handleFormData = formData => {
     setReceivedFormData(formData);
   };
-  /*
-  useEffect(() => {
-    if (receivedFormData) {
-      instance
-        .post(`/marker`, receivedFormData)
-        .then(response => {
-          console.log('POST request response:', response);
-        })
-        .catch(error => {
-          console.error('POST request error:', error);
-        });
-    }
-  }, [receivedFormData]);
-  console.log(receivedFormData);
-  */
   return (
     <>
       <div className={styles.markerTap}>

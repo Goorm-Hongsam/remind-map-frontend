@@ -10,8 +10,10 @@ const Posting = ({ id, title, nickName, wentDate, latitude, longitude, fav, type
     instance[method](endpoint)
       .then(response => {
         if (response.status === (fav === '❌' ? 204 : 201)) {
-          console.log(
-            `${type === 'marker' ? '마커' : '루트'} 찜 ${fav === '❌' ? '삭제' : '완료'}`,
+          alert(
+            `${type === 'marker' ? '마커' : '루트'} 찜이 ${
+              fav === '❌' ? '삭제되었어요.' : '완료되었어요.'
+            }`,
           );
         } else {
           console.log(
@@ -20,7 +22,7 @@ const Posting = ({ id, title, nickName, wentDate, latitude, longitude, fav, type
         }
       })
       .catch(error => {
-        console.error(error);
+        alert('잘못된 접근이에요.');
       });
   };
 

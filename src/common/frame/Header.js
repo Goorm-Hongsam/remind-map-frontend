@@ -30,11 +30,17 @@ const Header = () => {
     setDropdownVisible(!isDropdownVisible);
   };
 
+  const location = window.location.origin;
+
   const handleLogout = () => {
-    localStorage.removeItem('Authorization');
     instance
-      .post('/logout')
-      .then(response => console.log(response))
+      .post('/out')
+      .then(response => {
+        if (response.status === 200) {
+          localStorage.removeItem('Authorization');
+          window.location.href = `${location}`;
+        }
+      })
       .catch(e => console.error());
     setIsLogined(false);
   };
