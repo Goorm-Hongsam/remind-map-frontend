@@ -38,6 +38,7 @@ const useGroup = (groupId, groupTitle) => {
       const result = await instance.get(`/group/get/${groupId}`);
       const copyGroup = result.data;
       console.log('그룹 단건 조회 : ', copyGroup);
+      setSeletGroupId(copyGroup.groupId);
       setGroup(copyGroup);
     } catch (error) {
       console.log(error);
@@ -93,7 +94,7 @@ const useGroup = (groupId, groupTitle) => {
     }
   };
 
-  const deletGroup = async () => {
+  const deleteGroup = async () => {
     console.log('삭제할 그룹 ID : ', groupId);
     try {
       const result = await instance.post(`/group/remove/${groupId}`);
@@ -107,14 +108,14 @@ const useGroup = (groupId, groupTitle) => {
     try {
       const result = await instance.post(`/group/edit/${groupId}`, { title: groupTitle });
       console.log('그룹수정 성공 : ', result);
+      navigate(`/grouptab/all/${groupId}`);
+      setSeletGroupId(groupId);
       getGroups();
-      navigate(`/grouptab/all/${result.data.groupId}`);
-      setSeletGroupId(result.data.groupId);
     } catch (error) {
       console.log('그룹수정 실패', error);
     }
   };
-  const deletMember = async member => {
+  const deleteMember = async () => {
     try {
       const result = await instance.delete(`/group/member/remove/${groupId}`);
       console.log(result);
@@ -130,10 +131,10 @@ const useGroup = (groupId, groupTitle) => {
     groupMembers,
     getGroupMarkers,
     getGroupRoutes,
-    deletGroup,
+    deleteGroup,
     editGroup,
     createGroup,
-    deletMember,
+    deleteMember,
   };
 };
 

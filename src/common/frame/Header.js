@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom';
 import GroupInvites from '../../tap/group/components/ui-components/GroupInvites';
 import useFriends from '../../hooks/useFriends';
 import { groupInvitesState } from '../../recoil/groupAtoms';
+import Bell from '../icon/Bell';
+import GroupButton from '../../tap/group/components/atom-components/GroupButton';
 
 const Header = () => {
   const [isLogined, setIsLogined] = useRecoilState(UserLogin);
@@ -25,7 +27,7 @@ const Header = () => {
   const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
   useEffect(() => {
-    console.log('asdsad');
+    console.log('나에게 온 초대메시지 불러오기 !');
     getGroupInvite();
     console.log(groupInvites);
   }, [isInvites]);
@@ -83,36 +85,36 @@ const Header = () => {
         <div className={Styles.userInfo} onClick={toggleDropdown}>
           <img className={Styles.userPhoto} src={profileImg} alt="유저 프로필" />
           <div className={Styles.userName}>{nickname}</div>
-          <button
-            onClick={() => {
-              setIsInvites(!isInvites);
-            }}
-            className="pr-3"
-          >
-            종
-          </button>
           {isDropdownVisible && (
             <div className={Styles.dropdown}>
               <button onClick={handleLogout}>로그아웃</button>
             </div>
           )}
-        </div>
-      ) : (
-        <div>
-          <button className={Styles.loginBtn} onClick={handleLogin}>
-            로그인
-          </button>
-          <button
+          <GroupButton
+            text={<Bell />}
+            type="Button"
+            size="icon"
             onClick={() => {
               setIsInvites(!isInvites);
             }}
-            className="pr-3"
-          >
-            종
+          />
+        </div>
+      ) : (
+        <div className="flex">
+          <button className={Styles.loginBtn} onClick={handleLogin}>
+            로그인
           </button>
+          <GroupButton
+            text={<Bell />}
+            type="Button"
+            size="icon"
+            onClick={() => {
+              setIsInvites(!isInvites);
+            }}
+          />
         </div>
       )}
-      {isInvites && <GroupInvites />}
+      {isInvites && <GroupInvites setIsInvites={setIsInvites} />}
     </header>
   );
 };
