@@ -148,7 +148,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
         {modalVisible && (
           <MarkerModal
             data={selectedMarker}
-            groupId={groupId}
+            groupId={group.groupId}
             onClose={closeModal}
             onFormData={handleFormData}
           />

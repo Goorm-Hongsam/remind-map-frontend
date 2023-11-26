@@ -12,7 +12,8 @@ const { defaultImg } = {
 
 const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   const modalRef = useRef();
-  console.log('id:', groupId); //여기서 Null 남
+  console.log('id:', groupId); //여기서 Null 남 //4로 고정됨
+  const fileInputRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState({
     startDate: null,
     endDate: null,
@@ -24,7 +25,6 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     visiable: '',
     wentDate: '',
   });
-  const [images, setImages] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   const handleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -46,9 +46,11 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [onClose]);
-
   const handleDateChange = date => {
     setSelectedDate(date);
+  };
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
   };
   const handleChange = e => {
     const { name, value } = e.target;
@@ -63,7 +65,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       wentDate: selectedDate.startDate,
     }));
   };
-
+  /*
   const handleImageUpload = event => {
     const files = event.target.files;
     for (let i = 0; i < files.length && images.length + i < 10; i++) {
@@ -77,27 +79,35 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       }
     }
   };
-  const handleSubmit = e => {
+  */
+  const [images, setImages] = useState([]); // 이미지 미리보기를 위한 상태
+
+  const handleImageUpload = event => {
+    if (event.target.files) {
+      const fileArray = Array.from(event.target.files).map(file => URL.createObjectURL(file));
+      setImages(prevImages => prevImages.concat(fileArray));
+    }
+  };
+  const handleSubmit = async e => {
     e.preventDefault();
     const formDataObj = new FormData();
-    const completeFormData = {
-      ...formData,
-    };
 
-    formDataObj.append('title', completeFormData.title);
-    formDataObj.append('memo', completeFormData.title);
-    if (completeFormData.location) {
+    //여기 형식이 이상
+    formDataObj.append('title', formData.title);
+    formDataObj.append('memo', formData.memo);
+    if (formData.location) {
       const locationString = JSON.stringify({
-        latitude: completeFormData.location.latitude || '',
-        longitude: completeFormData.location.longitude || '',
+        latitude: formData.location.latitude || '',
+        longitude: formData.location.longitude || '',
       });
       formDataObj.append('location', locationString);
     }
-    formDataObj.append('visiable', completeFormData.visiable);
-    formDataObj.append('wentDate', completeFormData.wentDate);
-    images.forEach((file, index) => {
-      formDataObj.append(`file[${index}]`, file);
-    });
+    formDataObj.append('visiable', formData.visiable);
+    formDataObj.append('wentDate', formData.wentDate);
+    if (fileInputRef.current.files[0]) {
+      formDataObj.append('file', fileInputRef.current.files[0]);
+    }
+    console.log(fileInputRef);
     instance
       .post(`/marker/group/${groupId}`, formDataObj, {
         headers: {
@@ -117,18 +127,19 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       <button className={Styles.closeButton} onClick={onClose}>
         ×
       </button>
+
       <div className={Styles.titleBar}>
         <h2>마커 생성</h2>
       </div>
-      <label htmlFor="image-upload" className={Styles.titleBar}>
-        이미지 업로드하기!
-      </label>
+
       <input
         type="file"
-        onChange={handleImageUpload}
+        ref={fileInputRef}
         style={{ display: 'none' }}
         id="image-upload"
         multiple
+        accept="image/*"
+        onChange={handleImageUpload} // 파일 선택 시 이미지 미리보기 처리
       />
       <div className={Styles.photo}>
         <div className={Styles.carousel}>
@@ -150,6 +161,9 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
           )}
         </div>
       </div>
+      <label className={Styles.abc} htmlFor="image-upload">
+        사진!
+      </label>
       <form onSubmit={handleSubmit}>
         <label className={Styles.inputLabel}>마커 제목</label>
         <input
@@ -158,7 +172,9 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
           name="title"
           value={formData.title}
           onChange={handleChange}
+          placeholder="마커 제목"
         />
+
         <label className={Styles.inputLabel}>날짜</label>
         <Datepicker
           inputClassName="w-full p-2"
@@ -198,5 +214,24 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 export default MarkerModal;
 
 /*
-
+      <div className={Styles.photo}>
+        <div className={Styles.carousel}>
+          {images.length === 0 ? (
+            <img src={defaultImg} alt="기본 이미지" />
+          ) : (
+            <Swiper
+              modules={[Navigation, Pagination]}
+              navigation
+              pagination={{ clickable: true }}
+              loop={true}
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <img src={image} alt={`업로드 이미지 ${index + 1}`} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          )}
+        </div>
+      </div>
       */
