@@ -35,9 +35,11 @@ const Posting = ({ id, title, nickName, wentDate, latitude, longitude, fav, type
         <div className={Styles.latitude}>{latitude}</div>
         <div className={Styles.longitude}>{longitude}</div>
       </div>
-      <button className={Styles.fav} onClick={handleFavorite}>
-        {fav}
-      </button>
+      {fav ? (
+        <button className={Styles.fav} onClick={handleFavorite}>
+          {fav}
+        </button>
+      ) : null}
     </div>
   );
 };
