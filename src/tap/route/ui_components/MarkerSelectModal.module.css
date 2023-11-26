@@ -83,13 +83,12 @@
   background-color: var(--main-color);
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
 }
 .groupTapItem {
   border-color: var(--main-color);
   font-size: var(--text-sm);
-  width: 80%;
 }
 
 .photo {

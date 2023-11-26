@@ -6,4 +6,110 @@
   align-items: center;
   justify-content: center;
   padding: 20px 0px;
+  overflow: auto;
+}
+
+.MarkerBtnContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  height: 100px;
+  padding: 0px;
+  padding-left: 50px;
+}
+.createMarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  max-height: 1070px;
+}
+.searchReset {
+  float: right;
+  font-size: var(--text-xs);
+  width: 50px;
+  border-radius: 5px;
+  padding: 5px;
+  color: white;
+  background-color: var(--main-color);
+}
+.posting {
+  width: 80%;
+  background-color: var(--main-color);
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10px;
+}
+.listItem {
+  width: 100%;
+  background-color: var(--main-color);
+  padding: 10px 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #ddd;
+  align-items: center;
+  gap: 20px;
+}
+.postingInfo {
+  height: 100px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.postingInfo .title {
+  font-size: var(--text-base);
+  width: 100%;
+  height: 25px;
+  word-wrap: break-word;
+  overflow-y: scroll;
+}
+
+.postingInfo .writer {
+  font-size: var(--text-sm);
+  font-family: 'GmarketSansLight';
+  padding-top: 10px;
+}
+
+.postingInfo .date {
+  font-size: var(--text-sm);
+  font-family: 'GmarketSansLight';
+  font-weight: 300;
+}
+
+.fav {
+  border: none;
+  background-color: transparent;
+  fill: var(--disable-color);
+}
+
+.fav svg {
+  font-size: 25px;
+}
+
+.active {
+  fill: var(--favorite-color);
+}
+.searchInput {
+  width: 80%;
+  height: 20px;
+  padding: 5px;
+  border: var(--main-color) 1px solid;
+  border-radius: 3px;
+}
+
+.searchForm {
+  width: 260px;
+  text-align: center;
+}
+
+.SearchInputContainer {
+  display: flex;
+  gap: 8px;
 }
