@@ -9,16 +9,26 @@ import { UserProfile } from '../../store/UserProfile';
 import { UserNickname } from '../../store/UserNickname';
 import { instance } from '../../api/customAxios';
 import { Link } from 'react-router-dom';
+import GroupInvites from '../../tap/group/components/ui-components/GroupInvites';
+import useFriends from '../../hooks/useFriends';
+import { groupInvitesState } from '../../recoil/groupAtoms';
 
 const Header = () => {
   const [isLogined, setIsLogined] = useRecoilState(UserLogin);
   const [userId, setUserId] = useRecoilState(UserId);
   const [userNickname, setUserNickname] = useRecoilState(UserNickname);
   const [userProfile, setUserProfile] = useRecoilState(UserProfile);
+  const [isInvites, setIsInvites] = useState(false);
+  const { getGroupInvite } = useFriends();
+  const groupInvites = useRecoilValue(groupInvitesState);
   console.log('header 유저 프로필', userProfile);
   const REST_API_KEY = process.env.REACT_APP_REST_API_KEY;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
-
+  useEffect(() => {
+    console.log('asdsad');
+    getGroupInvite();
+    console.log(groupInvites);
+  }, [isInvites]);
   const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&prompt=login&scope=profile_nickname,profile_image,friends,talk_message`;
 
   const handleLogin = () => {
@@ -68,24 +78,41 @@ const Header = () => {
       <Link to="/" className={Styles.title}>
         📌 RemindMap
       </Link>
+
       {isLogined && profileImg ? (
         <div className={Styles.userInfo} onClick={toggleDropdown}>
           <img className={Styles.userPhoto} src={profileImg} alt="유저 프로필" />
           <div className={Styles.userName}>{nickname}</div>
+          <button
+            onClick={() => {
+              setIsInvites(!isInvites);
+            }}
+            className="pr-3"
+          >
+            종
+          </button>
           {isDropdownVisible && (
             <div className={Styles.dropdown}>
               <button onClick={handleLogout}>로그아웃</button>
             </div>
           )}
-          <Link to="/group">
-            <HiUserGroup className={Styles.home} />
-          </Link>
         </div>
       ) : (
-        <button className={Styles.loginBtn} onClick={handleLogin}>
-          로그인
-        </button>
+        <div>
+          <button className={Styles.loginBtn} onClick={handleLogin}>
+            로그인
+          </button>
+          <button
+            onClick={() => {
+              setIsInvites(!isInvites);
+            }}
+            className="pr-3"
+          >
+            종
+          </button>
+        </div>
       )}
+      {isInvites && <GroupInvites />}
     </header>
   );
 };

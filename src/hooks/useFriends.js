@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { instance } from '../api/customAxios';
-import { groupState } from '../recoil/groupAtoms';
-import { useRecoilValue } from 'recoil';
+import { groupInvitesState, groupState } from '../recoil/groupAtoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import useGroup from './useGroup';
 
 const useFriends = groupId => {
   const [friends, setFriends] = useState([]);
+
   const group = useRecoilValue(groupState);
+  const setGroupInvites = useSetRecoilState(groupInvitesState);
 
   const getFriends = async () => {
     try {
@@ -54,7 +56,11 @@ const useFriends = groupId => {
   const getGroupInvite = async () => {
     try {
       const result = instance.get('/invite/getall');
+      console.log('초대목록 불러오기 성공', result);
       console.log('초대목록 불러오기 성공', result.data);
+      const copyInvites = [...result.data];
+      console.log('초대목록 복사본 : ', copyInvites);
+      setGroupInvites(copyInvites);
     } catch (error) {
       console.log('초대목록 불러오기 실패 : ', error);
     }

@@ -96,17 +96,20 @@ const useGroup = (groupId, groupTitle) => {
   const deletGroup = async () => {
     console.log('삭제할 그룹 ID : ', groupId);
     try {
-      const result = await instance.delete(`/group/remove/${groupId}`);
+      const result = await instance.post(`/group/remove/${groupId}`);
       console.log('그룹삭제 성공! : ', result);
     } catch (error) {
       console.log('그룹삭제 실패 : ', error);
     }
   };
-  const editGroup = async () => {
+  const editGroup = async navigate => {
     console.log('수정할 그룹명 & 그룹ID ', groupTitle, groupId);
     try {
       const result = await instance.post(`/group/edit/${groupId}`, { title: groupTitle });
       console.log('그룹수정 성공 : ', result);
+      getGroups();
+      navigate(`/grouptab/all/${result.data.groupId}`);
+      setSeletGroupId(result.data.groupId);
     } catch (error) {
       console.log('그룹수정 실패', error);
     }
