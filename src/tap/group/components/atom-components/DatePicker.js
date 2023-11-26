@@ -12,17 +12,17 @@ export default function DatePicker() {
   };
 
   const datePickerOptions = {
-    containerClassName: `w-11/12 bg-white z-20`,
-    // inputClassName: 'text-sm',
+    // containerClassName: `w-full text-xs `,
+    inputClassName: 'w-full bg-white p-3 cursor-pointer border border-main-color rounded-md',
     toggleClassName: 'hidden',
     primaryColor: 'purple',
     useRange: false,
     value: date,
     onChange: handleDateInput,
-    placeholder: 'YYYY-MM-DD~YYYY-MM-DD',
+    placeholder: 'YYYY-MM-DD',
   };
   return (
-    <div className="z-20">
+    <div className={`${styles.groupTapItem} text-xs relative z-10 w-full`}>
       <Datepicker {...datePickerOptions} />
     </div>
   );
