@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import GroupInput from '../atom-components/GroupInput';
 import useGroup from '../../../../hooks/useGroup';
-import { useMatch, useNavigate } from 'react-router-dom';
+import { useMatch, useNavigate, useParams } from 'react-router-dom';
 
 export default function GroupCreate() {
   const [groupTitle, setGroupTitle] = useState('');
-  const { createGroup } = useGroup();
+  const { groupId } = useParams();
+  const { createGroup } = useGroup(groupId, groupTitle);
   const navigate = useNavigate();
   const isTabCreate = useMatch('/grouptab/create/:id');
   const isCreate = useMatch('/group/create/:id');

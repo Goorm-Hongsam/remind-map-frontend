@@ -9,18 +9,19 @@ import GroupButton from './components/atom-components/GroupButton';
 import GroupCreate from './components/ui-components/GroupCreate';
 import Seleter from './components/atom-components/Seleter';
 import DatePicker from './components/atom-components/DatePicker';
-import { groupMarkersState } from '../../recoil/groupAtoms';
+import { groupMarkersState, groupsState } from '../../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
 import { formatDateWithDay } from '../../util/formatDateWithDay';
 
 const GroupTap = () => {
   const [isDetailGroup, setIsDetailGroup] = useState(false);
   const groupMarkers = useRecoilValue(groupMarkersState);
+  const groups = useRecoilValue(groupsState);
   const create = useMatch('/grouptab/create/:id');
   const detail = useMatch('/grouptab/all/:id');
   const navigator = useNavigate();
   const { groupId } = useParams();
-  const { getGroups, getGroup, getGroupmembers, getGroupMarkers, getGroupRoutes, deletGroup } =
+  const { getGroups, getGroup, getGroupmembers, getGroupMarkers, getGroupRoutes } =
     useGroup(groupId);
 
   const ref = useRef(null);
@@ -89,7 +90,8 @@ const GroupTap = () => {
         <GroupButton onClick={onCreateTab} text="그룹관리" type="Button" size="w90" />
         <GroupButton onClick={onDetailTab} text="그룹 만들기" type="Button" size="w90" />
         <DatePicker />
-        <Seleter />
+        {groups.length === 0 ? '그룹없음' : <Seleter />}
+
         <div
           className={`${styles.trans} w-full flex flex-col items-center justify-center gap-3 transition-all`}
         >

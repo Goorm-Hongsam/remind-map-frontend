@@ -8,7 +8,6 @@ import {
 } from '../recoil/groupAtoms';
 import { useState } from 'react';
 import { instance } from '../api/customAxios';
-import axios from 'axios';
 const useGroup = (groupId, groupTitle) => {
   const setGroups = useSetRecoilState(groupsState);
   const setGroup = useSetRecoilState(groupState);
@@ -75,79 +74,27 @@ const useGroup = (groupId, groupTitle) => {
     }
   };
 
-  //try catch 지우기
-  //비동기 없이
-  //뒤 함ㄴ수 지우고
-  // 1. 기본
-  const createGroup = async (isTabCreate, isCreate, navigate, groupTitle) => {
+  const createGroup = async (isTabCreate, isCreate, navigate) => {
     console.log('그룹 생성 그룹 제목', groupTitle);
     try {
       const result = await instance.post('/group/create', { title: groupTitle });
       console.log(result);
       getGroups();
-      // if (isTabCreate) {
-      //   navigate(`/grouptab/all/${result.data.groupId}`);
-      //   setSeletGroupId(result.data.groupId);
-      // }
-      // if (isCreate) {
-      //   navigate(`/group/detail/${result.data.groupId}`);
-      //   setSeletGroupId(result.data.groupId);
-      // }
+      if (isTabCreate) {
+        navigate(`/grouptab/all/${result.data.groupId}`);
+        setSeletGroupId(result.data.groupId);
+      }
+      if (isCreate) {
+        navigate(`/group/detail/${result.data.groupId}`);
+        setSeletGroupId(result.data.groupId);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  // 2.비동기 제거
-  // const createGroup = (isTabCreate, isCreate, navigate, groupTitle) => {
-  //   console.log('그룹 생성 그룹 제목', groupTitle);
-  //   try {
-  //     const result = instance.post('/group/create', { title: groupTitle });
-  //     console.log(result);
-  //     getGroups();
-  //     if (isTabCreate) {
-  //       navigate(`/grouptab/all/${result.data.groupId}`);
-  //       setSeletGroupId(result.data.groupId);
-  //     }
-  //     if (isCreate) {
-  //       navigate(`/group/detail/${result.data.groupId}`);
-  //       setSeletGroupId(result.data.groupId);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // try-catch 제거
-  // const createGroup = async (isTabCreate, isCreate, navigate, groupTitle) => {
-  //   await instance
-  //     .post('/group/create', { title: groupTitle })
-  //     .then(res => {
-  //       console.log(res);
-  //       getGroups();
-  //       if (isTabCreate) {
-  //         navigate(`/grouptab/all/${res.data.groupId}`);
-  //         setSeletGroupId(res.data.groupId);
-  //       }
-  //       if (isCreate) {
-  //         navigate(`/group/detail/${res.data.groupId}`);
-  //         setSeletGroupId(res.data.groupId);
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
-  // try-catch , 비동기 제거
-  // const createGroup = (isTabCreate, isCreate, navigate, groupTitle) => {
-  //   instance
-  //     .post('/group/create', { title: groupTitle })
-  //     .then(res => {
-  //       console.log(res);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
+
   const deletGroup = async () => {
+    console.log('삭제할 그룹 ID : ', groupId);
     try {
       const result = await instance.delete(`/group/remove/${groupId}`);
       console.log('그룹삭제 성공! : ', result);
@@ -156,12 +103,20 @@ const useGroup = (groupId, groupTitle) => {
     }
   };
   const editGroup = async () => {
-    console.log('수정할 그룹명', groupTitle);
+    console.log('수정할 그룹명 & 그룹ID ', groupTitle, groupId);
     try {
       const result = await instance.post(`/group/edit/${groupId}`, { title: groupTitle });
       console.log('그룹수정 성공 : ', result);
     } catch (error) {
       console.log('그룹수정 실패', error);
+    }
+  };
+  const deletMember = async member => {
+    try {
+      const result = await instance.delete(`/group/member/remove/${groupId}`);
+      console.log(result);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -175,6 +130,7 @@ const useGroup = (groupId, groupTitle) => {
     deletGroup,
     editGroup,
     createGroup,
+    deletMember,
   };
 };
 
