@@ -25,6 +25,7 @@ function App() {
     getGroups();
     getGroupInvite();
   }, []);
+
   return (
     <BrowserRouter>
       <div className="App">
