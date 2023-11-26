@@ -1,0 +1,50 @@
+.posting {
+  width: 80%;
+  background-color: var(--main-color);
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 8px;
+}
+
+.postingInfo {
+  height: 100px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.postingInfo .title {
+  font-size: var(--text-base);
+  width: 100%;
+  height: 40px;
+  word-wrap: break-word;
+}
+
+.postingInfo .writer {
+  font-size: var(--text-sm);
+  font-family: 'GmarketSansLight';
+  padding-top: 10px;
+}
+
+.postingInfo .date {
+  font-size: var(--text-sm);
+  font-family: 'GmarketSansLight';
+  font-weight: 300;
+}
+
+.fav {
+  border: none;
+  background-color: transparent;
+  fill: var(--disable-color);
+}
+
+.fav svg {
+  font-size: 25px;
+}
+
+.active {
+  fill: var(--favorite-color);
+}

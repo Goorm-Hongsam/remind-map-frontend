@@ -4,13 +4,50 @@
   flex-direction: column;
   gap: 20px;
   align-items: center;
-
   padding: 20px 0px;
   height: 100vh;
   overflow-y: scroll;
+  z-index: 1;
 }
 .groupTapItem {
   border-color: var(--main-color);
   font-size: var(--text-sm);
-  width: 80%;
+  width: 90%;
+  transition: 0.5s all;
+  cursor: pointer;
+}
+.groupDetailTap {
+  height: calc(100vh - 40px);
+  top: 40px;
+  left: 320px;
+  background: white;
+  width: 260px;
+  z-index: 0;
+  border-right: var(--border-color) 1px solid;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  transition: all 1s ease;
+}
+.listOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+.listClose {
+  transform: translateY(-30%);
+  opacity: 0;
+  pointer-events: none;
+}
+.close {
+  opacity: 0;
+  transform: translateX(-260px);
+  pointer-events: none;
+}
+.open {
+  opacity: 1;
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+}
+.trans {
+  transition: 1s opacity;
 }

@@ -30,7 +30,9 @@
   padding-top: 10px;
 }
 
-.postingInfo .date {
+.postingInfo .wentDate,
+.latitude,
+.longitude {
   font-size: var(--text-sm);
   font-family: 'GmarketSansLight';
   font-weight: 300;
@@ -38,14 +40,14 @@
 
 .fav {
   border: none;
-  background-color: transparent;
-  fill: var(--disable-color);
+  background-color: var(--sub-color);
+  font-size: 12px;
+  border-radius: 30px;
+  padding: 5px;
+  width: 25px;
+  height: 25px;
 }
 
-.fav svg {
-  font-size: 25px;
-}
-
-.active {
-  fill: var(--favorite-color);
+.fav:hover {
+  background-color: #9fe6b3;
 }

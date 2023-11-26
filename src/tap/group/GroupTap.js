@@ -1,102 +1,127 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './GroupTap.module.css';
-
-import Datepicker from 'react-tailwindcss-datepicker';
-import { groupMarkers, groups } from '../group/datas';
 import Posting from '../../common/userposting/Posting';
+import { useMatch, useNavigate, useParams } from 'react-router-dom';
+import useGroup from '../../hooks/useGroup';
+import GroupDetail from './components/ui-components/GroupDetail';
+import GroupFriends from './components/ui-components/GroupFriends';
+import GroupButton from './components/atom-components/GroupButton';
+import GroupCreate from './components/ui-components/GroupCreate';
+import Seleter from './components/atom-components/Seleter';
+import DatePicker from './components/atom-components/DatePicker';
+import { groupMarkersState } from '../../recoil/groupAtoms';
+import { useRecoilValue } from 'recoil';
+import { formatDateWithDay } from '../../util/formatDateWithDay';
+
 const GroupTap = () => {
-  const [curGroup, setCurGroup] = useState(0);
-  const [curGroupId, setCurGroupId] = useState(0);
-  const [isGroups, setIsGroups] = useState(false);
-  const [value, setValue] = useState({
-    startDate: new Date(),
-    endDate: new Date().setMonth(11),
-  });
+  const [isDetailGroup, setIsDetailGroup] = useState(false);
+  const groupMarkers = useRecoilValue(groupMarkersState);
+  const create = useMatch('/grouptab/create/:id');
+  const detail = useMatch('/grouptab/all/:id');
+  const navigator = useNavigate();
+  const { groupId } = useParams();
+  const { getGroups, getGroup, getGroupmembers, getGroupMarkers, getGroupRoutes, deletGroup } =
+    useGroup(groupId);
 
-  const handleValueChange = newValue => {
-    console.log('newValue:', newValue);
-    setValue(newValue);
-  };
-  const seletGroup = groupId => {
-    const seletIndex = groups.findIndex(el => {
-      return el.groupId === groupId;
+  const ref = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        setTimeout(() => {
+          if (entry.intersectionRatio) {
+            entry.target.classList.remove('opacity-0');
+            entry.target.classList.add('opacity-100');
+            console.log('on!');
+          }
+          if (!entry.intersectionRatio) {
+            entry.target.classList.remove('opacity-100');
+            entry.target.classList.add('opacity-0');
+            console.log('off!');
+          }
+        }, 200);
+      });
     });
-    setCurGroup(seletIndex);
-    setCurGroupId(groupId);
-    console.log(curGroup);
-    setIsGroups(false);
-  };
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
 
-  const openGroup = () => {
-    setIsGroups(!isGroups);
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [ref]);
+
+  useEffect(() => {
+    getGroups();
+    getGroup();
+    getGroupmembers();
+    getGroupMarkers();
+    getGroupRoutes();
+  }, [groupId]);
+
+  const onCreateTab = () => {
+    if (detail) {
+      setIsDetailGroup(!isDetailGroup);
+    }
+    if (create) {
+      navigator(`/grouptab/all/${groupId}`);
+      if (isDetailGroup === false) {
+        setIsDetailGroup(true);
+      }
+    }
+  };
+  const onDetailTab = () => {
+    if (create) {
+      setIsDetailGroup(!isDetailGroup);
+    }
+    if (detail) {
+      navigator(`/grouptab/create/${groupId}`);
+      if (isDetailGroup === false) {
+        setIsDetailGroup(true);
+      }
+    }
   };
 
   return (
-    <div className={styles.groupTap}>
-      <Datepicker
-        inputClassName="w-full p-2"
-        containerClassName={`${styles.groupTapItem} border rounded-sm`}
-        toggleClassName="hidden"
-        primaryColor="purple"
-        useRange={false}
-        value={value}
-        onChange={handleValueChange}
-        placeholder="YYYY-MM-DD"
-      />
-      <div className="w-full flex flex-col items-center justify-center">
-        {/* <select className={`${styles.groupTapItem} flex items-center justify-center border p-2`}>
-          {groups.map((group, i) => {
+    <div>
+      <div ref={ref} className={`${styles.trans} ${styles.groupTap} opacity-0`}>
+        <GroupButton onClick={onCreateTab} text="그룹관리" type="Button" size="w90" />
+        <GroupButton onClick={onDetailTab} text="그룹 만들기" type="Button" size="w90" />
+        <DatePicker />
+        <Seleter />
+        <div
+          className={`${styles.trans} w-full flex flex-col items-center justify-center gap-3 transition-all`}
+        >
+          {groupMarkers.map((marker, i) => {
             return (
-              <option
-                onClick={() => {
-                  seletGroup(group.groupId);
-                }}
-                key={group.groupId}
-              >
-                {group.groupTitle}
-              </option>
+              <Posting
+                key={i}
+                title={marker.title}
+                nickName={marker.nickName}
+                wentDate={formatDateWithDay(marker.wentDate)}
+                latitude={marker.latitude}
+                longitude={marker.longitude}
+              />
             );
           })}
-        </select> */}
-        {/* <ul className={`${styles.groupTapItem} border`}>
-          {groups.map((group, i) => {
-            return curGroup === i ? <li className="p-2">{group.groupTitle}</li> : null;
-          })}
-        </ul> */}
-
-        <p onClick={openGroup} className={`${styles.groupTapItem} border p-2`}>
-          {groups[curGroup].groupTitle}
-        </p>
-        {isGroups ? (
-          <ul className={`${styles.groupTapItem} border`}>
-            {groups.map((group, i) => {
-              return (
-                <li
-                  onClick={() => {
-                    seletGroup(group.groupId);
-                  }}
-                  key={i}
-                  className="p-2 border border-b"
-                >
-                  {group.groupTitle}
-                </li>
-              );
-            })}
-          </ul>
-        ) : null}
+        </div>
       </div>
-      <div className="w-full flex flex-col gap-3 items-center justify-center">
-        {groupMarkers.map((marker, i) => {
-          return curGroupId === marker.groupId ? (
-            <Posting
-              key={i}
-              title={marker.title}
-              writer={marker.writer}
-              date={marker.date}
-              fav={marker.fav}
-            />
-          ) : null;
-        })}
+
+      <div
+        className={`${
+          styles.groupDetailTap
+        } opacity-0 fixed h-screen overflow-y-scroll left-20 p-5 ${
+          isDetailGroup ? styles.open : styles.close
+        } `}
+      >
+        {detail && (
+          <>
+            <GroupDetail />
+            <GroupFriends />
+          </>
+        )}
+        {create && <GroupCreate />}
       </div>
     </div>
   );
