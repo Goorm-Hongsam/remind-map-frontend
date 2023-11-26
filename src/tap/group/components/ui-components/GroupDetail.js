@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-
 import GroupInput from '../atom-components/GroupInput';
 import GroupUserCardWraper from '../wrap-components/GroupUserCardWraper';
 import useGroup from '../../../../hooks/useGroup';
@@ -23,28 +22,39 @@ export default function GroupDetail() {
     getGroup();
   }, [groupId]);
 
+  useEffect(() => {
+    getGroup();
+  }, [editGroup]);
+
   return (
     <div className="flex flex-col items-center gap-5 mt-3 transition-all">
       <h1 className="text-xl">{group.title}</h1>
-      <GroupInput
+      {/* <GroupInput
         setValue={setGroupTitle}
         buttonText="수정"
         placeholder="그룹 이름 수정"
         buttonOnclick={() => {
           editGroup(navigate);
         }}
-      />
+      /> */}
       {groupMembers.length > 1 ? (
         <GroupUserCardWraper
           mambers={groupMembers}
           title="그룹원 목록"
           buttonText="삭제"
           buttonOnClick={deleteMember}
+          inputSetValue={setGroupTitle}
+          inputPlaceholder="그룹이름 수정"
+          inputButtonText="수정"
+          inputButtonOnclick={() => {
+            editGroup(navigate);
+          }}
         />
       ) : (
-        <div className="text-sm flex flex-col items-center justify-center gap-2">
+        <div className="text-sm flex flex-col items-center justify-center gap-3">
           <p>그룹에 아무도 없군요 ..</p>
-          <p>친구를 초대해보세요!</p>
+          <p className="">친구를 초대해보세요!</p>
+          <p className="text-5xl bounce mt-3">👇</p>
         </div>
       )}
     </div>
