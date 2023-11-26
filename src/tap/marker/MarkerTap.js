@@ -6,7 +6,12 @@ import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
 import { useParams } from 'react-router';
+import { useRecoilValue } from 'recoil';
+import { groupsState } from '../../recoil/groupAtoms';
 import { instance } from '../../api/customAxios';
+import Selecter from '../group/components/atom-components/Seleter';
+import useGroup from '../../hooks/useGroup';
+
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
   const [savedSearchResults, setSavedSearchResults] = useState([]);
@@ -16,37 +21,20 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [receivedFormData, setReceivedFormData] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const { groupId } = useParams();
-  const [groups, setGroups] = useState([]);
   const [group, setGroup] = useState(null);
-  // 모든 그룹 정보를 가져오는 함수
-  const getGroups = async () => {
-    try {
-      const result = await instance.get('/group/getall');
-      setGroups(result.data);
-      console.log('getGroups result', result);
-    } catch (error) {
-      console.error('그룹 정보 가져오기 실패:', error);
-    }
-  };
-
-  // 특정 그룹의 상세 정보를 가져오는 함수
-  const getGroup = async groupId => {
-    try {
-      const result = await instance.get(`/group/get/${groupId}`);
-      setGroup(result.data);
-      console.log('getGroup result', result);
-      console.log('성공!!!!!!!!!');
-    } catch (error) {
-      console.error('그룹 상세 정보 가져오기 실패:', error);
-    }
-  };
-
+  const groups = useRecoilValue(groupsState);
+  const { getGroup, getGroups } = useGroup();
   useEffect(() => {
     getGroups();
     if (groupId) {
       getGroup(groupId);
     }
   }, [groupId]);
+  console.log(getGroups, getGroup);
+  // 모든 그룹 정보를 가져오는 함수
+  /*
+  
+  */
   //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
   //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
   // 서치에 필요한 부분
@@ -114,13 +102,14 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     console.log(formData);
   };
   const handleGroupIdSelect = groupId => {
-    getGroup(groupId);
+    //getGroup(groupId);
     console.log(groupId);
   };
-  console.log('gruop markerTap ', group);
+  console.log('gruop markerTap ', group); //선택된 그룹이고, groupId, title받음
 
   return (
     <>
+      <Selecter />
       <div className={styles.markerTap}>
         <GroupSelect onSelect={handleGroupSelect} groups={groups} onGroupId={handleGroupIdSelect} />
         <div className={styles.SearchInputContainer}>
@@ -159,7 +148,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
         {modalVisible && (
           <MarkerModal
             data={selectedMarker}
-            groupId={selectedGroupId}
+            groupId={groupId}
             onClose={closeModal}
             onFormData={handleFormData}
           />

@@ -11,6 +11,7 @@ const GroupSelect = ({ groups, onGroupId, onSelect }) => {
   const [isGroups, setIsGroups] = useState(false);
   const selectGroup = groupId => {
     const selectIndex = groups.findIndex(e => {
+      //여기서
       return e.groupId === groupId;
     });
     setCurGroup(selectIndex);
