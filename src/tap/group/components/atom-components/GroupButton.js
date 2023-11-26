@@ -19,9 +19,11 @@ export const ButtonVariants = cva(
       size: {
         wfull: `w-full`,
         w90: `w-11/12`,
-        sm: `w-10 h-6 text-xs p-1 mb-2`,
+        sm: `w-10 h-6 text-xs p-1 mb-1.5`,
+        sm2: `w-10 h-6 text-xs p-1`,
         md: ``,
         lg: ``,
+        icon: `w-10 h-full bg-inherit border-none shadow-none text-main-color rounded-full hover:bg-sub-hover transition-all`,
       },
       type: {
         default: ``,
