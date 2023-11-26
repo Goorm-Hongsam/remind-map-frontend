@@ -55,7 +55,7 @@ const useFriends = groupId => {
   };
   const getGroupInvite = async () => {
     try {
-      const result = instance.get('/invite/getall');
+      const result = await instance.get('/invite/getall');
       console.log('초대목록 불러오기 성공', result);
       console.log('초대목록 불러오기 성공', result.data);
       const copyInvites = [...result.data];

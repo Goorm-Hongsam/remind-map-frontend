@@ -12,7 +12,7 @@ export default function DatePicker() {
   };
 
   const datePickerOptions = {
-    containerClassName: `w-11/12`,
+    containerClassName: `w-11/12 bg-white z-20`,
     // inputClassName: 'text-sm',
     toggleClassName: 'hidden',
     primaryColor: 'purple',
@@ -21,5 +21,9 @@ export default function DatePicker() {
     onChange: handleDateInput,
     placeholder: 'YYYY-MM-DD~YYYY-MM-DD',
   };
-  return <Datepicker {...datePickerOptions} />;
+  return (
+    <div className="z-20">
+      <Datepicker {...datePickerOptions} />
+    </div>
+  );
 }

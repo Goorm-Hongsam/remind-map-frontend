@@ -13,6 +13,7 @@ import { groupMarkersState, groupsState } from '../../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
 import { formatDateWithDay } from '../../util/formatDateWithDay';
 import { UserLogin } from '../../store/UserLogin';
+import { groupMarkersMooc } from '../marker/data';
 
 const GroupTap = () => {
   const [isDetailGroup, setIsDetailGroup] = useState(false);
