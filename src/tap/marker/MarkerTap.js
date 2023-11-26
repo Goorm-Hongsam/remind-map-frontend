@@ -18,7 +18,6 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const { groupId } = useParams();
   const [groups, setGroups] = useState([]);
   const [group, setGroup] = useState(null);
-  console.log('gruop markerTap ', group);
   // 모든 그룹 정보를 가져오는 함수
   const getGroups = async () => {
     try {
@@ -36,6 +35,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       const result = await instance.get(`/group/get/${groupId}`);
       setGroup(result.data);
       console.log('getGroup result', result);
+      console.log('성공!!!!!!!!!');
     } catch (error) {
       console.error('그룹 상세 정보 가져오기 실패:', error);
     }
@@ -108,7 +108,6 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   };
   const handleSearchReset = () => {
     setSavedSearchResults([]);
-    setSelectedGroup([]);
   };
   const handleFormData = formData => {
     setReceivedFormData(formData);
@@ -118,6 +117,8 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     getGroup(groupId);
     console.log(groupId);
   };
+  console.log('gruop markerTap ', group);
+
   return (
     <>
       <div className={styles.markerTap}>
