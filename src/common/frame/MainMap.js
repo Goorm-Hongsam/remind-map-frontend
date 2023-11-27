@@ -19,8 +19,8 @@ const MainMap = ({
   const [markers, setMarkers] = useState([]);
   const [polylines, setPolylines] = useState([]);
   const [map, setMap] = useState(null);
-  // const [groupMarkers, setGroupMarkers] = useRecoilState(groupMarkersState);
-
+  const [groupMarkers, setGroupMarkers] = useRecoilState(groupMarkersState);
+  console.log(selectedLocation);
   useEffect(() => {
     const mapContainer = document.getElementById('map');
     const mapOption = {

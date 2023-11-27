@@ -19,7 +19,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [receivedFormData, setReceivedFormData] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState([]);
 
-  //경규
+  const [editingMarker, setEditingMarker] = useState('');
   const group = useRecoilValue(groupState); //하나의 그룹만 갖고 있음
   const groups = useRecoilValue(groupsState); //groups 모든 그룹의 정보 갖고있고,
   const groupMarkers = useRecoilValue(groupMarkersState); //그룹에 포함되어있는 마커
@@ -88,11 +88,10 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     console.log(group.groupId);
     try {
       const response = await instance.get(`/marker/group/${group.groupId}`);
-      setSelectedGroup(response.data); // Assuming response.data contains the array of markers
+      setSelectedGroup(response.data);
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching group markers:', error);
-      // Handle error (e.g., updating state to show an error message to the user)
     }
   };
   //리셋버튼;
@@ -102,6 +101,26 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const handleFormData = formData => {
     setReceivedFormData(formData);
     console.log(formData);
+  };
+  const handleEditMarker = marker => {
+    setEditingMarker(marker);
+    setModalVisible(true);
+  };
+  const deleteMarker = async () => {
+    try {
+      const groupId = group.groupId;
+      const markerId = groupMarkers.markerId;
+      const response = await instance.delete(`/marker/group/${groupId}/marker/${markerId}`);
+      if (response.status === 204) {
+        console.log('삭제된 마커 : ', groupId);
+        groupMarkers(prevMarker => prevMarker.filter(marker => marker.id !== markerId));
+      }
+    } catch (err) {
+      console.error('Error deleting the marker:', err);
+    }
+  };
+  const handleDeleteButtonClick = () => {
+    deleteMarker();
   };
   // selectedGroup -> group.groupId
   return (
@@ -124,33 +143,45 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           <button className={styles.searchReset} onClick={handleSearchReset}>
             리셋
           </button>
-          <button onClick={test}>버튼</button>
         </div>
         <div className={styles.createMarker}>
           {hasSearchResults
             ? savedSearchResults.map((result, index) => <Posting key={index} {...result} />)
             : groupMarkers.map((marker, index) => (
-                <GroupPosting
-                  key={index}
-                  latitude={marker.latitude}
-                  longitude={marker.longitude}
-                  onPostClick={() => handlePostClick(marker)}
-                  title={marker.title}
-                  date={marker.date}
-                  writer={marker.writer}
-                />
+                <>
+                  <button onClick={() => handleEditMarker(marker)}>수정</button> {/* Edit button */}
+                  <GroupPosting
+                    key={index}
+                    latitude={marker.location.latitude}
+                    longitude={marker.location.longitude}
+                    onPostClick={() => handlePostClick(marker)}
+                    title={marker.title}
+                    wentDate={marker.wentDate}
+                    nickName={marker.nickName}
+                  />
+                </>
               ))}
           <div>
-            <button onClick={handleMarkerCreation}>마커 생성하기</button>
+            <div>
+              <button className={styles.routeMarkerButton} onClick={handleMarkerCreation}>
+                마커 생성 및 수정
+              </button>
+              <button className={styles.routeDeleteButton} onClick={handleDeleteButtonClick}>
+                마커 삭제하기
+              </button>
+            </div>
           </div>
         </div>{' '}
       </div>
       <div>
         {modalVisible && (
           <MarkerModal
-            data={selectedMarker}
+            data={editingMarker || selectedMarker}
             groupId={group.groupId}
-            onClose={closeModal}
+            onClose={() => {
+              setModalVisible(false);
+              setEditingMarker(null);
+            }}
             onFormData={handleFormData}
           />
         )}
