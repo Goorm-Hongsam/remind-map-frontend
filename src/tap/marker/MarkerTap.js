@@ -105,7 +105,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       <div className={styles.markerTap}>
         <GroupSelect
           onSelect={handleGroupSelect}
-          selectedGroupId={selectedGroup} /* groups={groups} */
+          selectedGroupId={selectedGroupId} /* groups={groups} */
         />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
