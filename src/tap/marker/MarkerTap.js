@@ -9,25 +9,27 @@ import Seleter from '../group/components/atom-components/Seleter';
 
 import { instance } from '../../api/customAxios';
 import { useRecoilValue } from 'recoil';
-import { groupState, groupsState } from '../../recoil/groupAtoms';
+import { groupMarkersState, groupState, groupsState } from '../../recoil/groupAtoms';
 
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
   const [savedSearchResults, setSavedSearchResults] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [enableMarkerCreation, setEnableMarkerCreation] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState([]);
   const [receivedFormData, setReceivedFormData] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState([]);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
 
   //경규
   const group = useRecoilValue(groupState);
   const groups = useRecoilValue(groupsState);
+  const groupMarkers = useRecoilValue(groupMarkersState);
 
   const test = e => {
     e.preventDefault();
     console.log(group);
     console.log(groups);
+    console.log(groupMarkers);
   };
 
   // 모든 그룹 정보를 가져오는 함수
@@ -88,7 +90,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const hasSearchResults = savedSearchResults.length > 0;
 
   //이부분;
-  const handleGroupSelect = async group => {
+  const handleGroupSelect = async () => {
     setSelectedGroup(group);
     console.log(group);
     try {
@@ -120,7 +122,6 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           onSelect={handleGroupSelect}
           selectedGroupId={selectedGroupId} /* groups={groups} */
         />
-
         <Seleter />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
@@ -153,7 +154,8 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           <div>
             <button onClick={handleMarkerCreation}>마커 생성하기</button>
           </div>
-        </div>
+        </div>{' '}
+        *
       </div>
       <div>
         {modalVisible && (
