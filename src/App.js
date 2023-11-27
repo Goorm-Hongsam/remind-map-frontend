@@ -25,13 +25,6 @@ function App() {
     getGroups();
     getGroupInvite();
   }, []);
-<<<<<<< HEAD
-
-=======
-  const handleDataFromSidebarContent = data => {
-    setSidebarData(data);
-  };
->>>>>>> prod5
   return (
     <BrowserRouter>
       <div className="App">
@@ -54,11 +47,7 @@ function App() {
                   selectedMarker={selectedMarker}
                   onEnableMarkerCreation={setEnableMarkerCreation}
                   onPostClick={setSelectedLocation}
-<<<<<<< HEAD
                   onDataFromSidebar={handleDataFromSidebar}
-=======
-                  onDataFromSidebarContent={handleDataFromSidebarContent}
->>>>>>> prod5
                 />
               </>
             }
