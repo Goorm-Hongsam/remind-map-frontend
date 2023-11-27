@@ -3,11 +3,11 @@ import styles from './GroupSelect.module.css';
 import { instance } from '../../../api/customAxios';
 
 //useGroup.js:31 지금 가지고 있는 그룹ID 스테이트 :  3
-const GroupSelect = ({ groups, onSelect }) => {
+const GroupSelect = ({ selectedGroupId, onSelect }) => {
   const [curGroupId, setCurGroupId] = useState(0);
   const [isGroups, setIsGroups] = useState(false);
-  console.log(groups, onSelect);
-  console.log('cureGroupId');
+  console.log(selectedGroupId, onSelect);
+  console.log('cureGroupId', curGroupId);
   useEffect(() => {
     if (curGroupId) {
       instance
