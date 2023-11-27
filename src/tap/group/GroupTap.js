@@ -15,7 +15,11 @@ import { formatDateWithDay } from '../../util/formatDateWithDay';
 
 const GroupTap = () => {
   const [isDetailGroup, setIsDetailGroup] = useState(false);
-  const groupMarkers = useRecoilValue(groupMarkersState);
+  const [date, setDate] = useState({
+    startDate: new Date(),
+    endDate: new Date(),
+  });
+  const [groupMarkers, setGroupMarkers] = useRecoilValue(groupMarkersState);
   const groups = useRecoilValue(groupsState);
   const create = useMatch('/grouptab/create/:id');
   const detail = useMatch('/grouptab/all/:id');
@@ -61,6 +65,18 @@ const GroupTap = () => {
     getGroupRoutes();
   }, []);
 
+  // useEffect(() => {
+  //   const copyGroupMarkers = groupMarkers.filter(marker => {
+  //     const markerDate = new Date(marker.wentDate);
+  //     const startDateObj = new Date(date.startDate);
+  //     const endDateObj = new Date(date.endDate);
+
+  //     return markerDate >= startDateObj && markerDate <= endDateObj;
+  //   });
+  //   console.log('이펙트 데이트 : ', date);
+  //   console.log(copyGroupMarkers);
+  // }, [date]);
+
   const onCreateTab = () => {
     if (detail) {
       setIsDetailGroup(!isDetailGroup);
@@ -89,7 +105,7 @@ const GroupTap = () => {
       <div ref={ref} className={`${styles.trans} ${styles.groupTap} opacity-0`}>
         <GroupButton onClick={onDetailTab} text="그룹 만들기" type="Button" size="w90" />
 
-        {groups.length === 0 ? (
+        {groups.length !== 0 ? (
           <div className="bg-white flex items-center flex-col gap-3 mt-5">
             <p className="text-5xl bounce">👆</p>
             <p>그룹을 만들어주세요 !</p>
@@ -97,7 +113,7 @@ const GroupTap = () => {
         ) : (
           <>
             <GroupButton onClick={onCreateTab} text="그룹관리" type="Button" size="w90" />
-            <DatePicker />
+            <DatePicker date={date} setDate={setDate} />
             <Seleter />
           </>
         )}
