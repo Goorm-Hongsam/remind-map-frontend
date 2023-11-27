@@ -104,7 +104,7 @@ const GroupTap = () => {
       <div ref={ref} className={`${styles.trans} ${styles.groupTap} opacity-0`}>
         <GroupButton onClick={onDetailTab} text="그룹 만들기" type="Button" size="w90" />
 
-        {groups.length !== 0 ? (
+        {groups.length === 0 ? (
           <div className="bg-white flex items-center flex-col gap-3 mt-5">
             <p className="text-5xl bounce">👆</p>
             <p>그룹을 만들어주세요 !</p>
