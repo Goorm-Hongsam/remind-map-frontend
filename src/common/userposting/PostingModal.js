@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import './swiper-bundle.css';
 
-const PostingModal = () => {
+const PostingModal = ({ marker }) => {
   const [like, setLike] = useState(false);
 
   const handleLike = () => {

@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Redirect from '../../api/Redirect';
 import MainMapModal from './MainMapModal';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { groupMarkersState } from '../../recoil/groupAtoms';
+import Posting from '../userposting/Posting';
+import PostingModal from '../userposting/PostingModal';
+
 const { kakao } = window;
 
 const MainMap = ({
@@ -18,7 +21,7 @@ const MainMap = ({
   const [markers, setMarkers] = useState([]);
   const [polylines, setPolylines] = useState([]);
   const [map, setMap] = useState(null);
-  const groupMarkers = useRecoilValue(groupMarkersState);
+  const [groupMarkers, setGroupMarkers] = useRecoilState(groupMarkersState);
 
   useEffect(() => {
     const mapContainer = document.getElementById('map');
@@ -52,7 +55,18 @@ const MainMap = ({
   //groupMarkers
   useEffect(() => {
     if (groupMarkers && groupMarkers.length > 0 && map) {
+      groupMarkers.forEach(groupMarker => groupMarker.setMap(null));
+      setGroupMarkers([]);
       for (const groupMarker of groupMarkers) {
+        let overlay = new kakao.maps.CustomOverlay({
+          content: <PostingModal marker={groupMarker} />,
+          map: map,
+          position: new kakao.maps.LatLng(
+            groupMarker.location.longitude,
+            groupMarker.location.latitude,
+          ),
+        });
+
         let marker = new kakao.maps.Marker({
           map: map,
           position: new kakao.maps.LatLng(
@@ -63,7 +77,11 @@ const MainMap = ({
         });
         kakao.maps.event.addListener(marker, 'click', () => {
           console.log('그룹마커들입니다 ! ', groupMarker);
+          overlay.setMap(map);
         });
+        function closeOverlay() {
+          overlay.setMap(null);
+        }
       }
       // const groupMarker = groupMarkers[0];
       // console.log('첫번째 그룹 마커입니다 : ', groupMarker);
