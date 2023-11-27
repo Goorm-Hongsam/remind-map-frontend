@@ -16,10 +16,7 @@ const RouteTap = ({ onDataFromRouteTap }) => {
   const [selectedMarkersData, setSelectedMarkersData] = useState([]);
   const [routeModalVisible, setRouteModalVisible] = useState(false);
   const [selectedRouteData, setSelectedRouteData] = useState('');
-  // 그룹 내 루트 조회 GET 	/marker-route/group/{groupId} -> selectedRouteData이거 사용해서 GET한 이후 사용
-  // 루트 생성할때(날짜 셀렉 모달창) GET	/marker/group/{groupId} 로 그룹내 모든 마커 데이터 받기
-  // 그룹 내 루트 생성 POST	/marker-route/group/{groupId} -> Modal쪽 데이터 보기
-  // 하나의 루트내 모든 마커 조회 -> 루트의 마커들을 통해서 Polyline볼때
+
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -58,7 +55,7 @@ const RouteTap = ({ onDataFromRouteTap }) => {
     setActiveButton('marker');
     setModalVisible(!modalVisible);
   };
-
+  /*
   const toggleMarkerSelection = markerId => {
     setSelectedMarkers(prevSelectedMarkers =>
       prevSelectedMarkers.includes(markerId)
@@ -66,6 +63,7 @@ const RouteTap = ({ onDataFromRouteTap }) => {
         : [...prevSelectedMarkers, markerId],
     );
   };
+  */
   const handleRouteCreate = () => {
     setActiveButton('route');
     setRouteModalVisible(!routeModalVisible);
@@ -75,23 +73,26 @@ const RouteTap = ({ onDataFromRouteTap }) => {
       selectedMarkerIds.includes(marker.id),
     );
     setSelectedMarkersData(selectedData);
+    console.log(selectedData);
   };
   const handleRouteSubmit = markers => {
     console.log(handleRouteSubmit);
     console.log(markers);
+    setSelectedMarkersData([]);
   };
-
+  /*
   const handleMarkerClick = marker => {
     setSelectedMarkersData([marker]);
     // onDataFromRouteTap(marker);
   };
+  */
   const handleTitleClick = () => {
     onDataFromRouteTap(selectedRouteData);
   };
   return (
     <div className={styles.routeTap}>
       <div className="w-full flex flex-col items-center justify-center">
-        <p onClick={openGroup} className={`${styles.routeTapItem} rounded border p-2`}>
+        <p onClick={openGroup} className={`${styles.routeTap} rounded border p-2`}>
           {groups[curGroup].groupTitle}
         </p>
         {isGroups ? (
@@ -112,7 +113,7 @@ const RouteTap = ({ onDataFromRouteTap }) => {
           </ul>
         ) : null}
       </div>
-      {selectedRouteData && <h3 onClick={handleTitleClick}>{selectedRouteData.title}</h3>}
+      {selectedRouteData && <ul className={`${styles.routeTapItem} rounded border`}></ul>}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {provided => (
@@ -124,7 +125,6 @@ const RouteTap = ({ onDataFromRouteTap }) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      onClick={() => handleMarkerClick(marker)}
                     >
                       <Posting
                         title={marker.title}
