@@ -40,11 +40,7 @@
   cursor: pointer;
   color: red;
 }
-.abc {
-  color: var(--main-color); /* 색상 변경 */
-  font-size: var(--text-base); /* 폰트 크기 변경 */
-  /* 필요한 경우 추가 스타일 */
-}
+
 .titleBar {
   display: flex;
   justify-content: space-between;
@@ -52,7 +48,7 @@
   font-size: var(--text-base);
   text-align: center;
   padding: 10px;
-  color: var(--main-hover-color);
+  color: var(--main-color);
 }
 
 .inputLabel {

@@ -7,7 +7,6 @@ import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
 import { instance } from '../../../api/customAxios';
 import axios from 'axios';
-import axios from 'axios';
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
@@ -88,6 +87,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       setImages(prevImages => prevImages.concat(fileArray));
     }
   };
+  console.log(images);
   const handleSubmit = async e => {
     e.preventDefault();
     const formDataObj = new FormData();
@@ -95,7 +95,6 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     //여기 형식이 이상
 
     formDataObj.append(
-      'request',
       'request',
       JSON.stringify({
         title: formData.title,
@@ -107,23 +106,22 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     );
 
     if (fileInputRef.current.files[0]) {
-      formDataObj.append('file', fileInputRef.current.files[0]);
+      formDataObj.append('file', [fileInputRef.current.files[0]]);
     }
     for (let [key, value] of formDataObj.entries()) {
       console.log(key, value);
     }
-    console.log(formData, '드가자!!!!!!!!!');
-    try {
-      const response = await axios.post(`marker/group/${groupId}`, formDataObj, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      console.log(response.data);
-      // 성공 처리 로직
-    } catch (error) {
-      console.error('Error:', error);
-      // 실패 처리 로직
-    }
+    await instance({
+      method: 'post',
+      url: '/marker/group/{groupid}', //환경변수
+      data: formData,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: localStorage.getItem('access_token'),
+      },
+    });
   };
+
   return (
     <div className={Styles.MarkerpostingModal}>
       <button className={Styles.closeButton} onClick={onClose}>
@@ -140,7 +138,6 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
         id="image-upload"
         multiple
         accept="image/*"
-        ref={fileInputRef}
         ref={fileInputRef}
         onChange={handleImageUpload} // 파일 선택 시 이미지 미리보기 처리
       />
@@ -215,45 +212,3 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 };
 
 export default MarkerModal;
-
-/*
-      <div className={Styles.photo}>
-        <div className={Styles.carousel}>
-          {images.length === 0 ? (
-            <img src={defaultImg} alt="기본 이미지" />
-          ) : (
-            <Swiper
-              modules={[Navigation, Pagination]}
-              navigation
-              pagination={{ clickable: true }}
-              loop={true}
-            >
-              {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <img src={image} alt={`업로드 이미지 ${index + 1}`} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          )}
-        </div>
-      </div>
-      */
-
-/* 
-          instance
-      .post(`/marker/group/${groupId}`, formDataObj, {
-        headers: {
-          'Contest-Type': 'multipart/form-data',
-        },
-      })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error('Error during the API call', error);
-      });
-    console.log(formDataObj);
-  };
-      
-      
-      */
