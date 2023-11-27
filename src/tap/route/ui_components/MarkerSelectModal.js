@@ -2,22 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Styles from './MarkerSelectModal.module.css';
 import Datepicker from 'react-tailwindcss-datepicker';
 import MarkerSelectModalPosting from './Modal/MarkerSelectModalPosting';
-import { instance } from '../../../api/customAxios';
 
 const MarkerSelectModal = ({ onClose, selectedGroupMarkers, onMarkersSelected }) => {
-  // 2. 그룹내 마커 조희        루트 생성할때(날짜 셀렉 모달창) GET	/marker/group/{groupId} 로 그룹내 모든 마커 데이터 받기
-  const [groupId, setGroup] = useState('');
-  useEffect(() => {
-    instance
-      .get(`/marker/group/${groupId}`)
-      .then(response => {
-        console.log(response);
-        //데이터
-      })
-      .catch(e => {
-        console.log('토큰이 유효하지 않습니다.', e);
-      });
-  }, []);
   const modalRef = useRef();
   const [filterMarker, setFilterMarker] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState([]);
