@@ -13,7 +13,7 @@ export default function GroupCard({ group, onClick, bg, size }) {
           alt=""
         />
       </div>
-      <p className="w-full md:w-6/12 text-md md:text-lg">{group.groupTitle}</p>
+      <p className="w-full md:w-6/12 text-md md:text-lg">{group.title}</p>
     </div>
   );
 }
