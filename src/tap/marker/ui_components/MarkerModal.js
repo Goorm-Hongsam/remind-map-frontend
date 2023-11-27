@@ -33,7 +33,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   useEffect(() => {
     setFormData(prevState => ({
       ...prevState,
-      visiable: isChecked ? 1 : 0,
+      visiable: isChecked ? true : false,
     }));
   }, [isChecked]);
   useEffect(() => {
@@ -93,7 +93,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     const formDataObj = new FormData();
 
     //여기 형식이 이상
-
+    console.log(formData.location);
     formDataObj.append(
       'request',
       JSON.stringify({
@@ -106,20 +106,22 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     );
 
     if (fileInputRef.current.files[0]) {
-      formDataObj.append('file', [fileInputRef.current.files[0]]);
+      formDataObj.append('file', fileInputRef.current.files[0]);
     }
+    console.log(fileInputRef.current.files[0]);
     for (let [key, value] of formDataObj.entries()) {
       console.log(key, value);
     }
-    await instance({
-      method: 'post',
-      url: '/marker/group/{groupid}', //환경변수
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: localStorage.getItem('access_token'),
-      },
-    });
+    instance
+      .post(`marker/group/${groupId}`, formDataObj, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
