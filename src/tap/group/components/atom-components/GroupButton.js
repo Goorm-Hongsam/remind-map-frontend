@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { cn } from '../../../../util/cn';
 import { cva } from 'class-variance-authority';
 export const ButtonVariants = cva(
-  `flex w-full items-center justiy-center md:max-w-none rounded-md bg-main-color text-white shadow-md transition-all p-2 text-center hover:bg-main-hover cursor-pointer text-sm`,
+  `flex w-full items-center justiy-center md:max-w-none min-h-fit rounded-md bg-main-color h- text-white shadow-md transition-all p-2 text-center hover:bg-main-hover cursor-pointer text-sm`,
   {
     variants: {
       bg: {

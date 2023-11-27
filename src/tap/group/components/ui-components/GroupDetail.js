@@ -27,6 +27,9 @@ export default function GroupDetail() {
         buttonOnclick={() => {
           editGroup(navigate);
         }}
+        keyDown={() => {
+          editGroup(navigate);
+        }}
       />
       {groupMembers.length > 1 ? (
         <GroupUserCardWraper
@@ -37,8 +40,8 @@ export default function GroupDetail() {
         />
       ) : (
         <div className="text-sm flex flex-col items-center justify-center gap-3">
-          <p>그룹에 아무도 없군요 ..</p>
-          <p className="">친구를 초대해보세요!</p>
+          <p>그룹에 혼자이시군요 ?</p>
+          <p className="">친구를 초대해보시는건 어떨까요 ?</p>
           <p className="text-5xl bounce mt-3">👇</p>
         </div>
       )}

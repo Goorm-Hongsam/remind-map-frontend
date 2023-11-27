@@ -12,6 +12,7 @@ import DatePicker from './components/atom-components/DatePicker';
 import { groupMarkersState, groupsState } from '../../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
 import { formatDateWithDay } from '../../util/formatDateWithDay';
+// import { groupMarkers } from '../route/data';
 
 const GroupTap = () => {
   const [isDetailGroup, setIsDetailGroup] = useState(false);
@@ -19,8 +20,6 @@ const GroupTap = () => {
     startDate: new Date(),
     endDate: new Date(),
   });
-  const [groupMarkers, setGroupMarkers] = useRecoilValue(groupMarkersState);
-  const [filterGroupMarkers, setFilterGroupMarkers] = useState([]);
   const groups = useRecoilValue(groupsState);
   const create = useMatch('/grouptab/create/:id');
   const detail = useMatch('/grouptab/all/:id');
@@ -28,6 +27,7 @@ const GroupTap = () => {
   const { groupId } = useParams();
   const { getGroups, getGroup, getGroupmembers, getGroupMarkers, getGroupRoutes } =
     useGroup(groupId);
+  const groupMarkers = useRecoilValue(groupMarkersState);
 
   const ref = useRef(null);
   useEffect(() => {
@@ -62,7 +62,6 @@ const GroupTap = () => {
     //   const markerDate = new Date(marker.wentDate);
     //   const startDateObj = new Date(date.startDate);
     //   const endDateObj = new Date(date.endDate);
-
     //   return markerDate >= startDateObj && markerDate <= endDateObj;
     // });
     console.log('이펙트 데이트 : ', date);
