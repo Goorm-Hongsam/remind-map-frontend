@@ -113,7 +113,7 @@ const RouteTap = ({ onDataFromRouteTap }) => {
           </ul>
         ) : null}
       </div>
-      {selectedRouteData && <ul className={`${styles.routeTapItem} rounded border`}></ul>}
+      {selectedRouteData && <h3 onClick={handleTitleClick}>{selectedRouteData.title}</h3>}
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
           {provided => (

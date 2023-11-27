@@ -54,11 +54,7 @@ const MainMap = ({
   }, [searchResults, map]);
   //groupMarkers
   useEffect(() => {
-    function hideMarkers() {
-      setMarkers(null);
-    }
     if (groupMarkers && groupMarkers.length > 0 && map) {
-      hideMarkers();
       setGroupMarkers([]);
       for (const groupMarker of groupMarkers) {
         // let overlay = new kakao.maps.CustomOverlay({
