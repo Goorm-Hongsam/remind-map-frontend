@@ -4,6 +4,8 @@ import Datepicker from 'react-tailwindcss-datepicker';
 import MarkerSelectModalPosting from './Modal/MarkerSelectModalPosting';
 
 const MarkerSelectModal = ({ onClose, selectedGroupMarkers, onMarkersSelected }) => {
+  // 2. 그룹내 마커 조희        루트 생성할때(날짜 셀렉 모달창) GET	/marker/group/{groupId} 로 그룹내 모든 마커 데이터 받기
+
   const modalRef = useRef();
   const [filterMarker, setFilterMarker] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState([]);
