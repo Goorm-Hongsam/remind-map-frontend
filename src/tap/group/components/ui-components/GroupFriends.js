@@ -57,7 +57,7 @@ export default function GroupFriends() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-5 mt-10 transition-all">
+    <div className="flex flex-col items-center gap-5 mt-5 transition-all">
       {/* <GroupInput buttonText="검색" placeholder="친구 찾기" /> */}
       <GroupUserCardWraper
         mambers={filterFriends}
