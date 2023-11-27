@@ -55,17 +55,17 @@ const MainMap = ({
   //groupMarkers
   useEffect(() => {
     if (groupMarkers && groupMarkers.length > 0 && map) {
-      groupMarkers.forEach(groupMarker => groupMarker.setMap(null));
-      setGroupMarkers([]);
+      // groupMarkers.forEach(groupMarker => groupMarker.setMap(null));
+      // setGroupMarkers([]);
       for (const groupMarker of groupMarkers) {
-        let overlay = new kakao.maps.CustomOverlay({
-          content: <PostingModal marker={groupMarker} />,
-          map: map,
-          position: new kakao.maps.LatLng(
-            groupMarker.location.longitude,
-            groupMarker.location.latitude,
-          ),
-        });
+        // let overlay = new kakao.maps.CustomOverlay({
+        //   content: <PostingModal marker={groupMarker} />,
+        //   map: map,
+        //   position: new kakao.maps.LatLng(
+        //     groupMarker.location.longitude,
+        //     groupMarker.location.latitude,
+        //   ),
+        // });
 
         let marker = new kakao.maps.Marker({
           map: map,
@@ -77,11 +77,10 @@ const MainMap = ({
         });
         kakao.maps.event.addListener(marker, 'click', () => {
           console.log('그룹마커들입니다 ! ', groupMarker);
-          overlay.setMap(map);
         });
-        function closeOverlay() {
-          overlay.setMap(null);
-        }
+        // function closeOverlay() {
+        //   overlay.setMap(null);
+        // }
       }
       // const groupMarker = groupMarkers[0];
       // console.log('첫번째 그룹 마커입니다 : ', groupMarker);
