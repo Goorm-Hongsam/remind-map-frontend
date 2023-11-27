@@ -18,12 +18,11 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [enableMarkerCreation, setEnableMarkerCreation] = useState(false);
   const [receivedFormData, setReceivedFormData] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState([]);
-  const [selectedGroupId, setSelectedGroupId] = useState(null);
 
   //경규
-  const group = useRecoilValue(groupState);
-  const groups = useRecoilValue(groupsState);
-  const groupMarkers = useRecoilValue(groupMarkersState);
+  const group = useRecoilValue(groupState); //하나의 그룹만 갖고 있음
+  const groups = useRecoilValue(groupsState); //groups 모든 그룹의 정보 갖고있고,
+  const groupMarkers = useRecoilValue(groupMarkersState); //그룹에 포함되어있는 마커
 
   const test = e => {
     e.preventDefault();
@@ -32,12 +31,6 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     console.log(groupMarkers);
   };
 
-  // 모든 그룹 정보를 가져오는 함수
-  /*
-   */
-  //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
-  //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
-  // 서치에 필요한 부분
   const searchPlaces = () => {
     if (!place.trim()) {
       alert('검색어를 입력해주세요');
@@ -110,7 +103,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     setReceivedFormData(formData);
     console.log(formData);
   };
-
+  // selectedGroup -> group.groupId
   return (
     <>
       <div className={styles.markerTap}>
@@ -136,7 +129,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
         <div className={styles.createMarker}>
           {hasSearchResults
             ? savedSearchResults.map((result, index) => <Posting key={index} {...result} />)
-            : selectedGroup.map((marker, index) => (
+            : group.groupId.map((marker, index) => (
                 <GroupPosting
                   key={index}
                   latitude={marker.latitude}
@@ -151,13 +144,12 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
             <button onClick={handleMarkerCreation}>마커 생성하기</button>
           </div>
         </div>{' '}
-        *
       </div>
       <div>
         {modalVisible && (
           <MarkerModal
             data={selectedMarker}
-            groupId={selectedGroupId}
+            groupId={group.groupId}
             onClose={closeModal}
             onFormData={handleFormData}
           />
