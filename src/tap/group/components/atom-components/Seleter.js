@@ -3,6 +3,7 @@ import styles from '../../GroupTap.module.css';
 import {
   groupState,
   groupsState,
+  isDatePickerState,
   seletGroupIdState,
   seletGroupIndexState,
 } from '../../../../recoil/groupAtoms';
@@ -17,6 +18,7 @@ export default function Seleter() {
   const group = useRecoilValue(groupState);
   const [isGroupsList, setIsGroupsList] = useState(false);
   const { getGroup, getGroups, getGroupMarkers } = useGroup(groupId);
+  const isDatePicker = useRecoilValue(isDatePickerState);
   const openGroup = () => {
     setIsGroupsList(!isGroupsList);
   };
@@ -42,7 +44,11 @@ export default function Seleter() {
   }, [isGroupsList]);
 
   return (
-    <div className="w-full flex flex-col items-center justify-center relative z-50 text-sx">
+    <div
+      className={`${
+        isDatePicker ? 'opacity-0' : 'opacity-100'
+      } w-full flex flex-col items-center justify-center relative text-sx`}
+    >
       <p
         onClick={openGroup}
         className={`${styles.groupTapItem} border p-2 hover:bg-main-color hover:text-white`}
