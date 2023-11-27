@@ -8,6 +8,8 @@ import GroupPosting from './ui_components/GroupPosting';
 import Seleter from '../group/components/atom-components/Seleter';
 
 import { instance } from '../../api/customAxios';
+import { useRecoilValue } from 'recoil';
+import { groupState, groupsState } from '../../recoil/groupAtoms';
 
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
@@ -17,6 +19,16 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [receivedFormData, setReceivedFormData] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
+
+  //경규
+  const group = useRecoilValue(groupState);
+  const groups = useRecoilValue(groupsState);
+
+  const test = e => {
+    e.preventDefault();
+    console.log(group);
+    console.log(groups);
+  };
 
   // 모든 그룹 정보를 가져오는 함수
   /*
@@ -75,7 +87,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   };
   const hasSearchResults = savedSearchResults.length > 0;
 
-  //이부분
+  //이부분;
   const handleGroupSelect = async group => {
     setSelectedGroup(group);
     console.log(group);
@@ -87,6 +99,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       console.error('Error fetching group markers:', error);
     }
   };
+  //리셋버튼;
   const handleSearchReset = () => {
     setSavedSearchResults([]);
   };
@@ -103,12 +116,11 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   return (
     <>
       <div className={styles.markerTap}>
-        {
-          /* <GroupSelect
+        <GroupSelect
           onSelect={handleGroupSelect}
           selectedGroupId={selectedGroupId} /* groups={groups} */
-          /> */
-        }
+        />
+
         <Seleter />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
@@ -122,6 +134,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           <button className={styles.searchReset} onClick={handleSearchReset}>
             리셋
           </button>
+          <button onClick={test}>버튼</button>
         </div>
         <div className={styles.createMarker}>
           {hasSearchResults
