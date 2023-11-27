@@ -25,6 +25,7 @@ const useGroup = (groupId, groupTitle) => {
       console.log('그룹들 가져오기 : ', copyGroups);
       if (seletGroupId === 0 || seletGroupId === undefined) {
         const copyGroupId = copyGroups[0].groupId;
+        getGroup(copyGroupId);
         setSeletGroupId(copyGroupId);
       }
       console.log('지금 가지고 있는 그룹ID 스테이트 : ', seletGroupId);
