@@ -9,6 +9,8 @@ import GroupHome from './tap/group/GroupHome';
 import { useEffect } from 'react';
 import useGroup from './hooks/useGroup';
 import useFriends from './hooks/useFriends';
+import { UserLogin } from './store/UserLogin';
+import { useRecoilValue } from 'recoil';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -21,10 +23,13 @@ function App() {
   const handleDataFromSidebar = data => {
     setSidebarData(data);
   };
+  const isLogin = useRecoilValue(UserLogin);
   useEffect(() => {
-    getGroups();
-    getGroupInvite();
-  }, []);
+    if (isLogin) {
+      getGroups();
+      getGroupInvite();
+    }
+  }, [isLogin]);
   return (
     <BrowserRouter>
       <div className="App">

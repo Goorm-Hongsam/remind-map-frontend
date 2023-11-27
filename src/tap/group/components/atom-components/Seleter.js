@@ -6,18 +6,17 @@ import {
   seletGroupIdState,
   seletGroupIndexState,
 } from '../../../../recoil/groupAtoms';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGroup from '../../../../hooks/useGroup';
 export default function Seleter() {
   const { groupId } = useParams();
   const navigator = useNavigate();
-  const [seletGroupId, setSeletGroupIndex] = useRecoilState(seletGroupIndexState);
-  const setSeletGroupId = useSetRecoilState(seletGroupIdState);
+  const [seletGroupId, setSeletGroupId] = useRecoilState(seletGroupIdState);
   const groups = useRecoilValue(groupsState);
   const group = useRecoilValue(groupState);
   const [isGroupsList, setIsGroupsList] = useState(false);
-  const { getGroup } = useGroup(groupId);
+  const { getGroup, getGroups } = useGroup(groupId);
   const openGroup = () => {
     setIsGroupsList(!isGroupsList);
   };
@@ -29,7 +28,11 @@ export default function Seleter() {
 
   useEffect(() => {
     seletGroup(seletGroupId);
-  }, [seletGroupId]);
+  }, [groupId, seletGroupId]);
+
+  useEffect(() => {
+    getGroups();
+  }, [isGroupsList]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center relative z-50 text-sx">
@@ -50,7 +53,7 @@ export default function Seleter() {
               onClick={() => {
                 setSeletGroupId(group.groupId);
               }}
-              key={i}
+              key={group.groupId}
               className="p-2 border border-b hover:bg-main-color hover:text-white transition-all"
             >
               {group.title}
