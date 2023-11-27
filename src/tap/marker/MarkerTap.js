@@ -30,7 +30,8 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       getGroup(groupId);
     }
   }, [groupId]);
-  console.log(getGroups, getGroup);
+  console.log('Get Groups', getGroups, getGroup);
+  console.log('group , groups', group, groups);
   // 모든 그룹 정보를 가져오는 함수
   /*
   
@@ -109,9 +110,8 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
 
   return (
     <>
-      <Selecter />
       <div className={styles.markerTap}>
-        <GroupSelect onSelect={handleGroupSelect} groups={groups} onGroupId={handleGroupIdSelect} />
+        <GroupSelect onSelect={handleGroupSelect} groups={groups} groupId={selectedGroupId} />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput

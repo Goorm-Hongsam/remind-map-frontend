@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './GroupSelect.module.css';
+import { instance } from '../../../api/customAxios';
+
 //useGroup.js:31 지금 가지고 있는 그룹ID 스테이트 :  3
-const GroupSelect = ({ groups, onGroupId, onSelect }) => {
+const GroupSelect = ({ groups, groupId, onSelect }) => {
   console.log(groups);
-  console.log(onGroupId);
+  console.log(groupId);
   console.log(onSelect);
+  const [groupData, setGroupData] = useState();
+  useEffect(() => {
+    instance
+      .get(`/marker/group/${groupId}`)
+      .then(response => {
+        console.log(response);
+        setGroupData(response);
+      })
+      .catch(e => {
+        console.log('토큰이 유효하지 않습니다.', e);
+      });
+  }, []);
 
   const [curGroup, setCurGroup] = useState(0);
   const [curGroupId, setCurGroupId] = useState(0);
@@ -17,17 +31,15 @@ const GroupSelect = ({ groups, onGroupId, onSelect }) => {
     setCurGroup(selectIndex);
     setCurGroupId(groupId);
     setIsGroups(false);
-    const selectedGroup = groups.filter(marker => marker.groupId === groupId);
+    const selectedGroup = groupData.filter(marker => marker.groupId === groupId);
     if (typeof onSelect === 'function') {
       onSelect(selectedGroup);
-    }
-    if (typeof onGroupId === 'function') {
-      onGroupId(groupId); // 여기에서 groupId를 직접 전달
     }
   };
   const openGroup = () => {
     setIsGroups(!isGroups);
   };
+  console.log(groupData);
   return (
     <div className={styles.routeTap}>
       <div className="w-full flex flex-col items-center justify-center ">
