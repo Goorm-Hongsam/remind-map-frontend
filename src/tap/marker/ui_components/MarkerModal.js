@@ -108,6 +108,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     if (fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
+    console.log(fileInputRef.current.files[0]);
     for (let [key, value] of formDataObj.entries()) {
       console.log(key, value);
     }
