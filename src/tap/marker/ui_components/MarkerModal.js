@@ -64,21 +64,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       wentDate: selectedDate.startDate,
     }));
   };
-  /*
-  const handleImageUpload = event => {
-    const files = event.target.files;
-    for (let i = 0; i < files.length && images.length + i < 10; i++) {
-      const file = files[i];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          setImages(oldImages => [...oldImages, e.target.result]);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  };
-  */
+
   const [images, setImages] = useState([]); // 이미지 미리보기를 위한 상태
 
   const handleImageUpload = event => {
@@ -113,7 +99,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       console.log(key, value);
     }
     instance
-      .post(`marker/group/${groupId}`, formDataObj, {
+      .post(`/marker/group/${groupId}`, formDataObj, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then(response => {
@@ -214,3 +200,19 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 };
 
 export default MarkerModal;
+
+/*
+  const handleImageUpload = event => {
+    const files = event.target.files;
+    for (let i = 0; i < files.length && images.length + i < 10; i++) {
+      const file = files[i];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          setImages(oldImages => [...oldImages, e.target.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+  */
