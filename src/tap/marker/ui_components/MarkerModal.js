@@ -74,12 +74,12 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     }
   };
   console.log(images);
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     const formDataObj = new FormData();
 
     //여기 형식이 이상
-    /*
+
     console.log(formData.location);
     formDataObj.append(
       'request',
@@ -91,17 +91,19 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
         wentDate: formData.wentDate,
       }),
     );
-        if (fileInputRef.current.files[0]) {
+    if (fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
-     */
+    /*
     formDataObj.append(
       'requset',
       new Blob([JSON.stringify(formData)], { type: 'application/json' }),
     );
-    if (images) {
-      formDataObj.append('file', images.current.files[0]);
+    if (fileInputRef.current.files[0]) {
+      formDataObj.append('file', fileInputRef.current.files[0]);
     }
+*/
+    console.log(images.current.file[0]);
     for (let [key, value] of formDataObj.entries()) {
       console.log(key, value);
     }
