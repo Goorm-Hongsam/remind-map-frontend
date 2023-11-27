@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../GroupTap.module.css';
-import {
-  groupState,
-  groupsState,
-  isDatePickerState,
-  seletGroupIdState,
-  seletGroupIndexState,
-} from '../../../../recoil/groupAtoms';
+import { groupState, groupsState, seletGroupIdState } from '../../../../recoil/groupAtoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGroup from '../../../../hooks/useGroup';
@@ -18,7 +12,7 @@ export default function Seleter() {
   const group = useRecoilValue(groupState);
   const [isGroupsList, setIsGroupsList] = useState(false);
   const { getGroup, getGroups, getGroupMarkers } = useGroup(groupId);
-  const isDatePicker = useRecoilValue(isDatePickerState);
+
   const openGroup = () => {
     setIsGroupsList(!isGroupsList);
   };
@@ -44,11 +38,7 @@ export default function Seleter() {
   }, [isGroupsList]);
 
   return (
-    <div
-      className={`${
-        isDatePicker ? 'opacity-0' : 'opacity-100'
-      } w-full flex flex-col items-center justify-center relative text-sx`}
-    >
+    <div className="w-full flex flex-col items-center justify-center relative text-sx">
       <p
         onClick={openGroup}
         className={`${styles.groupTapItem} border p-2 hover:bg-main-color hover:text-white`}
