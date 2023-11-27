@@ -96,6 +96,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     try {
       const response = await instance.get(`/marker/group/${group.groupId}`);
       setSelectedGroup(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error('Error fetching group markers:', error);
     }

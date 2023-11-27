@@ -6,7 +6,7 @@ import { instance } from '../../../api/customAxios';
 const GroupSelect = ({ groups, onSelect }) => {
   const [curGroupId, setCurGroupId] = useState(0);
   const [isGroups, setIsGroups] = useState(false);
-
+  console.log(groups, onSelect);
   useEffect(() => {
     if (curGroupId) {
       instance
@@ -14,6 +14,7 @@ const GroupSelect = ({ groups, onSelect }) => {
         .then(response => {
           if (typeof onSelect === 'function') {
             onSelect(response.data);
+            console.log(response.data);
           }
         })
         .catch(e => {

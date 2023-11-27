@@ -13,7 +13,7 @@ const { defaultImg } = {
 
 const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   const modalRef = useRef();
-  console.log('id:', groupId); //여기서 Null 남 //4로 고정됨
+  console.log('id:', groupId, data); //여기서 Null 남 //4로 고정됨
   const fileInputRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState({
     startDate: null,
@@ -98,9 +98,6 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
 */
-    for (let [key, value] of formDataObj.entries()) {
-      console.log(key, value);
-    }
     instance
       .post(`/marker/group/${groupId}`, formDataObj, {
         headers: { 'Content-Type': 'multipart/form-data' },
