@@ -20,6 +20,7 @@ const GroupTap = () => {
     endDate: new Date(),
   });
   const [groupMarkers, setGroupMarkers] = useRecoilValue(groupMarkersState);
+  const [filterGroupMarkers, setFilterGroupMarkers] = useState([]);
   const groups = useRecoilValue(groupsState);
   const create = useMatch('/grouptab/create/:id');
   const detail = useMatch('/grouptab/all/:id');
@@ -56,26 +57,18 @@ const GroupTap = () => {
       }
     };
   }, [ref]);
-
   useEffect(() => {
-    getGroups();
-    getGroup();
-    getGroupmembers();
-    getGroupMarkers();
-    getGroupRoutes();
-  }, []);
+    // const copyGroupMarkers = groupMarkers.filter(marker => {
+    //   const markerDate = new Date(marker.wentDate);
+    //   const startDateObj = new Date(date.startDate);
+    //   const endDateObj = new Date(date.endDate);
 
-  // useEffect(() => {
-  //   const copyGroupMarkers = groupMarkers.filter(marker => {
-  //     const markerDate = new Date(marker.wentDate);
-  //     const startDateObj = new Date(date.startDate);
-  //     const endDateObj = new Date(date.endDate);
-
-  //     return markerDate >= startDateObj && markerDate <= endDateObj;
-  //   });
-  //   console.log('이펙트 데이트 : ', date);
-  //   console.log(copyGroupMarkers);
-  // }, [date]);
+    //   return markerDate >= startDateObj && markerDate <= endDateObj;
+    // });
+    console.log('이펙트 데이트 : ', date);
+    // console.log(copyGroupMarkers);
+    // setFilterGroupMarkers(copyGroupMarkers);
+  }, [date]);
 
   const onCreateTab = () => {
     if (detail) {
@@ -99,7 +92,13 @@ const GroupTap = () => {
       }
     }
   };
-
+  useEffect(() => {
+    getGroups();
+    getGroup();
+    getGroupmembers();
+    getGroupMarkers();
+    getGroupRoutes();
+  }, []);
   return (
     <div>
       <div ref={ref} className={`${styles.trans} ${styles.groupTap} opacity-0`}>
@@ -121,7 +120,7 @@ const GroupTap = () => {
         <div
           className={`${styles.trans} w-full flex flex-col items-center justify-center gap-3 transition-all`}
         >
-          {groupMarkers.map((marker, i) => {
+          {filterGroupMarkers.map((marker, i) => {
             return (
               <Posting
                 key={i}

@@ -51,9 +51,6 @@ const Sidebar = ({
     onDataFromSidebar(data);
   };
 
-  useEffect(() => {
-    getGroups();
-  }, [setIsSidebarOpen]);
   return (
     <div>
       <div className={Styles.sidebarContainer}>
