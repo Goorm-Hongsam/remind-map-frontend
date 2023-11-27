@@ -23,7 +23,7 @@ const useGroup = (groupId, groupTitle) => {
       const copyGroups = [...result.data];
       setGroups(copyGroups);
       console.log('그룹들 가져오기 : ', copyGroups);
-      if (seletGroupIdState === 0 || seletGroupId === undefined) {
+      if (seletGroupId === 0 || seletGroupId === undefined) {
         const copyGroupId = copyGroups[0].groupId;
         setSeletGroupId(copyGroupId);
       }
@@ -32,9 +32,9 @@ const useGroup = (groupId, groupTitle) => {
       console.log(error);
     }
   };
-  const getGroup = async () => {
+  const getGroup = async curGroupId => {
     try {
-      const result = await instance.get(`/group/get/${groupId}`);
+      const result = await instance.get(`/group/get/${curGroupId}`);
       const copyGroup = result.data;
       console.log('그룹 단건 조회 : ', copyGroup);
       setSeletGroupId(copyGroup.groupId);
