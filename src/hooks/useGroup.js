@@ -23,7 +23,10 @@ const useGroup = (groupId, groupTitle) => {
       const copyGroups = [...result.data];
       setGroups(copyGroups);
       console.log('그룹들 가져오기 : ', copyGroups);
-      setSeletGroupId(copyGroups[0].groupId);
+      if (seletGroupIdState === 0 || seletGroupId === undefined) {
+        const copyGroupId = copyGroups[0].groupId;
+        setSeletGroupId(copyGroupId);
+      }
       console.log('지금 가지고 있는 그룹ID 스테이트 : ', seletGroupId);
     } catch (error) {
       console.log(error);

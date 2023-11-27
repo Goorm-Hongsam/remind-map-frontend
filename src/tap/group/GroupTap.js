@@ -54,16 +54,10 @@ const GroupTap = () => {
   }, [ref]);
 
   useEffect(() => {
-    getGroups();
     getGroup();
     getGroupmembers();
     getGroupMarkers();
     getGroupRoutes();
-  }, [groupId]);
-
-  useEffect(() => {
-    getGroups();
-    getGroup();
   }, []);
 
   const onCreateTab = () => {

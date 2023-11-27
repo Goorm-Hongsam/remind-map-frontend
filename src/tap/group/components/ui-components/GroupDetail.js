@@ -20,7 +20,7 @@ export default function GroupDetail() {
   useEffect(() => {
     getGroupmembers();
     getGroup();
-  }, [groupId, group]);
+  }, [groupId]);
   return (
     <div className="flex flex-col items-center gap-5 mt-3 transition-all">
       <h1 className="text-2xl">{group.title}</h1>
