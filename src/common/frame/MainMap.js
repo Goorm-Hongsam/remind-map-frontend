@@ -55,7 +55,6 @@ const MainMap = ({
   //groupMarkers
   useEffect(() => {
     if (groupMarkers && groupMarkers.length > 0 && map) {
-      groupMarkers.forEach(groupMarker => groupMarker.setMap(null));
       setGroupMarkers([]);
       for (const groupMarker of groupMarkers) {
         // let overlay = new kakao.maps.CustomOverlay({
