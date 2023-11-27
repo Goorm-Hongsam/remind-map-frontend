@@ -7,6 +7,7 @@ const GroupSelect = ({ groups, onSelect }) => {
   const [curGroupId, setCurGroupId] = useState(0);
   const [isGroups, setIsGroups] = useState(false);
   console.log(groups, onSelect);
+  console.log('cureGroupId');
   useEffect(() => {
     if (curGroupId) {
       instance
