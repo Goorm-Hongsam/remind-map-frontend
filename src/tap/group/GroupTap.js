@@ -120,7 +120,7 @@ const GroupTap = () => {
         <div
           className={`${styles.trans} w-full flex flex-col items-center justify-center gap-3 transition-all`}
         >
-          {filterGroupMarkers.map((marker, i) => {
+          {groupMarkers.map((marker, i) => {
             return (
               <Posting
                 key={i}

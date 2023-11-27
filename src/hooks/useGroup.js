@@ -93,11 +93,14 @@ const useGroup = (groupId, groupTitle) => {
     }
   };
 
-  const deleteGroup = async () => {
+  const deleteGroup = async navigate => {
     console.log('삭제할 그룹 ID : ', groupId);
     try {
       const result = await instance.post(`/group/remove/${groupId}`);
       console.log('그룹삭제 성공! : ', result);
+      getGroup(groupId);
+      setSeletGroupId(groupId);
+      navigate(`/grouptab/all/${groupId}`);
     } catch (error) {
       console.log('그룹삭제 실패 : ', error);
     }

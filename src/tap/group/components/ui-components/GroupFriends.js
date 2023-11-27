@@ -3,11 +3,12 @@ import GroupButton from '../atom-components/GroupButton';
 import GroupInput from '../atom-components/GroupInput';
 import GroupUserCardWraper from '../wrap-components/GroupUserCardWraper';
 import useFriends from '../../../../hooks/useFriends';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useGroup from '../../../../hooks/useGroup';
 
 const { Kakao } = window;
 export default function GroupFriends() {
+  const navigate = useNavigate();
   const { groupId } = useParams();
   const [filterFriends, setFilterFriends] = useState([]);
   const [isInformationModal, setIsInformationModal] = useState(false);
@@ -89,7 +90,12 @@ export default function GroupFriends() {
           }}
           bg="kakao"
         />
-        <GroupButton type="Button" text="그룹 삭제" onClick={deleteGroup} bg="red" />
+        <GroupButton
+          type="Button"
+          text="그룹 삭제"
+          onClick={() => deleteGroup(navigate)}
+          bg="red"
+        />
       </div>
     </div>
   );
