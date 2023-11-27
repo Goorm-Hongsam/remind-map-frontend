@@ -5,12 +5,9 @@ import styles from './MarkerTap.module.css';
 import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
-import { useParams } from 'react-router';
-import { useRecoilValue } from 'recoil';
-import { groupsState, groupState } from '../../recoil/groupAtoms';
+
 import { instance } from '../../api/customAxios';
-import Selecter from '../group/components/atom-components/Seleter';
-import useGroup from '../../hooks/useGroup';
+
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
   const [savedSearchResults, setSavedSearchResults] = useState([]);
@@ -19,14 +16,6 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const [selectedGroup, setSelectedGroup] = useState([]);
   const [receivedFormData, setReceivedFormData] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
-  const { groupId } = useParams();
-  const group = useRecoilValue(groupState);
-  const groups = useRecoilValue(groupsState);
-  const { getGroup, getGroups } = useGroup();
-  console.log('group', group);
-  console.log('groupId', group.groupId);
-  console.log('useparams', groupId);
-  console.log('groups', groups);
 
   // 모든 그룹 정보를 가져오는 함수
   /*
@@ -89,6 +78,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   //이부분
   const handleGroupSelect = async group => {
     setSelectedGroup(group);
+    console.log(group);
     try {
       const response = await instance.get(`/marker/group/${group.groupId}`);
       setSelectedGroup(response.data);
@@ -108,12 +98,15 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     setSelectedGroupId(groupId);
     console.log(groupId);
   };
-  console.log('gruop markerTap ', group); //선택된 그룹이고, groupId, title받음
+  //선택된 그룹이고, groupId, title받음
 
   return (
     <>
       <div className={styles.markerTap}>
-        <GroupSelect onSelect={handleGroupSelect} groups={groups} />
+        <GroupSelect
+          onSelect={handleGroupSelect}
+          selectedGroupId={selectedGroup} /* groups={groups} */
+        />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput
@@ -161,3 +154,18 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
 };
 
 export default MarkerTap;
+
+/*  
+  import { useParams } from 'react-router';
+import { useRecoilValue } from 'recoil';
+import { groupsState, groupState } from '../../recoil/groupAtoms';
+  import Selecter from '../group/components/atom-components/Seleter';
+import useGroup from '../../hooks/useGroup';
+  const { groupId } = useParams();
+  const group = useRecoilValue(groupState);
+  const groups = useRecoilValue(groupsState);
+  const { getGroup, getGroups } = useGroup();
+  console.log('group', group);
+  console.log('groupId', group.groupId);
+  console.log('useparams', groupId);
+  console.log('groups', groups); */
