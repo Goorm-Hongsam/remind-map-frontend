@@ -81,24 +81,19 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     //여기 형식이 이상
 
     console.log(formData.location);
-    formDataObj.append(
-      'request',
-      JSON.stringify({
-        title: formData.title,
-        memo: formData.memo,
-        location: formData.location,
-        visiable: formData.visiable,
-        wentDate: formData.wentDate,
-      }),
-    );
+    const jsonRequest = JSON.stringify({
+      title: formData.title,
+      memo: formData.memo,
+      location: formData.location,
+      visiable: formData.visiable,
+      wentDate: formData.wentDate,
+    });
+
     if (fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
+    formDataObj.append('request', new Blob([jsonRequest], { type: 'application/json' }));
     /*
-    formDataObj.append(
-      'requset',
-      new Blob([JSON.stringify(formData)], { type: 'application/json' }),
-    );
     if (fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
