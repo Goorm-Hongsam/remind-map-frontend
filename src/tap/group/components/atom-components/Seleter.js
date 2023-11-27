@@ -7,11 +7,10 @@ import {
   seletGroupIndexState,
 } from '../../../../recoil/groupAtoms';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useGroup from '../../../../hooks/useGroup';
 export default function Seleter() {
-  const seletGroupId = useRecoilValue(seletGroupIdState);
-  const [groupId, setGroupId] = useState(seletGroupId);
+  const { groupId } = useParams();
   const navigator = useNavigate();
   const setSeletGroupIndex = useSetRecoilState(seletGroupIndexState);
   const setSeletGroupId = useSetRecoilState(seletGroupIdState);
@@ -30,7 +29,6 @@ export default function Seleter() {
     navigator(`/grouptab/all/${groupId}`);
     setSeletGroupId(groupId);
     setSeletGroupIndex(groupIndex);
-    setGroupId(seletGroupId);
     setIsGroupsList(false);
   };
 

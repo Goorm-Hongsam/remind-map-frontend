@@ -12,14 +12,11 @@ import DatePicker from './components/atom-components/DatePicker';
 import { groupMarkersState, groupsState } from '../../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
 import { formatDateWithDay } from '../../util/formatDateWithDay';
-import { UserLogin } from '../../store/UserLogin';
-import { groupMarkersMooc } from '../marker/data';
 
 const GroupTap = () => {
   const [isDetailGroup, setIsDetailGroup] = useState(false);
   const groupMarkers = useRecoilValue(groupMarkersState);
   const groups = useRecoilValue(groupsState);
-  const isUserLogin = useRecoilValue(UserLogin);
   const create = useMatch('/grouptab/create/:id');
   const detail = useMatch('/grouptab/all/:id');
   const navigator = useNavigate();
@@ -63,6 +60,11 @@ const GroupTap = () => {
     getGroupMarkers();
     getGroupRoutes();
   }, [groupId]);
+
+  useEffect(() => {
+    getGroups();
+    getGroup();
+  }, []);
 
   const onCreateTab = () => {
     if (detail) {
