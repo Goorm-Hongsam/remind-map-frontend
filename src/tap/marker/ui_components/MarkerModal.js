@@ -6,7 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
 import { instance } from '../../../api/customAxios';
-import axios from 'axios';
+import { FaUpload } from 'react-icons/fa';
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
@@ -107,6 +107,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       })
       .then(response => {
         console.log(response.data);
+        onClose();
       })
       .catch(err => {
         console.log(err);
@@ -151,53 +152,55 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
             </Swiper>
           )}
         </div>
+        <label className={Styles.uploadButton} htmlFor="image-upload">
+          사진!
+        </label>
       </div>
-      <label className={Styles.abc} htmlFor="image-upload">
-        사진!
-      </label>
-      <form onSubmit={handleSubmit}>
-        <label className={Styles.inputLabel}>마커 제목</label>
-        <input
-          className={Styles.inputField}
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="마커 제목"
-        />
+      <div className={Styles.formContainer}>
+        <form onSubmit={handleSubmit}>
+          <label className={Styles.inputLabel}>마커 제목</label>
+          <input
+            className={Styles.inputField}
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="마커 제목"
+          />
 
-        <label className={Styles.inputLabel}>날짜</label>
-        <Datepicker
-          inputClassName="w-full p-2"
-          containerClassName={`${Styles.groupTapItem} border rounded-sm`}
-          toggleClassName="hidden"
-          primaryColor="purple"
-          asSingle={true}
-          value={selectedDate}
-          onChange={handleDateChange}
-          placeholder="YYYY-MM-DD"
-          useRange={false}
-        />
-        <label className={Styles.inputLabel}>추가메모</label>
-        <textarea
-          className={Styles.textAreaField}
-          name="memo"
-          value={formData.memo}
-          onChange={handleChange}
-          placeholder="추가 메모"
-        />
-        <div className={Styles.buttonContainer}>
-          <button type="submit" className={Styles.saveButton}>
-            생성 완료
-          </button>
-          <div onClick={handleCheckbox}>
-            <MdCheckBox
-              onChange={handleCheckbox}
-              className={isChecked ? Styles.checkboxActive : ''}
-            />
+          <label className={Styles.inputLabel}>날짜</label>
+          <Datepicker
+            inputClassName="w-full p-2"
+            containerClassName={`${Styles.groupTapItem} border rounded-sm`}
+            toggleClassName="hidden"
+            primaryColor="purple"
+            asSingle={true}
+            value={selectedDate}
+            onChange={handleDateChange}
+            placeholder="YYYY-MM-DD"
+            useRange={false}
+          />
+          <label className={Styles.inputLabel}>추가메모</label>
+          <textarea
+            className={Styles.textAreaField}
+            name="memo"
+            value={formData.memo}
+            onChange={handleChange}
+            placeholder="추가 메모"
+          />
+          <div className={Styles.buttonContainer}>
+            <button type="submit" className={Styles.saveButton}>
+              생성 완료
+            </button>
+            <div onClick={handleCheckbox}>
+              <MdCheckBox
+                onChange={handleCheckbox}
+                className={isChecked ? Styles.checkboxActive : ''}
+              />
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

@@ -94,7 +94,10 @@
 .photo {
   position: relative;
   width: 100%;
-  height: 35%;
+  max-height: 160px;
+  max-width: 160px;
+  width: auto;
+  height: auto;
 }
 
 .photoimg {
@@ -110,4 +113,20 @@
 .checkboxActive {
   cursor: pointer;
   color: green;
+}
+
+.uploadButton {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  color: var(--main-color);
+}
+
+.formContainer {
+  position: relative;
+}
+
+.form {
+  position: absolute;
+  top: 200px;
 }

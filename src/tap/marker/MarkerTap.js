@@ -91,9 +91,14 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   const hasSearchResults = savedSearchResults.length > 0;
 
   //이부분
-  const handleGroupSelect = group => {
+  const handleGroupSelect = async group => {
     setSelectedGroup(group);
-    console.log(group);
+    try {
+      const response = await instance.get(`/marker/group/${group.groupId}`);
+      setSelectedGroup(response.data);
+    } catch (error) {
+      console.error('Error fetching group markers:', error);
+    }
   };
   const handleSearchReset = () => {
     setSavedSearchResults([]);
@@ -111,7 +116,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   return (
     <>
       <div className={styles.markerTap}>
-        <GroupSelect onSelect={handleGroupSelect} groups={groups} groupId={selectedGroupId} />
+        <GroupSelect onSelect={handleGroupSelect} groups={groups} />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput
