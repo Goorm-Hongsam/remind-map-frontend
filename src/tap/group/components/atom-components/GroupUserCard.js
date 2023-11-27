@@ -16,7 +16,7 @@ export default function GroupUserCard({ member, userName, buttonText, onClick, b
       ) : (
         <img
           className="w-8 rounded-full"
-          src="https://img.icons8.com/?size=128&id=ckaioC1qqwCu&format=png"
+          src="https://k.kakaocdn.net/dn/1G9kp/btsAot8liOn/8CWudi3uy07rvFNUkk3ER0/img_110x110.jpg"
           alt="기본 프로필 이미지"
         />
       )}

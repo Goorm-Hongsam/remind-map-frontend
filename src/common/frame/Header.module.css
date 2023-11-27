@@ -26,6 +26,7 @@ header .userInfo {
   gap: 10px;
   position: relative;
   cursor: pointer;
+  width: 90px;
 }
 
 header .userInfo .userPhoto {
