@@ -12,14 +12,10 @@ export default function GroupDetail() {
   const group = useRecoilValue(groupState);
   const [search, setSearch] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
-  const { getGroup, getGroupmembers, groupMembers, editGroup, deleteMember } = useGroup(
-    groupId,
-    groupTitle,
-  );
+  const { getGroupmembers, groupMembers, editGroup, deleteMember } = useGroup(groupId, groupTitle);
 
   useEffect(() => {
     getGroupmembers();
-    getGroup();
   }, [groupId]);
   return (
     <div className="flex flex-col items-center gap-5 mt-3 transition-all">

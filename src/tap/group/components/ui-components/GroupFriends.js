@@ -23,8 +23,6 @@ export default function GroupFriends() {
     getFriends();
     getGroupmembers();
     getGroupInvite();
-    console.log(groupMembers.length);
-    console.log(friends);
   }, [groupId]);
 
   useEffect(() => {
