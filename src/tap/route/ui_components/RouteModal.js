@@ -8,6 +8,8 @@ const { defaultImg } = {
 };
 const RouteModal = ({ selectedMarkers, onClose, onSubmit }) => {
   const modalRef = useRef();
+  // 3. Route Modal   그룹 내 루트 생성 POST	/marker-route/group/{groupId} -> Modal쪽 데이터 보기
+
   const [formData, setFormData] = useState({
     markerIds: [],
     title: '',

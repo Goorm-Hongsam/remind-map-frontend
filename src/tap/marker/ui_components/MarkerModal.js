@@ -33,7 +33,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   useEffect(() => {
     setFormData(prevState => ({
       ...prevState,
-      visiable: isChecked ? 1 : 0,
+      visiable: isChecked ? true : false,
     }));
   }, [isChecked]);
   useEffect(() => {
@@ -64,21 +64,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       wentDate: selectedDate.startDate,
     }));
   };
-  /*
-  const handleImageUpload = event => {
-    const files = event.target.files;
-    for (let i = 0; i < files.length && images.length + i < 10; i++) {
-      const file = files[i];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          setImages(oldImages => [...oldImages, e.target.result]);
-        };
-        reader.readAsDataURL(file);
-      }
-    }
-  };
-  */
+
   const [images, setImages] = useState([]); // 이미지 미리보기를 위한 상태
 
   const handleImageUpload = event => {
@@ -88,38 +74,43 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     }
   };
   console.log(images);
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
     const formDataObj = new FormData();
 
     //여기 형식이 이상
 
-    formDataObj.append(
-      'request',
-      JSON.stringify({
-        title: formData.title,
-        memo: formData.memo,
-        location: formData.location,
-        visiable: formData.visiable,
-        wentDate: formData.wentDate,
-      }),
-    );
+    console.log(formData.location);
+    const jsonRequest = JSON.stringify({
+      title: formData.title,
+      memo: formData.memo,
+      location: formData.location,
+      visiable: formData.visiable,
+      wentDate: formData.wentDate,
+    });
 
     if (fileInputRef.current.files[0]) {
-      formDataObj.append('file', [fileInputRef.current.files[0]]);
+      formDataObj.append('file', fileInputRef.current.files[0]);
     }
+    formDataObj.append('request', new Blob([jsonRequest], { type: 'application/json' }));
+    /*
+    if (fileInputRef.current.files[0]) {
+      formDataObj.append('file', fileInputRef.current.files[0]);
+    }
+*/
     for (let [key, value] of formDataObj.entries()) {
       console.log(key, value);
     }
-    await instance({
-      method: 'post',
-      url: '/marker/group/{groupid}', //환경변수
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: localStorage.getItem('access_token'),
-      },
-    });
+    instance
+      .post(`/marker/group/${groupId}`, formDataObj, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -212,3 +203,19 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 };
 
 export default MarkerModal;
+
+/*
+  const handleImageUpload = event => {
+    const files = event.target.files;
+    for (let i = 0; i < files.length && images.length + i < 10; i++) {
+      const file = files[i];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          setImages(oldImages => [...oldImages, e.target.result]);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+  */
