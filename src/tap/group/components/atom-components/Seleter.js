@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../GroupTap.module.css';
 import {
   groupState,
@@ -6,13 +6,13 @@ import {
   seletGroupIdState,
   seletGroupIndexState,
 } from '../../../../recoil/groupAtoms';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useNavigate, useParams } from 'react-router-dom';
 import useGroup from '../../../../hooks/useGroup';
 export default function Seleter() {
   const { groupId } = useParams();
   const navigator = useNavigate();
-  const setSeletGroupIndex = useSetRecoilState(seletGroupIndexState);
+  const [seletGroupId, setSeletGroupIndex] = useRecoilState(seletGroupIndexState);
   const setSeletGroupId = useSetRecoilState(seletGroupIdState);
   const groups = useRecoilValue(groupsState);
   const group = useRecoilValue(groupState);
@@ -22,15 +22,14 @@ export default function Seleter() {
     setIsGroupsList(!isGroupsList);
   };
   const seletGroup = groupId => {
-    const groupIndex = groups.findIndex(el => {
-      return el.groupId === groupId;
-    });
-    getGroup();
+    getGroup(groupId);
     navigator(`/grouptab/all/${groupId}`);
-    setSeletGroupId(groupId);
-    setSeletGroupIndex(groupIndex);
     setIsGroupsList(false);
   };
+
+  useEffect(() => {
+    seletGroup(seletGroupId);
+  }, [seletGroupId]);
 
   return (
     <div className="w-full flex flex-col items-center justify-center relative z-50 text-sx">
@@ -49,7 +48,7 @@ export default function Seleter() {
           return (
             <li
               onClick={() => {
-                seletGroup(group.groupId);
+                setSeletGroupId(group.groupId);
               }}
               key={i}
               className="p-2 border border-b hover:bg-main-color hover:text-white transition-all"
