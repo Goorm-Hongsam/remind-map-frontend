@@ -1,9 +1,9 @@
 name: frontend deploy
 
 on:
-  # push:
-  pull_request:
-    branches: [prod2]
+  push:
+  # pull_request:
+    branches: [prod22]
 
 jobs:
   deploy:
@@ -20,7 +20,7 @@ jobs:
           script: | # 실행할 스크립트
             rm -rf remind-map-frontend
             echo "삭제 완료"
-            git clone --branch prod2 https://github.com/Goorm-Hongsam/remind-map-frontend.git
+            git clone --branch prod22 https://github.com/Goorm-Hongsam/remind-map-frontend.git
             docker-compose -f docker-compose.front.yaml down
             docker rm react
             docker rm nginx
