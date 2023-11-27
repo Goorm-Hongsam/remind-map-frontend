@@ -92,8 +92,8 @@ const RouteTap = ({ onDataFromRouteTap }) => {
   return (
     <div className={styles.routeTap}>
       <div className="w-full flex flex-col items-center justify-center">
-        <p onClick={openGroup} className={`${styles.routeTap} rounded border p-2`}>
-          {groups[curGroup].groupTitle}
+        <p onClick={openGroup} className={`${styles.routeTapItem} rounded border p-2`}>
+          그룹을 선택하세요!
         </p>
         {isGroups ? (
           <ul className={`${styles.routeTapItem} rounded border`}>

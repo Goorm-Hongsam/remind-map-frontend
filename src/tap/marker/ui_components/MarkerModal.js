@@ -11,8 +11,11 @@ const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
 
-const MarkerModal = ({ groupId, data, onClose }) => {
+const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
   const modalRef = useRef();
+
+  const isEditMode = data != null;
+
   console.log('id:', groupId, data); //여기서 Null 남 //4로 고정됨
   const fileInputRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState({
@@ -73,14 +76,30 @@ const MarkerModal = ({ groupId, data, onClose }) => {
       setImages(prevImages => prevImages.concat(fileArray));
     }
   };
-  console.log(images);
+  useEffect(() => {
+    if (isEditMode) {
+      setFormData({
+        title: data.title,
+        memo: data.memo,
+        location: data.location,
+        visiable: data.visiable,
+        wentDate: data.wentDate,
+      });
+    } else {
+      setFormData({
+        title: '',
+        memo: '',
+        location: {},
+        visiable: '',
+        wentDate: '',
+      });
+    }
+  }, [data, isEditMode]);
+
   const handleSubmit = e => {
     e.preventDefault();
     const formDataObj = new FormData();
 
-    //여기 형식이 이상
-
-    console.log(formData.location);
     const jsonRequest = JSON.stringify({
       title: formData.title,
       memo: formData.memo,
@@ -89,17 +108,15 @@ const MarkerModal = ({ groupId, data, onClose }) => {
       wentDate: formData.wentDate,
     });
 
-    if (fileInputRef.current.files[0]) {
+    if (fileInputRef.current && fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
     formDataObj.append('request', new Blob([jsonRequest], { type: 'application/json' }));
 
-    if (fileInputRef.current.files[0]) {
-      formDataObj.append('file', fileInputRef.current.files[0]);
-    }
+    const endpoint = isEditMode ? `/marker/group/${groupId}` : `/marker/update/group/${groupId}`;
 
     instance
-      .post(`/marker/group/${groupId}`, formDataObj, {
+      .post(endpoint, formDataObj, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then(response => {
@@ -117,11 +134,9 @@ const MarkerModal = ({ groupId, data, onClose }) => {
       <button className={Styles.closeButton} onClick={onClose}>
         ×
       </button>
-
       <div className={Styles.titleBar}>
         <h2>마커 생성</h2>
       </div>
-
       <input
         type="file"
         style={{ display: 'none' }}

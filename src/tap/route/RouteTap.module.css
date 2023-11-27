@@ -113,12 +113,23 @@
   color: green;
 }
 
+.searchTap {
+  display: absolute;
+  width: 260px;
+  height: 95%;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0px;
+}
 .routeTap {
   display: flex;
   width: 260px;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 }
 
 .rankSelect {
