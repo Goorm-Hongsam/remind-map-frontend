@@ -3,12 +3,12 @@ name: frontend deploy
 on:
   # push:
   pull_request:
-    branches: [ prod2 ]
+    branches: [prod2]
 
 jobs:
   deploy:
     name: deploy
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
       - name: excuting remote ssh commands
@@ -27,4 +27,3 @@ jobs:
             docker rmi -f nginx
             docker rmi -f ubuntu-react
             docker-compose -f docker-compose.front.yaml up -d
-            

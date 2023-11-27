@@ -7,7 +7,10 @@ import { MdCheckBox } from 'react-icons/md';
 import '../../../common/userposting/swiper-bundle.css';
 import { instance } from '../../../api/customAxios';
 import axios from 'axios';
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+>>>>>>> prod5
 const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
@@ -88,7 +91,12 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       setImages(prevImages => prevImages.concat(fileArray));
     }
   };
+<<<<<<< HEAD
   const handleSubmit = async e => {
+=======
+  console.log(images);
+  const handleSubmit = e => {
+>>>>>>> prod5
     e.preventDefault();
     const formDataObj = new FormData();
 
@@ -96,7 +104,10 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 
     formDataObj.append(
       'request',
+<<<<<<< HEAD
       'request',
+=======
+>>>>>>> prod5
       JSON.stringify({
         title: formData.title,
         memo: formData.memo,
@@ -107,6 +118,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
     );
 
     if (fileInputRef.current.files[0]) {
+<<<<<<< HEAD
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
     for (let [key, value] of formDataObj.entries()) {
@@ -124,6 +136,25 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       // 실패 처리 로직
     }
   };
+=======
+      formDataObj.append('file', [fileInputRef.current.files[0]]);
+    }
+
+    for (let [key, value] of formDataObj.entries()) {
+      console.log(key, value);
+    }
+    console.log(formDataObj.file, '드가자!!!!!!!!!');
+    try {
+      const response = await instance.post(`marker/group/${groupId}`, formDataObj, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+>>>>>>> prod5
   return (
     <div className={Styles.MarkerpostingModal}>
       <button className={Styles.closeButton} onClick={onClose}>
@@ -141,7 +172,10 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
         multiple
         accept="image/*"
         ref={fileInputRef}
+<<<<<<< HEAD
         ref={fileInputRef}
+=======
+>>>>>>> prod5
         onChange={handleImageUpload} // 파일 선택 시 이미지 미리보기 처리
       />
       <div className={Styles.photo}>
@@ -215,6 +249,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
 };
 
 export default MarkerModal;
+<<<<<<< HEAD
 
 /*
       <div className={Styles.photo}>
@@ -257,3 +292,5 @@ export default MarkerModal;
       
       
       */
+=======
+>>>>>>> prod5
