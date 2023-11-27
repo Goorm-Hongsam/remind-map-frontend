@@ -54,6 +54,7 @@ const GroupTap = () => {
   }, [ref]);
 
   useEffect(() => {
+    getGroups();
     getGroup();
     getGroupmembers();
     getGroupMarkers();

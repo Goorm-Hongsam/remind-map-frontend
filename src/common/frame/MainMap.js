@@ -51,35 +51,31 @@ const MainMap = ({
   }, [searchResults, map]);
   //groupMarkers
   useEffect(() => {
-    // if (searchResults && searchResults.length > 0 && map) {
-    //   const mapCenter = searchResults[0];
-    //   const centerPosition = new kakao.maps.LatLng(mapCenter.y, mapCenter.x);
-    //   map.setCenter(centerPosition);
-
-    //   searchResults.forEach(place => {
-    //     const position = new kakao.maps.LatLng(place.y, place.x);
-    //     const marker = new kakao.maps.Marker({
-    //       position,
-    //       map,
-    //     });
-
-    //     kakao.maps.event.addListener(marker, 'click', () => {
-    //       onMarkerSelect(place);
-    //     });
-    //   });
-    // }
     if (groupMarkers && groupMarkers.length > 0 && map) {
-      const groupMarker = groupMarkers[0];
-      console.log('첫번째 그룹 마커입니다 : ', groupMarker);
-      let markerPosition = new kakao.maps.LatLng(
-        groupMarker.location.longitude,
-        groupMarker.location.latitude,
-      );
+      for (const groupMarker of groupMarkers) {
+        let marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(
+            groupMarker.location.longitude,
+            groupMarker.location.latitude,
+          ),
+          title: groupMarker.title,
+        });
+        kakao.maps.event.addListener(marker, 'click', () => {
+          console.log('그룹마커들입니다 ! ', groupMarker);
+        });
+      }
+      // const groupMarker = groupMarkers[0];
+      // console.log('첫번째 그룹 마커입니다 : ', groupMarker);
+      // let markerPosition = new kakao.maps.LatLng(
+      //   groupMarker.location.longitude,
+      //   groupMarker.location.latitude,
+      // );
 
-      let marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(map);
+      // let marker = new kakao.maps.Marker({
+      //   position: markerPosition,
+      // });
+      // marker.setMap(map);
     }
   }, [groupMarkers, map]);
 
