@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Redirect from '../../api/Redirect';
 import MainMapModal from './MainMapModal';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { groupMarkersState } from '../../recoil/groupAtoms';
-import Posting from '../userposting/Posting';
-import PostingModal from '../userposting/PostingModal';
 
 const { kakao } = window;
 
@@ -53,46 +51,6 @@ const MainMap = ({
     }
   }, [searchResults, map]);
   //groupMarkers
-  useEffect(() => {
-    if (groupMarkers && groupMarkers.length > 0 && map) {
-      setGroupMarkers([]);
-      for (const groupMarker of groupMarkers) {
-        // let overlay = new kakao.maps.CustomOverlay({
-        //   content: <PostingModal marker={groupMarker} />,
-        //   map: map,
-        //   position: new kakao.maps.LatLng(
-        //     groupMarker.location.longitude,
-        //     groupMarker.location.latitude,
-        //   ),
-        // });
-        let marker = new kakao.maps.Marker({
-          map: map,
-          position: new kakao.maps.LatLng(
-            groupMarker.location.longitude,
-            groupMarker.location.latitude,
-          ),
-          title: groupMarker.title,
-        });
-        kakao.maps.event.addListener(marker, 'click', () => {
-          console.log('그룹마커들입니다 ! ', groupMarker);
-        });
-        // function closeOverlay() {
-        //   overlay.setMap(null);
-        // }
-      }
-      // const groupMarker = groupMarkers[0];
-      // console.log('첫번째 그룹 마커입니다 : ', groupMarker);
-      // let markerPosition = new kakao.maps.LatLng(
-      //   groupMarker.location.longitude,
-      //   groupMarker.location.latitude,
-      // );
-
-      // let marker = new kakao.maps.Marker({
-      //   position: markerPosition,
-      // });
-      // marker.setMap(map);
-    }
-  }, [groupMarkers, map]);
 
   //Marker관련 포스팅 클릭시 마커 생성 부분
   useEffect(() => {
@@ -135,6 +93,37 @@ const MainMap = ({
       };
     }
   }, [map, enableMarkerCreation, onMarkerSelect]);
+  useEffect(() => {
+    if (groupMarkers && groupMarkers.length > 0 && map) {
+      markers.forEach(marker => marker.setMap(null));
+      setMarkers([]);
+      const newMarkers = [];
+      for (const groupMarker of groupMarkers) {
+        let marker = new kakao.maps.Marker({
+          map: map,
+          position: new kakao.maps.LatLng(
+            groupMarker.location.longitude,
+            groupMarker.location.latitude,
+          ),
+        });
+        newMarkers.push(marker);
+        kakao.maps.event.addListener(marker, 'click', () => {
+          console.log('그룹마커들입니다 ! ', groupMarker);
+        });
+        // let overlay = new kakao.maps.CustomOverlay({
+        //   content: <PostingModal marker={groupMarker} />,
+        //   map: map,
+        //   position: new kakao.maps.LatLng(
+        //     groupMarker.location.longitude,
+        //     groupMarker.location.latitude,
+        //   ),
+        // });
+        // function closeOverlay() {
+        //   overlay.setMap(null);
+        // }
+      }
+    }
+  }, [groupMarkers, map]);
 
   //루트관련 포스팅 클릭시
   useEffect(() => {
