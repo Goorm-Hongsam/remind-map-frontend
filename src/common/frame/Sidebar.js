@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Styles from './Sidebar.module.css';
 import SidebarMenu from './SidebarMenu';
 import SidebarContent from './SidebarContent';
 import { useNavigate } from 'react-router-dom';
 import { seletGroupIdState } from '../../recoil/groupAtoms';
 import { useRecoilValue } from 'recoil';
+import useGroup from '../../hooks/useGroup';
 
 const OpenBtn = ({ handleSidebarToggle, isSidebarOpen }) => {
   return (
@@ -30,6 +31,7 @@ const Sidebar = ({
   const navigator = useNavigate();
   const [selectedTab, setSelectedTab] = useState('검색');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { getGroups } = useGroup();
 
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -48,6 +50,10 @@ const Sidebar = ({
   const handleDataFromSidebarContent = data => {
     onDataFromSidebar(data);
   };
+
+  useEffect(() => {
+    getGroups();
+  }, [setIsSidebarOpen]);
   return (
     <div>
       <div className={Styles.sidebarContainer}>
