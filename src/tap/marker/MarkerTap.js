@@ -5,6 +5,7 @@ import styles from './MarkerTap.module.css';
 import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
+import Seleter from '../group/components/atom-components/Seleter';
 
 import { instance } from '../../api/customAxios';
 
@@ -19,8 +20,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
 
   // 모든 그룹 정보를 가져오는 함수
   /*
-  
-  */
+   */
   //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
   //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
   // 서치에 필요한 부분
@@ -103,10 +103,13 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   return (
     <>
       <div className={styles.markerTap}>
-        <GroupSelect
+        {
+          /* <GroupSelect
           onSelect={handleGroupSelect}
           selectedGroupId={selectedGroupId} /* groups={groups} */
-        />
+          /> */
+        }
+        <Seleter />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput
