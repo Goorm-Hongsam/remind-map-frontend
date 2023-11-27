@@ -5,13 +5,6 @@ import Posting from '../../common/userposting/Posting';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import MarkerSelectModal from './ui_components/MarkerSelectModal';
 import RouteModal from './ui_components/RouteModal';
-import { useParams } from 'react-router';
-import { useRecoilValue } from 'recoil';
-import { groupsState } from '../../recoil/groupAtoms';
-import { instance } from '../../api/customAxios';
-import Selecter from '../group/components/atom-components/Seleter';
-import useGroup from '../../hooks/useGroup';
-
 const RouteTap = ({ onDataFromRouteTap }) => {
   const [curGroup, setCurGroup] = useState(0);
   const [curGroupId, setCurGroupId] = useState(0);
@@ -20,38 +13,13 @@ const RouteTap = ({ onDataFromRouteTap }) => {
   const [groupMarkerD, setGroupMarkerD] = useState([groupMarkers]);
   const [selectedMarkers, setSelectedMarkers] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedMarkersData, setSelectedMarkersData] = useState([]); //이거는 사용
+  const [selectedMarkersData, setSelectedMarkersData] = useState([]);
   const [routeModalVisible, setRouteModalVisible] = useState(false);
   const [selectedRouteData, setSelectedRouteData] = useState('');
-  const { groupId } = useParams();
-
-  const [group, setGroupId] = useState(null);
-  const groups = useRecoilValue(groupsState);
-  const [routeId, setRouteId] = useState(null);
-  const { getGroup, getGroups } = useGroup();
-  useEffect(() => {
-    getGroups();
-    if (groupId) {
-      getGroup(groupId);
-    }
-  }, [groupId]);
   // 그룹 내 루트 조회 GET 	/marker-route/group/{groupId} -> selectedRouteData이거 사용해서 GET한 이후 사용
   // 루트 생성할때(날짜 셀렉 모달창) GET	/marker/group/{groupId} 로 그룹내 모든 마커 데이터 받기
   // 그룹 내 루트 생성 POST	/marker-route/group/{groupId} -> Modal쪽 데이터 보기
   // 하나의 루트내 모든 마커 조회 -> 루트의 마커들을 통해서 Polyline볼때
-  useEffect(() => {
-    //group id로 group에 있는 루트들 조회
-    instance
-      .get(`/marker-route/group/${groupId}`)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log('에러발생!', err);
-      });
-  });
-  //routeId들을 갖고 루트내 마커들을 조회해서 Polyline
-
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -68,7 +36,6 @@ const RouteTap = ({ onDataFromRouteTap }) => {
     setGroupMarkerD(filteredMarkers);
   }, [curGroupId]);
   const selectedGroupMarkers = groupMarkers.filter(
-    //groupmarkers -> 그룹안에 있는 마커
     marker => marker.groupId === groups[curGroup].groupId,
   );
 
@@ -78,22 +45,11 @@ const RouteTap = ({ onDataFromRouteTap }) => {
     });
     setCurGroup(selectIndex);
     setCurGroupId(groupId);
-    setRouteId(groupId);
     setIsGroups(false);
 
-    const selectedRoute = routeMaker.find(route => route.id === groupId); //routeMaker 루트안에 있는 마커
+    const selectedRoute = routeMaker.find(route => route.id === groupId);
     setSelectedRouteData(selectedRoute); // 상태 업데이트
   };
-  useEffect(() => {
-    instance
-      .get(`/route/${routeId}`)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(err => {
-        console.log('에러발생!', err);
-      });
-  });
 
   const openGroup = () => {
     setIsGroups(!isGroups);

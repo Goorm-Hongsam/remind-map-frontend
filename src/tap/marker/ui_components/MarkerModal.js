@@ -11,7 +11,7 @@ const { defaultImg } = {
   defaultImg: 'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
 };
 
-const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
+const MarkerModal = ({ groupId, data, onClose }) => {
   const modalRef = useRef();
   console.log('id:', groupId, data); //여기서 Null 남 //4로 고정됨
   const fileInputRef = useRef(null);
@@ -93,11 +93,11 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
     formDataObj.append('request', new Blob([jsonRequest], { type: 'application/json' }));
-    /*
+
     if (fileInputRef.current.files[0]) {
       formDataObj.append('file', fileInputRef.current.files[0]);
     }
-*/
+
     instance
       .post(`/marker/group/${groupId}`, formDataObj, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -109,6 +109,7 @@ const MarkerModal = ({ groupId, data, onClose, onFormData }) => {
       .catch(err => {
         console.log(err);
       });
+    onClose();
   };
 
   return (

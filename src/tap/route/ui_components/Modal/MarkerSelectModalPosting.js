@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Styles from './MarkerSelectModalPosting.module.css';
 import { AiFillStar } from 'react-icons/ai';
-
+//셀렉하는 마커의 Posting을 표기하는곳
 const Posting = ({ title, writer, date, fav, onClick, isSelected }) => {
   const [onFav, setOnFav] = useState(fav);
   const handleFav = () => {
