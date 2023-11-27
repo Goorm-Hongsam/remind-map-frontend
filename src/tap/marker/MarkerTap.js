@@ -5,22 +5,36 @@ import styles from './MarkerTap.module.css';
 import Posting from './ui_components/Posting';
 import GroupSelect from './ui_components/GroupSelect';
 import GroupPosting from './ui_components/GroupPosting';
+import Seleter from '../group/components/atom-components/Seleter';
 
 import { instance } from '../../api/customAxios';
+import { useRecoilValue } from 'recoil';
+import { groupMarkersState, groupState, groupsState } from '../../recoil/groupAtoms';
 
 const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarkerCreation }) => {
   const [place, setPlace] = useState('');
   const [savedSearchResults, setSavedSearchResults] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [enableMarkerCreation, setEnableMarkerCreation] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState([]);
   const [receivedFormData, setReceivedFormData] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState([]);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
+
+  //경규
+  const group = useRecoilValue(groupState);
+  const groups = useRecoilValue(groupsState);
+  const groupMarkers = useRecoilValue(groupMarkersState);
+
+  const test = e => {
+    e.preventDefault();
+    console.log(group);
+    console.log(groups);
+    console.log(groupMarkers);
+  };
 
   // 모든 그룹 정보를 가져오는 함수
   /*
-  
-  */
+   */
   //  /marker/group/{groupId} 그룹을 클릭햇을때 groupId를 받고, 그룹 내 마커 조회 api를 이용하여 GET
   //  /marker/group/{groupId} Modal을 통해서 그룹내 마커 생성 POST
   // 서치에 필요한 부분
@@ -75,8 +89,8 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   };
   const hasSearchResults = savedSearchResults.length > 0;
 
-  //이부분
-  const handleGroupSelect = async group => {
+  //이부분;
+  const handleGroupSelect = async () => {
     setSelectedGroup(group);
     console.log(group.groupId);
     try {
@@ -88,6 +102,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
       // Handle error (e.g., updating state to show an error message to the user)
     }
   };
+  //리셋버튼;
   const handleSearchReset = () => {
     setSavedSearchResults([]);
   };
@@ -103,6 +118,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           onSelect={handleGroupSelect}
           /* groups={groups} */
         />
+        <Seleter />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
             <SearchInput
@@ -115,6 +131,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           <button className={styles.searchReset} onClick={handleSearchReset}>
             리셋
           </button>
+          <button onClick={test}>버튼</button>
         </div>
         <div className={styles.createMarker}>
           {hasSearchResults
@@ -133,7 +150,8 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
           <div>
             <button onClick={handleMarkerCreation}>마커 생성하기</button>
           </div>
-        </div>
+        </div>{' '}
+        *
       </div>
       <div>
         {modalVisible && (

@@ -12,38 +12,28 @@ export default function GroupDetail() {
   const group = useRecoilValue(groupState);
   const [search, setSearch] = useState('');
   const [groupTitle, setGroupTitle] = useState('');
-  const { getGroup, getGroupmembers, groupMembers, editGroup, deleteMember } = useGroup(
-    groupId,
-    groupTitle,
-  );
+  const { getGroupmembers, groupMembers, editGroup, deleteMember } = useGroup(groupId, groupTitle);
 
   useEffect(() => {
     getGroupmembers();
-    getGroup();
   }, [groupId]);
   return (
     <div className="flex flex-col items-center gap-5 mt-3 transition-all">
-      <h1 className="text-xl">{group.title}</h1>
-      {/* <GroupInput
+      <h1 className="text-2xl">{group.title}</h1>
+      <GroupInput
         setValue={setGroupTitle}
         buttonText="수정"
         placeholder="그룹 이름 수정"
         buttonOnclick={() => {
           editGroup(navigate);
         }}
-      /> */}
+      />
       {groupMembers.length > 1 ? (
         <GroupUserCardWraper
           mambers={groupMembers}
           title="그룹원 목록"
           buttonText="삭제"
           buttonOnClick={deleteMember}
-          inputSetValue={setGroupTitle}
-          inputPlaceholder="그룹이름 수정"
-          inputButtonText="수정"
-          inputButtonOnclick={() => {
-            editGroup(navigate);
-          }}
         />
       ) : (
         <div className="text-sm flex flex-col items-center justify-center gap-3">

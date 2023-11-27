@@ -8,7 +8,7 @@ import {
 } from '../recoil/groupAtoms';
 import { useState } from 'react';
 import { instance } from '../api/customAxios';
-import { groups } from '../tap/group/datas';
+
 const useGroup = (groupId, groupTitle) => {
   const setGroups = useSetRecoilState(groupsState);
   const setGroup = useSetRecoilState(groupState);
@@ -24,18 +24,18 @@ const useGroup = (groupId, groupTitle) => {
       setGroups(copyGroups);
       console.log('그룹들 가져오기 : ', copyGroups);
       if (seletGroupId === 0 || seletGroupId === undefined) {
-        setSeletGroupId(copyGroups[0].groupId);
-        console.log('최초 진입 시 그룹ID : ', seletGroupId);
+        const copyGroupId = copyGroups[0].groupId;
+        getGroup(copyGroupId);
+        setSeletGroupId(copyGroupId);
       }
-      // setSeletGroupId(groups[0].groupId);
       console.log('지금 가지고 있는 그룹ID 스테이트 : ', seletGroupId);
     } catch (error) {
       console.log(error);
     }
   };
-  const getGroup = async () => {
+  const getGroup = async curGroupId => {
     try {
-      const result = await instance.get(`/group/get/${groupId}`);
+      const result = await instance.get(`/group/get/${curGroupId}`);
       const copyGroup = result.data;
       console.log('그룹 단건 조회 : ', copyGroup);
       setSeletGroupId(copyGroup.groupId);
@@ -54,9 +54,9 @@ const useGroup = (groupId, groupTitle) => {
       console.log(error);
     }
   };
-  const getGroupMarkers = async () => {
+  const getGroupMarkers = async curGroupId => {
     try {
-      const result = await instance.get(`/marker/group/${groupId}`);
+      const result = await instance.get(`/marker/group/${curGroupId}`);
       const copyGroupMarkers = [...result.data];
       console.log('그룹마커 복사본 : ', copyGroupMarkers);
       setGroupMarkers(copyGroupMarkers);
@@ -74,7 +74,6 @@ const useGroup = (groupId, groupTitle) => {
       console.log('그룹 루트 가져오기 실패', error);
     }
   };
-
   const createGroup = async (isTabCreate, isCreate, navigate) => {
     console.log('그룹 생성 그룹 제목', groupTitle);
     try {
@@ -108,9 +107,10 @@ const useGroup = (groupId, groupTitle) => {
     try {
       const result = await instance.post(`/group/edit/${groupId}`, { title: groupTitle });
       console.log('그룹수정 성공 : ', result);
-      navigate(`/grouptab/all/${groupId}`);
+      //Params의 그룹Id를 받아서 단일그룹 요청을 하여 렌더링 된 화면을 바로 볼수 있음 (seletGroupId와 Params가 변하면서 재렌더링 됨 아마..)
+      getGroup(groupId);
       setSeletGroupId(groupId);
-      getGroups();
+      navigate(`/grouptab/all/${groupId}`);
     } catch (error) {
       console.log('그룹수정 실패', error);
     }

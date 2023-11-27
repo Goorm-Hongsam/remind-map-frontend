@@ -23,7 +23,7 @@ export const ButtonVariants = cva(
         sm2: `w-10 h-6 text-xs p-1`,
         md: ``,
         lg: ``,
-        icon: `w-10 h-full bg-inherit border-none shadow-none text-main-color rounded-full hover:bg-sub-hover transition-all`,
+        icon: `w-6 h-full bg-inherit border-none shadow-none text-main-color rounded-full hover:bg-sub-hover transition-all p-0 mr-4`,
       },
       type: {
         default: ``,

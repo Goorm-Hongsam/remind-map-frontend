@@ -82,14 +82,16 @@ const Header = () => {
       </Link>
 
       {isLogined && profileImg ? (
-        <div className={Styles.userInfo} onClick={toggleDropdown}>
-          <img className={Styles.userPhoto} src={profileImg} alt="유저 프로필" />
-          <div className={Styles.userName}>{nickname}</div>
-          {isDropdownVisible && (
-            <div className={Styles.dropdown}>
-              <button onClick={handleLogout}>로그아웃</button>
-            </div>
-          )}
+        <div className="flex items-center justify-center ">
+          <div className={Styles.userInfo} onClick={toggleDropdown}>
+            <img className={Styles.userPhoto} src={profileImg} alt="유저 프로필" />
+            <div className={Styles.userName}>{nickname}</div>
+            {isDropdownVisible && (
+              <div className={Styles.dropdown}>
+                <button onClick={handleLogout}>로그아웃</button>
+              </div>
+            )}
+          </div>
           <GroupButton
             text={<Bell />}
             type="Button"
@@ -100,7 +102,7 @@ const Header = () => {
           />
         </div>
       ) : (
-        <div className="flex">
+        <div className="flex gap-3">
           <button className={Styles.loginBtn} onClick={handleLogin}>
             로그인
           </button>

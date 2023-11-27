@@ -24,9 +24,9 @@ header .userInfo {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding-right: 15px;
   position: relative;
   cursor: pointer;
+  width: 90px;
 }
 
 header .userInfo .userPhoto {
@@ -40,7 +40,6 @@ header .userInfo .userPhoto {
 .loginBtn {
   border: none;
   background-color: transparent;
-  padding-right: 15px;
   cursor: pointer;
 }
 
