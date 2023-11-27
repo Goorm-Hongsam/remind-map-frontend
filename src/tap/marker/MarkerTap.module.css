@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   padding: 20px 0px;
-  overflow: auto;
 }
 
 .MarkerBtnContainer {
@@ -165,4 +164,26 @@
 }
 .trans {
   transition: 1s opacity;
+}
+
+.routeMarkerButton {
+  border: 1px solid var(--main-color);
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgb(255, 255, 255);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  margin: 3px;
+}
+
+.routeDeleteButton {
+  border: 1px solid red;
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: rgb(252, 237, 237);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  margin: 3px;
 }

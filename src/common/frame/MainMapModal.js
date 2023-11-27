@@ -9,11 +9,11 @@ import '../userposting/swiper-bundle.css';
 
 const MainMapModal = ({ data, onClose }) => {
   const [like, setLike] = useState(false);
-
+  console.log(data);
   const handleLike = () => {
     setLike(!like);
   };
-
+  console.log(data);
   if (!data) return null;
   const modalStyle = {
     position: 'absolute',
@@ -31,7 +31,7 @@ const MainMapModal = ({ data, onClose }) => {
             pagination={{ clickable: true }}
             slidesPerView={1}
           >
-            {data.media.map((image, index) => (
+            {data.imageUrl.map((image, index) => (
               <SwiperSlide key={index}>
                 <img src={image} alt="미디어" className={Styles.image} />
               </SwiperSlide>
@@ -45,8 +45,7 @@ const MainMapModal = ({ data, onClose }) => {
       <div className={Styles.PostingInfo}>
         <div className={Styles.top}>
           <div className={Styles.title}>{data.title}</div>
-          <div className={Styles.writer}>by {data.writer}</div>
-          <div className={Styles.date}>{data.date}</div>
+          <div className={Styles.date}>{data.wentDate}</div>
         </div>
         <div className={Styles.bottom}>
           <div className={Styles.location}>📌 청계천 한화불꽃길</div>
