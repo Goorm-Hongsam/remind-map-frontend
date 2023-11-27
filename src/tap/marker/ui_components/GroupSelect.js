@@ -35,7 +35,7 @@ const GroupSelect = ({ onSelect }) => {
   };
 
   return (
-    <div className={styles.routeTap}>
+    <div className={`${styles.routeTap} hidden`}>
       <div className="w-full flex flex-col items-center justify-center">
         <p onClick={toggleGroups} className={`${styles.routeTapItem} rounded border p-2`}>
           {groupData.find(group => group.groupId === curGroupId)?.title || '그룹 선택'}

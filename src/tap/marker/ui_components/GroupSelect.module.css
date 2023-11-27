@@ -1,5 +1,5 @@
 .routeTap {
-  display: flex;
+  display: none;
   width: 260px;
   flex-direction: column;
   align-items: center;
