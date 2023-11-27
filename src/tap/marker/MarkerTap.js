@@ -129,7 +129,7 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
         <div className={styles.createMarker}>
           {hasSearchResults
             ? savedSearchResults.map((result, index) => <Posting key={index} {...result} />)
-            : group.groupId.map((marker, index) => (
+            : groupMarkers.map((marker, index) => (
                 <GroupPosting
                   key={index}
                   latitude={marker.latitude}
