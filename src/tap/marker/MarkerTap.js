@@ -78,13 +78,14 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
   //이부분
   const handleGroupSelect = async group => {
     setSelectedGroup(group);
-    console.log(group);
+    console.log(group.groupId);
     try {
       const response = await instance.get(`/marker/group/${group.groupId}`);
-      setSelectedGroup(response.data);
+      setSelectedGroup(response.data); // Assuming response.data contains the array of markers
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching group markers:', error);
+      // Handle error (e.g., updating state to show an error message to the user)
     }
   };
   const handleSearchReset = () => {
@@ -94,18 +95,13 @@ const MarkerTap = ({ onPostClick, onSearchResults, selectedMarker, onEnableMarke
     setReceivedFormData(formData);
     console.log(formData);
   };
-  const handleGroupIdSelect = groupId => {
-    setSelectedGroupId(groupId);
-    console.log(groupId);
-  };
-  //선택된 그룹이고, groupId, title받음
 
   return (
     <>
       <div className={styles.markerTap}>
         <GroupSelect
           onSelect={handleGroupSelect}
-          selectedGroupId={selectedGroupId} /* groups={groups} */
+          /* groups={groups} */
         />
         <div className={styles.SearchInputContainer}>
           <form onSubmit={handleSubmit}>
@@ -157,10 +153,10 @@ export default MarkerTap;
 
 /*  
   import { useParams } from 'react-router';
-import { useRecoilValue } from 'recoil';
-import { groupsState, groupState } from '../../recoil/groupAtoms';
+  import { useRecoilValue } from 'recoil';
+  import { groupsState, groupState } from '../../recoil/groupAtoms';
   import Selecter from '../group/components/atom-components/Seleter';
-import useGroup from '../../hooks/useGroup';
+  import useGroup from '../../hooks/useGroup';
   const { groupId } = useParams();
   const group = useRecoilValue(groupState);
   const groups = useRecoilValue(groupsState);
@@ -168,4 +164,5 @@ import useGroup from '../../hooks/useGroup';
   console.log('group', group);
   console.log('groupId', group.groupId);
   console.log('useparams', groupId);
-  console.log('groups', groups); */
+  console.log('groups', groups); 
+*/
