@@ -19,9 +19,8 @@ const GroupPosting = ({
     >
       <div className={Styles.postingInfo}>
         <div className={Styles.title}>{title}</div>
-        <div className={Styles.writer}>{writer}</div>
-        <div className={Styles.wentDate}>{wentDate}</div>
         <div className={Styles.nickName}>{nickName}</div>
+        <div className={Styles.wentDate}>{wentDate}</div>
       </div>
     </div>
   );

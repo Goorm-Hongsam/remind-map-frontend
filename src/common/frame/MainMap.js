@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Redirect from '../../api/Redirect';
 import MainMapModal from './MainMapModal';
-import { useRecoilState } from 'recoil';
-import { groupMarkersState } from '../../recoil/groupAtoms';
 
 const { kakao } = window;
 
@@ -19,8 +17,6 @@ const MainMap = ({
   const [markers, setMarkers] = useState([]);
   const [polylines, setPolylines] = useState([]);
   const [map, setMap] = useState(null);
-  const [groupMarkers, setGroupMarkers] = useRecoilState(groupMarkersState);
-  console.log(selectedLocation);
   useEffect(() => {
     const mapContainer = document.getElementById('map');
     const mapOption = {

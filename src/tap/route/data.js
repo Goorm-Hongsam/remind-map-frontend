@@ -112,7 +112,12 @@ export const routeMaker = [
           longitude: 128.1671744126717,
         },
         visiable: false,
-        wentDate: '2023-11-02T15:30:00',
+        wentDate: '2023-11-02T',
+        imageUrl: [
+          'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
+          'https://i.pinimg.com/736x/17/f6/3e/17f63ecacff59cfd166f40b49b9bfd8c.jpg',
+          'https://i.pinimg.com/564x/f6/9b/db/f69bdbd6be8b9046b0fb5ddec940774c.jpg',
+        ],
       },
       {
         id: 2,
@@ -124,6 +129,11 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://i.pinimg.com/564x/a4/ac/dd/a4acdd0fc741bf7ee7ffaeb3ed87dbee.jpg',
+          'https://i.pinimg.com/736x/17/f6/3e/17f63ecacff59cfd166f40b49b9bfd8c.jpg',
+          'https://i.pinimg.com/564x/f6/9b/db/f69bdbd6be8b9046b0fb5ddec940774c.jpg',
+        ],
       },
       {
         id: 3,
@@ -135,6 +145,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
     ],
   },
@@ -155,6 +168,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
       {
         id: 4,
@@ -166,6 +182,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
       {
         id: 5,
@@ -177,6 +196,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
     ],
   },
@@ -197,6 +219,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
       {
         id: 4,
@@ -208,6 +233,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
       {
         id: 5,
@@ -219,6 +247,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
     ],
   },
@@ -239,6 +270,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
       {
         id: 4,
@@ -250,6 +284,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
       {
         id: 5,
@@ -261,6 +298,9 @@ export const routeMaker = [
         },
         visiable: false,
         wentDate: '2023-11-02T15:30:00',
+        imageUrl: [
+          'https://remindmap-bucket.s3.ap-northeast-2.amazonaws.com/marker/1_1700943691429.png',
+        ],
       },
     ],
   },
